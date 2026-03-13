@@ -199,7 +199,7 @@ function handleStreamChunk(text) {
                 <div class="message-text streaming-cursor" id="streaming-text"></div>
                 <div class="message-time">
                     <span>${getCurrentTime()}</span>
-                    <svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#d4a853"/></svg>
+                    <svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#53bdeb"/></svg>
                 </div>
             </div>
         `;
@@ -252,7 +252,7 @@ function addMessageToChat(role, content, justSent) {
     const formattedContent = role === 'assistant' ? formatMessage(content) : escapeHtml(content);
 
     const readReceipt = role === 'user'
-        ? '<svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#d4a853"/></svg>'
+        ? '<svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#53bdeb"/></svg>'
         : '';
 
     msgDiv.innerHTML = `
