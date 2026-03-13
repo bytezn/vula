@@ -53,8 +53,9 @@ system_prompt = get_system_prompt(knowledge_base)
 # Demo mode detection
 DEMO_MODE = not os.getenv("ANTHROPIC_API_KEY")
 
-# Claude client (None in demo mode)
-client = None if DEMO_MODE else anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
+# Claude async client (None in demo mode)
+# Using AsyncAnthropic so streaming never blocks the event loop on Azure
+client = None if DEMO_MODE else anthropic.AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
 
 
 @app.on_event("startup")
@@ -140,7 +141,7 @@ async def chat(data: dict):
         assistant_message = get_demo_response(message)
     else:
         try:
-            response = client.messages.create(
+            response = await client.messages.create(
                 model="claude-sonnet-4-20250514",
                 max_tokens=2048,
                 system=system_prompt,
@@ -148,6 +149,7 @@ async def chat(data: dict):
             )
             assistant_message = response.content[0].text
         except Exception as e:
+            print(f"[Pfula ERROR /api/chat] {type(e).__name__}: {e}")
             assistant_message = (
                 "I'm having trouble connecting right now. Please try again in a moment. "
                 "If this persists, you can call the relevant service directly — "
@@ -214,19 +216,20 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
                     })
             else:
                 try:
-                    with client.messages.stream(
+                    async with client.messages.stream(
                         model="claude-sonnet-4-20250514",
                         max_tokens=2048,
                         system=system_prompt,
                         messages=messages,
                     ) as stream:
-                        for text in stream.text_stream:
+                        async for text in stream.text_stream:
                             full_response += text
                             await websocket.send_json({
                                 "type": "stream",
                                 "content": text,
                             })
-                except Exception:
+                except Exception as e:
+                    print(f"[Pfula ERROR /ws/chat] {type(e).__name__}: {e}")
                     full_response = (
                         "I'm having trouble connecting right now. Please try again in a moment."
                     )
@@ -335,7 +338,7 @@ Return the letter as a JSON object with these fields:
 Return ONLY the JSON object, no other text."""
 
     try:
-        response = client.messages.create(
+        response = await client.messages.create(
             model="claude-sonnet-4-20250514",
             max_tokens=2048,
             messages=[{"role": "user", "content": letter_prompt}],
