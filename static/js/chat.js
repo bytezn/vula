@@ -11,6 +11,10 @@ let currentStreamBubble = null;
 let messageCount = 0;
 let ttsEnabled = true;
 
+// TTS: track whether we've already spoken for the current streamed message
+let hasSpokenThisMessage = false;
+let streamAccumulator = '';
+
 // --- Sound Effects (subtle, WhatsApp-like) ---
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
@@ -190,6 +194,10 @@ function handleStreamChunk(text) {
         isStreaming = true;
         playSound('receive');
 
+        // Reset TTS state for this new message
+        hasSpokenThisMessage = false;
+        streamAccumulator = '';
+
         // Create a new assistant message bubble for streaming
         const chatArea = document.getElementById('chat-area');
         const msgDiv = document.createElement('div');
@@ -215,6 +223,20 @@ function handleStreamChunk(text) {
     // Keep cursor class during streaming
     currentStreamBubble.classList.add('streaming-cursor');
 
+    // ── Early TTS: speak the first conversational sentence as soon as it lands ──
+    // Don't wait for the full response — feels much more natural in conversation
+    if (ttsEnabled && !hasSpokenThisMessage) {
+        streamAccumulator += text;
+        // Wait for at least 80 chars then look for a natural sentence break
+        if (streamAccumulator.length >= 80) {
+            const earlyMatch = streamAccumulator.match(/^[\s\S]{60,}?[.?!](?=\s|$)/);
+            if (earlyMatch) {
+                hasSpokenThisMessage = true;
+                speakConversational(streamAccumulator);
+            }
+        }
+    }
+
     scrollToBottom();
 }
 
@@ -231,9 +253,10 @@ function handleStreamComplete(fullText) {
     // Generate smart follow-up suggestions
     showFollowUpSuggestions(fullText);
 
-    // Speak the response aloud
-    if (ttsEnabled) {
-        speakResponse(fullText);
+    // Speak the response aloud — only if early-trigger didn't already fire
+    // (for very short responses that never hit the sentence-detection threshold)
+    if (ttsEnabled && !hasSpokenThisMessage) {
+        speakConversational(fullText);
     }
 
     scrollToBottom();
@@ -547,66 +570,81 @@ function stopListening() {
 
 // --- Text-to-Speech ---
 
-function speakResponse(text) {
-    if (!window.speechSynthesis) return;
-
-    // Stop any current speech
-    window.speechSynthesis.cancel();
-
-    // Clean text for speech — strip markdown, URLs, special chars
+// Extract a short, natural conversational response for speech.
+// Reads 1-2 key sentences — not bullet points or the full document.
+function extractSpeechText(text) {
     let clean = text
-        .replace(/\*\*(.*?)\*\*/g, '$1')
-        .replace(/###?\s/g, '')
-        .replace(/https?:\/\/[^\s]+/g, '')
-        .replace(/[\-\*] /g, '')
-        .replace(/\n{2,}/g, '. ')
-        .replace(/\n/g, '. ')
+        .replace(/\*\*(.*?)\*\*/g, '$1')          // strip bold
+        .replace(/\*(.*?)\*/g, '$1')               // strip italic
+        .replace(/#{1,4}\s+/g, '')                 // strip headings
+        .replace(/https?:\/\/[^\s]+/g, '')         // strip URLs
+        .replace(/^\s*[-*•]\s+/gm, '')             // strip bullet points
+        .replace(/^\s*\d+\.\s+/gm, '')             // strip numbered lists
+        .replace(/\n{2,}/g, ' ')                   // collapse paragraphs
+        .replace(/\n/g, ' ')                       // collapse line breaks
+        .replace(/\s{2,}/g, ' ')                   // collapse spaces
         .trim();
 
-    // Truncate very long responses for speech (first ~500 chars)
-    if (clean.length > 500) {
-        const cutoff = clean.lastIndexOf('.', 500);
-        clean = clean.substring(0, cutoff > 200 ? cutoff + 1 : 500) + '. I have more details in the message above.';
+    // Skip hollow openers — get straight to the substance
+    clean = clean.replace(/^(Sure[!,.]?\s*|Of course[!,.]?\s*|Great question[!,.]?\s*|Absolutely[!,.]?\s*|I['']d be happy to help[!,.]?\s*)/i, '');
+
+    // Pull out the first 1–2 complete sentences, max ~200 chars
+    // This keeps the voice short, punchy, and conversational
+    const sentenceRx = /[^.?!]+[.?!]+/g;
+    const sentences = [];
+    let match;
+    while ((match = sentenceRx.exec(clean)) !== null) {
+        const s = match[0].trim();
+        if (s.length < 12) continue;               // skip tiny fragments
+        sentences.push(s);
+        if (sentences.join(' ').length >= 160) break;
+        if (sentences.length >= 2) break;
     }
 
-    const utterance = new SpeechSynthesisUtterance(clean);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-    utterance.volume = 0.9;
+    if (sentences.length > 0) return sentences.join(' ');
 
-    // Pick the best available voice — always target South African English
+    // Fallback: first 160 chars at a word boundary
+    if (clean.length <= 200) return clean;
+    const cut = clean.lastIndexOf(' ', 200);
+    return clean.substring(0, cut > 80 ? cut : 200).trim() + '.';
+}
+
+function speakConversational(text) {
+    if (!window.speechSynthesis) return;
+
+    window.speechSynthesis.cancel();
+
+    const speech = extractSpeechText(text);
+    if (!speech) return;
+
+    const utterance = new SpeechSynthesisUtterance(speech);
+    utterance.rate = 1.05;    // very slightly faster — feels more natural/conversational
+    utterance.pitch = 1.0;
+    utterance.volume = 0.92;
+
+    // Voice priority: en-ZA → en-AU → en-US → any non-GB English
     const voices = window.speechSynthesis.getVoices();
     const isZulu = currentLanguage === 'zu';
-
     let preferred = null;
     if (isZulu) {
         preferred = voices.find(v => v.lang.startsWith('zu'));
     } else {
-        // Priority: en-ZA → en-AU (closer to SA than UK) → en-US → any en
-        // Deliberately skip en-GB — sounds too British for a SA demo
         preferred = voices.find(v => v.lang === 'en-ZA')
             || voices.find(v => v.lang === 'en-AU')
             || voices.find(v => v.lang === 'en-US')
             || voices.find(v => v.lang.startsWith('en') && !v.lang.includes('GB'));
     }
-
-    // Always force the locale to en-ZA so Google TTS uses SA pronunciation
     utterance.lang = isZulu ? 'zu-ZA' : 'en-ZA';
     if (preferred) utterance.voice = preferred;
 
-    // Show speaking state
     const status = document.getElementById('wa-status');
-    status.textContent = 'speaking...';
-    status.classList.add('typing');
+    if (status) { status.textContent = 'speaking...'; status.classList.add('typing'); }
 
     utterance.onend = () => {
-        status.textContent = 'online';
-        status.classList.remove('typing');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
     };
-
     utterance.onerror = () => {
-        status.textContent = 'online';
-        status.classList.remove('typing');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
     };
 
     window.speechSynthesis.speak(utterance);
