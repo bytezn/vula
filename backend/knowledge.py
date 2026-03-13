@@ -8,6 +8,7 @@ from pathlib import Path
 KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge_base"
 
 # Pre-load all KB files at startup to avoid repeated disk I/O
+# NOTE: _load_cache() is called at the BOTTOM of the file, after _format_knowledge is defined.
 _KB_CACHE: dict[str, str] = {}
 
 def _load_cache():
@@ -15,8 +16,6 @@ def _load_cache():
         with open(json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
         _KB_CACHE[json_file.stem] = _format_knowledge(data)
-
-_load_cache()
 
 
 def load_all_knowledge() -> str:
@@ -96,3 +95,7 @@ def get_knowledge_summary() -> dict:
             data = json.load(f)
         summary[json_file.stem] = data.get("service", json_file.stem)
     return summary
+
+
+# Must be called after _format_knowledge is defined above
+_load_cache()
