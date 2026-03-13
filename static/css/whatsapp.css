@@ -869,10 +869,12 @@ html, body {
 /* ============ VOICE INPUT ============ */
 
 .mic-btn {
-    background: none;
-    border: none;
+    width: 46px;
+    height: 46px;
+    background: rgba(196, 150, 64, 0.12);
+    border: 1.5px solid rgba(196, 150, 64, 0.3);
     cursor: pointer;
-    padding: 8px;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -882,12 +884,14 @@ html, body {
     position: relative;
 }
 
-.mic-btn:hover {
-    background: rgba(196, 150, 64, 0.1);
+.mic-btn svg {
+    fill: var(--pfula-gold);
 }
 
-.mic-btn:hover svg {
-    fill: var(--pfula-gold);
+.mic-btn:hover {
+    background: rgba(196, 150, 64, 0.22);
+    border-color: var(--pfula-gold);
+    transform: scale(1.05);
 }
 
 /* Listening state — pulsing red glow */
