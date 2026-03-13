@@ -18,22 +18,15 @@ def main():
     from dotenv import load_dotenv
     load_dotenv()
 
-    if not os.getenv("ANTHROPIC_API_KEY"):
-        print("\n" + "=" * 60)
-        print("  PFULA — AI That Opens Government for Every South African")
-        print("=" * 60)
-        print("\n  ⚠️  ANTHROPIC_API_KEY not found!")
-        print("\n  To get started:")
-        print("  1. Copy .env.example to .env")
-        print("  2. Add your Anthropic API key")
-        print("  3. Run this script again")
-        print("\n" + "=" * 60 + "\n")
-        sys.exit(1)
+    demo_mode = not os.getenv("ANTHROPIC_API_KEY")
 
     print("\n" + "=" * 60)
     print("  PFULA (to open)")
     print("  AI That Opens Government for Every South African")
     print("=" * 60)
+    if demo_mode:
+        print("\n  ⚡ Running in DEMO MODE (no API key)")
+        print("  Add ANTHROPIC_API_KEY to .env for live Claude responses")
     print(f"\n  Chat:      http://localhost:8000")
     print(f"  Tracker:   http://localhost:8000/tracker")
     print(f"  Dashboard: http://localhost:8000/dashboard")

@@ -19,6 +19,7 @@ import anthropic
 
 from backend.knowledge import load_all_knowledge
 from backend.system_prompt import get_system_prompt
+from backend.demo_responses import get_demo_response, stream_demo_response
 from backend.database import (
     init_db, seed_demo_data,
     create_conversation, get_conversation, add_message,
@@ -49,8 +50,11 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 knowledge_base = load_all_knowledge()
 system_prompt = get_system_prompt(knowledge_base)
 
-# Claude client
-client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
+# Demo mode detection
+DEMO_MODE = not os.getenv("ANTHROPIC_API_KEY")
+
+# Claude client (None in demo mode)
+client = None if DEMO_MODE else anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
 
 
 @app.on_event("startup")
@@ -72,6 +76,13 @@ async def index():
 async def dashboard():
     """Serve the admin analytics dashboard."""
     html_path = Path(__file__).parent.parent / "frontend" / "dashboard.html"
+    return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
+
+
+@app.get("/simulator", response_class=HTMLResponse)
+async def simulator():
+    """Serve the iPhone simulator view — for stage presentations."""
+    html_path = Path(__file__).parent.parent / "frontend" / "simulator.html"
     return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
 
 
@@ -117,21 +128,24 @@ async def chat(data: dict):
     # Get conversation history
     messages = get_conversation_messages(conv_id)
 
-    # Call Claude
-    try:
-        response = client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=2048,
-            system=system_prompt,
-            messages=messages,
-        )
-        assistant_message = response.content[0].text
-    except Exception as e:
-        assistant_message = (
-            "I'm having trouble connecting right now. Please try again in a moment. "
-            "If this persists, you can call the relevant service directly — "
-            "SASSA: 0800 60 10 11, Home Affairs: 0800 60 11 90, SARS: 0800 00 7277."
-        )
+    # Call Claude (or use demo responses)
+    if DEMO_MODE:
+        assistant_message = get_demo_response(message)
+    else:
+        try:
+            response = client.messages.create(
+                model="claude-sonnet-4-20250514",
+                max_tokens=2048,
+                system=system_prompt,
+                messages=messages,
+            )
+            assistant_message = response.content[0].text
+        except Exception as e:
+            assistant_message = (
+                "I'm having trouble connecting right now. Please try again in a moment. "
+                "If this persists, you can call the relevant service directly — "
+                "SASSA: 0800 60 10 11, Home Affairs: 0800 60 11 90, SARS: 0800 00 7277."
+            )
 
     # Save assistant response
     add_message(conv_id, "assistant", assistant_message)
@@ -184,27 +198,35 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
 
             # Stream response
             full_response = ""
-            try:
-                with client.messages.stream(
-                    model="claude-sonnet-4-20250514",
-                    max_tokens=2048,
-                    system=system_prompt,
-                    messages=messages,
-                ) as stream:
-                    for text in stream.text_stream:
-                        full_response += text
-                        await websocket.send_json({
-                            "type": "stream",
-                            "content": text,
-                        })
-            except Exception:
-                full_response = (
-                    "I'm having trouble connecting right now. Please try again in a moment."
-                )
-                await websocket.send_json({
-                    "type": "stream",
-                    "content": full_response,
-                })
+            if DEMO_MODE:
+                async for chunk in stream_demo_response(user_message):
+                    full_response += chunk
+                    await websocket.send_json({
+                        "type": "stream",
+                        "content": chunk,
+                    })
+            else:
+                try:
+                    with client.messages.stream(
+                        model="claude-sonnet-4-20250514",
+                        max_tokens=2048,
+                        system=system_prompt,
+                        messages=messages,
+                    ) as stream:
+                        for text in stream.text_stream:
+                            full_response += text
+                            await websocket.send_json({
+                                "type": "stream",
+                                "content": text,
+                            })
+                except Exception:
+                    full_response = (
+                        "I'm having trouble connecting right now. Please try again in a moment."
+                    )
+                    await websocket.send_json({
+                        "type": "stream",
+                        "content": full_response,
+                    })
 
             # Save full response
             add_message(conv_id, "assistant", full_response)
