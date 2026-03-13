@@ -574,19 +574,25 @@ function speakResponse(text) {
     utterance.pitch = 1.0;
     utterance.volume = 0.9;
 
-    // Try to pick a good voice
+    // Pick the best available voice — always target South African English
     const voices = window.speechSynthesis.getVoices();
-    const lang = currentLanguage === 'zu' ? 'zu' : 'en';
+    const isZulu = currentLanguage === 'zu';
 
-    // Prefer: en-ZA, en-GB, en-US (in that order for SA context)
-    const preferred = lang === 'zu'
-        ? voices.find(v => v.lang.startsWith('zu'))
-        : voices.find(v => v.lang === 'en-ZA')
-          || voices.find(v => v.lang === 'en-GB')
-          || voices.find(v => v.lang.startsWith('en'));
+    let preferred = null;
+    if (isZulu) {
+        preferred = voices.find(v => v.lang.startsWith('zu'));
+    } else {
+        // Priority: en-ZA → en-AU (closer to SA than UK) → en-US → any en
+        // Deliberately skip en-GB — sounds too British for a SA demo
+        preferred = voices.find(v => v.lang === 'en-ZA')
+            || voices.find(v => v.lang === 'en-AU')
+            || voices.find(v => v.lang === 'en-US')
+            || voices.find(v => v.lang.startsWith('en') && !v.lang.includes('GB'));
+    }
 
+    // Always force the locale to en-ZA so Google TTS uses SA pronunciation
+    utterance.lang = isZulu ? 'zu-ZA' : 'en-ZA';
     if (preferred) utterance.voice = preferred;
-    utterance.lang = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
 
     // Show speaking state
     const status = document.getElementById('wa-status');
