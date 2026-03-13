@@ -149,7 +149,7 @@ async def chat(data: dict):
         try:
             response = await client.messages.create(
                 model="claude-sonnet-4-20250514",
-                max_tokens=2048,
+                max_tokens=1024,
                 system=system_prompt,
                 messages=messages,
             )
@@ -224,7 +224,7 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
                 try:
                     async with client.messages.stream(
                         model="claude-sonnet-4-20250514",
-                        max_tokens=2048,
+                        max_tokens=1024,
                         system=system_prompt,
                         messages=messages,
                     ) as stream:
