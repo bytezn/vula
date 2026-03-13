@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pfula — Case Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/whatsapp.css">
+    <style>
+        .tracker-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: var(--wa-bg);
+        }
+
+        .tracker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tracker-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--wa-text);
+        }
+
+        .tracker-header .case-count {
+            background: var(--wa-green);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .case-card {
+            background: var(--wa-header);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--wa-green);
+            transition: transform 0.15s;
+        }
+
+        .case-card:hover {
+            transform: translateX(4px);
+        }
+
+        .case-card.status-open { border-left-color: var(--pfula-gold); }
+        .case-card.status-resolved { border-left-color: var(--wa-green); }
+        .case-card.status-escalated { border-left-color: #ef4444; }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .case-id {
+            font-size: 11px;
+            color: var(--pfula-gold);
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        .case-status {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .case-status.open { background: rgba(200,150,60,0.2); color: var(--pfula-gold); }
+        .case-status.resolved { background: rgba(0,168,132,0.2); color: var(--wa-green); }
+        .case-status.escalated { background: rgba(239,68,68,0.2); color: #ef4444; }
+
+        .case-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--wa-text);
+            margin-bottom: 4px;
+        }
+
+        .case-service {
+            font-size: 12px;
+            color: var(--wa-text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .case-description {
+            font-size: 13px;
+            color: var(--wa-text-secondary);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .case-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--wa-text-secondary);
+        }
+
+        .case-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .case-action-btn {
+            background: rgba(0,168,132,0.1);
+            border: 1px solid rgba(0,168,132,0.3);
+            color: var(--wa-green);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+
+        .case-action-btn:hover {
+            background: rgba(0,168,132,0.2);
+        }
+
+        .case-action-btn.escalate {
+            border-color: rgba(200,150,60,0.3);
+            color: var(--pfula-gold);
+            background: rgba(200,150,60,0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--wa-text-secondary);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--wa-text);
+        }
+
+        .service-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .service-badge.sassa { background: rgba(59,130,246,0.2); color: #60a5fa; }
+        .service-badge.home_affairs { background: rgba(16,185,129,0.2); color: #34d399; }
+        .service-badge.municipal { background: rgba(245,158,11,0.2); color: #fbbf24; }
+        .service-badge.uif { background: rgba(139,92,246,0.2); color: #a78bfa; }
+        .service-badge.sars { background: rgba(239,68,68,0.2); color: #f87171; }
+        .service-badge.deeds_office { background: rgba(236,72,153,0.2); color: #f472b6; }
+        .service-badge.cipc { background: rgba(20,184,166,0.2); color: #2dd4bf; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <div class="status-bar">
+            <span class="time" id="current-time">09:41</span>
+            <div class="status-icons">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+            </div>
+        </div>
+
+        <div class="wa-header">
+            <button class="back-btn" onclick="window.location.href='/'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </button>
+            <div class="wa-contact-info" style="margin-left: 8px;">
+                <div class="wa-name">Case Tracker</div>
+                <div class="wa-status">Active applications & escalations</div>
+            </div>
+        </div>
+
+        <!-- Case List -->
+        <div class="tracker-container" id="tracker-container">
+            <div class="tracker-header">
+                <h1>Your Cases</h1>
+                <span class="case-count" id="case-count">0</span>
+            </div>
+            <div id="case-list">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="white"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+                    <h3>No cases yet</h3>
+                    <p>Start a conversation with Pfula to track your government applications.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav class="bottom-nav">
+            <a href="/" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                <span>Chat</span>
+            </a>
+            <a href="/tracker" class="nav-item active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+                <span>Cases</span>
+            </a>
+            <a href="/dashboard" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                <span>Dashboard</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        const SERVICE_NAMES = {
+            sassa: 'SASSA',
+            home_affairs: 'Home Affairs',
+            municipal: 'eThekwini Municipal',
+            uif: 'UIF',
+            sars: 'SARS',
+            deeds_office: 'Deeds Office',
+            cipc: 'CIPC',
+        };
+
+        async function loadCases() {
+            try {
+                const resp = await fetch('/api/cases');
+                const data = await resp.json();
+                renderCases(data.cases);
+            } catch (e) {
+                console.error('Failed to load cases:', e);
+            }
+        }
+
+        function renderCases(cases) {
+            const list = document.getElementById('case-list');
+            const count = document.getElementById('case-count');
+            count.textContent = cases.length;
+
+            if (cases.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="white"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+                        <h3>No cases yet</h3>
+                        <p>Start a conversation with Pfula to track your government applications.</p>
+                    </div>`;
+                return;
+            }
+
+            list.innerHTML = cases.map(c => `
+                <div class="case-card status-${c.status}">
+                    <div class="case-header">
+                        <span class="case-id">${c.id}</span>
+                        <span class="case-status ${c.status}">${c.status}</span>
+                    </div>
+                    <div class="case-title">${c.title}</div>
+                    <div class="case-service">
+                        <span class="service-badge ${c.service_type}">${SERVICE_NAMES[c.service_type] || c.service_type}</span>
+                    </div>
+                    ${c.description ? `<div class="case-description">${c.description}</div>` : ''}
+                    <div class="case-meta">
+                        <span>Opened ${formatDate(c.created_at)}</span>
+                        <div class="case-actions">
+                            ${c.status === 'open' ? `
+                                <button class="case-action-btn" onclick="updateCaseStatus('${c.id}', 'resolved')">Mark Resolved</button>
+                                <button class="case-action-btn escalate" onclick="escalateCase('${c.id}')">Escalate</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function updateCaseStatus(caseId, status) {
+            try {
+                await fetch(`/api/case/${caseId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status }),
+                });
+                loadCases();
+            } catch (e) {
+                console.error('Failed to update case:', e);
+            }
+        }
+
+        async function escalateCase(caseId) {
+            try {
+                await fetch(`/api/case/${caseId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'escalated', escalation_level: 1 }),
+                });
+                loadCases();
+            } catch (e) {
+                console.error('Failed to escalate case:', e);
+            }
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // Update clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('current-time').textContent =
+                now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+
+        updateClock();
+        setInterval(updateClock, 30000);
+        loadCases();
+    </script>
+</body>
+</html>

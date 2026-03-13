@@ -1,0 +1,148 @@
+{
+  "service": "CIPC — Companies and Intellectual Property Commission",
+  "overview": "CIPC registers companies, co-operatives, and intellectual property (trademarks, patents, designs) in South Africa. If you want to start a formal business, you register it here.",
+  "services": [
+    {
+      "name": "Company Registration (Pty Ltd)",
+      "description": "A private company (Proprietary Limited) is the most common business structure in South Africa.",
+      "requirements": [
+        "At least one director who is a natural person (a real human, not another company)",
+        "A unique company name (check availability on the CIPC website)",
+        "A registered address in South Africa",
+        "A Memorandum of Incorporation (MOI) — CIPC provides a standard template"
+      ],
+      "how_to_register": [
+        "Step 1: Create an account on www.cipc.co.za",
+        "Step 2: Reserve your company name (R50) — takes 1-2 business days for approval",
+        "Step 3: Once the name is approved, complete the company registration (CoR 14.1 form)",
+        "Step 4: Upload your MOI (use the CIPC standard template or a custom one prepared by an attorney)",
+        "Step 5: Pay the registration fee (R175 for online)",
+        "Step 6: CIPC issues a Registration Certificate — usually within 1-3 business days",
+        "Step 7: Register for tax with SARS immediately after receiving your registration certificate"
+      ],
+      "costs": {
+        "name_reservation": "R50",
+        "registration": "R175 (online)",
+        "total": "R225 for a basic Pty Ltd registration"
+      },
+      "after_registration": [
+        "Register for tax with SARS (Income Tax, VAT if applicable, PAYE if you have employees)",
+        "Register for UIF if you have employees",
+        "Register for Compensation Fund (COIDA) if you have employees",
+        "Open a business bank account (you will need your registration certificate)",
+        "File annual returns with CIPC (due every year on your registration anniversary)"
+      ]
+    },
+    {
+      "name": "Annual Returns",
+      "description": "Every registered company MUST file an annual return with CIPC every year. Failure to do so can result in your company being deregistered.",
+      "when": "Due every year on the anniversary month of your company's registration",
+      "cost": "R450 for a private company (Pty Ltd)",
+      "how": [
+        "Log in to the CIPC website",
+        "Navigate to 'Annual Returns'",
+        "Confirm or update your company details",
+        "Pay the fee online",
+        "Receipt is issued immediately"
+      ],
+      "what_happens_if_you_miss_it": [
+        "CIPC sends a compliance notice",
+        "If you still don't file, CIPC begins the deregistration process",
+        "A deregistered company cannot trade, cannot enter contracts, and cannot sue or be sued",
+        "Re-registration is possible but costs approximately R700 and takes weeks"
+      ]
+    },
+    {
+      "name": "Director Amendments",
+      "description": "When you add, remove, or change directors of your company.",
+      "how": [
+        "Log in to CIPC and submit a CoR 39 form (change of directors)",
+        "Upload the new director's ID and consent letter",
+        "Fee: R50 per change",
+        "Processing: 1-3 business days"
+      ]
+    },
+    {
+      "name": "Company Name Change",
+      "how": [
+        "Reserve the new name (R50)",
+        "Submit a special resolution signed by all shareholders",
+        "Submit CoR 9.4 form on the CIPC website",
+        "Fee: R175",
+        "Update your MOI to reflect the new name"
+      ]
+    },
+    {
+      "name": "Close Corporation (CC) Conversion",
+      "description": "Close Corporations (CCs) can no longer be registered, but existing CCs can continue to operate or convert to Pty Ltd companies.",
+      "how": [
+        "Submit a CK2A form to convert from CC to Pty Ltd",
+        "Prepare a new MOI for the company",
+        "Fee: R175",
+        "The CC registration number changes to a company registration number"
+      ]
+    },
+    {
+      "name": "Trademark Registration",
+      "description": "Protect your brand name, logo, or slogan from being used by others.",
+      "process": [
+        "Search the trademark database to check availability",
+        "File a trademark application on the CIPC website or through a trademark attorney",
+        "CIPC examines the application (takes 6-12 months)",
+        "If approved, the trademark is published in the Patent Journal for opposition (3 months)",
+        "If no opposition, the trademark is registered — valid for 10 years, renewable"
+      ],
+      "cost": "R590 per class per trademark",
+      "tip": "Consider using a trademark attorney for complex applications — errors can result in rejection and you lose the fee"
+    }
+  ],
+  "cipc_offices": [
+    {
+      "name": "CIPC Self-Service Terminal — Durban",
+      "address": "267 Anton Lembede Street, Durban CBD (at the Department of Employment and Labour)",
+      "hours": "Monday to Friday 07:30 - 15:30",
+      "note": "Limited services available in person — most CIPC services are online only"
+    }
+  ],
+  "online_portal": {
+    "website": "www.cipc.co.za",
+    "services": "Company registration, annual returns, director changes, trademark applications, name reservations",
+    "tip": "The website can be slow. Use Chrome browser. Try early morning (before 08:00) for best performance."
+  },
+  "important_contacts": {
+    "call_centre": "086 100 2472",
+    "email": "info@cipc.co.za",
+    "website": "www.cipc.co.za"
+  },
+  "common_problems": [
+    {
+      "problem": "CIPC website not working / constantly timing out",
+      "what_to_do": "This is a very common complaint. Try different browsers, try early morning, clear your cache. If persistent, call 086 100 2472. CIPC has acknowledged ongoing website performance issues."
+    },
+    {
+      "problem": "Company deregistered for not filing annual returns",
+      "what_to_do": "Apply for re-registration on the CIPC website. Submit a CoR 40.5 form. Fee: R700. You will need to file all outstanding annual returns and pay all outstanding fees."
+    },
+    {
+      "problem": "Someone registered a company using your identity",
+      "what_to_do": "Report immediately to CIPC and to SAPS. CIPC will investigate and can deregister the fraudulent company. Check your credit report for any business accounts opened in your name."
+    },
+    {
+      "problem": "Cannot get your registration certificate",
+      "what_to_do": "Download it from the CIPC website — log in and navigate to 'My Companies'. If it's not there, call 086 100 2472."
+    }
+  ],
+  "escalation": {
+    "step_1": "Contact CIPC call centre: 086 100 2472",
+    "step_2": "Email a formal complaint to info@cipc.co.za with all reference numbers",
+    "step_3": "Escalate to the CIPC Commissioner's office",
+    "step_4": "Lodge a complaint with the Department of Trade, Industry and Competition (DTIC)",
+    "legislation": "Companies Act 71 of 2008, Intellectual Property Laws"
+  },
+  "your_rights": [
+    "You have the right to register a company if you meet the requirements",
+    "CIPC must process applications within the published timeframes",
+    "You have the right to access the public company register",
+    "Your personal information held by CIPC is protected under POPIA"
+  ]
+}

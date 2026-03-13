@@ -1,0 +1,107 @@
+{
+  "service": "South African Revenue Service (SARS)",
+  "overview": "SARS collects taxes that fund government services. Every person who earns income above certain thresholds must register as a taxpayer and submit annual tax returns. SARS also handles VAT registration, customs, and tax clearance certificates.",
+  "individual_tax": {
+    "who_must_register": [
+      "Any person earning above R95,750 per year from a single employer",
+      "Anyone earning income from more than one source",
+      "Anyone with a provisional tax obligation",
+      "Anyone earning rental income, freelance income, or investment income"
+    ],
+    "tax_thresholds_2024_2025": {
+      "under_65": "R95,750 per year",
+      "65_to_74": "R148,217 per year",
+      "75_and_older": "R165,689 per year"
+    },
+    "how_to_register": [
+      "Visit www.sarsefiling.co.za and create an eFiling account",
+      "Or visit your nearest SARS branch with your ID and proof of address",
+      "You will receive a tax reference number — KEEP THIS SAFE, you will need it forever"
+    ],
+    "filing_your_tax_return": {
+      "when": "Tax season runs from July to November each year (dates announced by SARS annually)",
+      "how": [
+        "Log in to SARS eFiling (www.sarsefiling.co.za)",
+        "Your employer's IRP5 certificate should be pre-populated",
+        "Check that the amounts match your payslips",
+        "Add any additional income (freelance, rental, investments)",
+        "Claim allowable deductions (medical aid contributions, retirement fund contributions, travel allowance)",
+        "Submit the return",
+        "SARS will issue an assessment — either you owe SARS or SARS owes you a refund"
+      ],
+      "first_time_tips": [
+        "Keep all your payslips — they are your proof if SARS questions anything",
+        "Your IRP5 certificate comes from your employer — ask HR for it",
+        "If you earned below the threshold and had tax deducted, you MAY get a refund",
+        "Medical aid tax credits are automatic if your employer reported them correctly",
+        "You can claim for home office expenses ONLY if you have a dedicated room used exclusively for work"
+      ]
+    },
+    "common_problems": [
+      "Employer did not submit IRP5 — contact your employer immediately, then report to SARS if they refuse",
+      "Assessment shows you owe money you don't have — apply for a payment arrangement at SARS",
+      "Received assessment for tax you don't owe — dispute the assessment within 30 days on eFiling",
+      "eFiling not working — clear your browser cache, try a different browser, or visit a SARS branch",
+      "Outstanding tax returns from previous years — file them all, starting with the oldest year"
+    ]
+  },
+  "tax_clearance_certificate": {
+    "what_it_is": "A document confirming that your tax affairs are in order. Required for government tenders, certain visa applications, and large financial transactions.",
+    "how_to_get": [
+      "Apply on SARS eFiling under 'Tax Compliance Status'",
+      "Your tax returns must be up to date and any debt must be settled or under a payment arrangement",
+      "Processing is usually immediate if your affairs are in order",
+      "If there are issues, SARS will tell you what needs to be resolved first"
+    ]
+  },
+  "vat_registration": {
+    "who_must_register": "Any business with taxable supplies exceeding R1 million per year",
+    "voluntary_registration": "Businesses with taxable supplies exceeding R50,000 per year may register voluntarily",
+    "how_to_register": [
+      "Apply on SARS eFiling",
+      "Provide proof of business activity, bank statements, invoices",
+      "SARS may conduct a verification visit",
+      "Once registered, you must submit VAT returns every 2 months"
+    ]
+  },
+  "sars_offices_ethekwini": [
+    {
+      "name": "SARS Durban CBD",
+      "address": "Kingsmead Office Park, 2 Kingsmead Way, Durban",
+      "hours": "Monday to Friday 08:00 - 16:00",
+      "tip": "Book an appointment online before visiting — walk-ins face very long waits"
+    },
+    {
+      "name": "SARS Pinetown",
+      "address": "40 Josiah Gumede Road, Pinetown",
+      "hours": "Monday to Friday 08:00 - 16:00"
+    },
+    {
+      "name": "SARS Gateway",
+      "address": "Gateway Theatre of Shopping, Umhlanga",
+      "hours": "Monday to Friday 08:00 - 16:00, Saturday 09:00 - 13:00"
+    }
+  ],
+  "important_contacts": {
+    "contact_centre": "0800 00 7277 (toll-free)",
+    "efiling_help": "0800 00 7277 option 1",
+    "fraud_and_corruption": "0800 00 2870",
+    "tax_ombud": "0800 662 837"
+  },
+  "escalation": {
+    "step_1": "Use SARS eFiling to dispute an assessment — you have 30 business days from the assessment date",
+    "step_2": "If SARS does not resolve your dispute, request Alternative Dispute Resolution (ADR) through eFiling",
+    "step_3": "If ADR fails, appeal to the Tax Court",
+    "step_4": "Contact the Tax Ombud for complaints about SARS service: 0800 662 837",
+    "legislation": "Tax Administration Act 28 of 2011, Income Tax Act 58 of 1962"
+  },
+  "your_rights": [
+    "You have the right to be treated fairly and with respect at any SARS office",
+    "You have the right to clear explanations of any tax assessment",
+    "You have the right to dispute any assessment within 30 business days",
+    "You have the right to a payment arrangement if you cannot pay your tax debt in full",
+    "SARS must process refunds within a reasonable time — persistent delays can be reported to the Tax Ombud",
+    "You have the right to confidentiality of your tax information",
+    "SARS may not attach your primary residence to settle tax debt below R250,000 without a court order"
+  ]
+}

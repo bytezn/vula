@@ -1,0 +1,188 @@
+{
+  "service": "Department of Home Affairs",
+  "overview": "The Department of Home Affairs is responsible for civic services including identity documents, passports, birth and death registration, marriages, and citizenship. It is one of the most-used and most-frustrating government services for South Africans.",
+  "services": [
+    {
+      "name": "Smart ID Card (First Issue)",
+      "description": "The Smart ID card replaces the old green bar-coded ID book. All South Africans 16 and older should have one.",
+      "requirements": [
+        "South African birth certificate (unabridged preferred)",
+        "If 16: parent/guardian must accompany with their own ID",
+        "Proof of address (utility bill, lease, affidavit)",
+        "If applicable: marriage certificate, divorce decree"
+      ],
+      "process": [
+        "Visit your nearest Home Affairs office",
+        "Complete the BI-9 application form (available at the office)",
+        "Your fingerprints and photograph will be taken digitally",
+        "You will receive a receipt with a reference number — KEEP THIS",
+        "Collection is from the same office where you applied",
+        "Processing time: officially 1-3 months, but frequently takes 6-12 months"
+      ],
+      "cost": "Free for first issue",
+      "common_problems": [
+        "Application 'stuck' in the system for months — use the reference number to follow up",
+        "Office says 'system is offline' — this is common, ask when to return or try another office",
+        "Fingerprints rejected by the system — request manual override or try at a different office",
+        "ID allocated to wrong person — escalate immediately, this is an identity fraud risk"
+      ],
+      "tracking": "Check status at www.dha.gov.za/index.php/id-status or call 0800 60 11 90"
+    },
+    {
+      "name": "Smart ID Card (Replacement)",
+      "cost": "R140",
+      "requirements": [
+        "Affidavit explaining loss/theft (from SAPS)",
+        "Any available identification (old ID, passport, driver's license)",
+        "Proof of address"
+      ],
+      "process": [
+        "Obtain affidavit from nearest police station",
+        "Visit Home Affairs with affidavit and any ID you have",
+        "Pay R140 fee",
+        "Fingerprints and photo retaken",
+        "Same processing time as first issue"
+      ]
+    },
+    {
+      "name": "Passport",
+      "cost": "R400 (adult) / R200 (child under 16)",
+      "requirements": [
+        "Valid Smart ID card (you cannot apply with the old green ID book)",
+        "Completed BI-73 application form",
+        "Proof of address",
+        "If child: both parents' IDs, consent from both parents (or court order if single parent)"
+      ],
+      "process": [
+        "Visit Home Affairs or selected bank branches (Nedbank, Standard Bank, FNB)",
+        "Complete form, have biometrics taken",
+        "Pay the fee",
+        "Processing time: 4-6 weeks (standard), 48 hours (emergency — R800 extra)",
+        "Collect from the office where you applied"
+      ],
+      "common_problems": [
+        "Cannot apply without Smart ID — you must get the Smart ID first",
+        "Passport takes longer than 6 weeks — escalate to the office manager",
+        "Child passport refused due to missing parent consent — get a court order from the Family Court"
+      ]
+    },
+    {
+      "name": "Birth Certificate (Registration of Birth)",
+      "description": "All births must be registered within 30 days. Late registration (after 30 days) requires additional documentation.",
+      "within_30_days": {
+        "requirements": [
+          "Notification of Birth form (completed by the hospital/midwife)",
+          "Both parents' IDs (or mother's ID if father is unknown/absent)",
+          "If parents are married: marriage certificate"
+        ],
+        "process": [
+          "Visit Home Affairs within 30 days of birth",
+          "Submit the Notification of Birth form",
+          "Birth certificate is usually issued same day or within a few days"
+        ],
+        "cost": "Free"
+      },
+      "late_registration": {
+        "requirements": [
+          "Sworn affidavit explaining why registration is late",
+          "Baptismal certificate or school records as proof of birth",
+          "Both parents' IDs",
+          "Hospital records if available"
+        ],
+        "process": [
+          "Visit Home Affairs with all available documentation",
+          "Complete the late registration form",
+          "Home Affairs may conduct an investigation",
+          "Processing can take 3-6 months for late registrations"
+        ],
+        "cost": "Free"
+      }
+    },
+    {
+      "name": "Death Certificate",
+      "requirements": [
+        "Notification of Death form (BI-1663) completed by a medical practitioner",
+        "Deceased's ID document",
+        "Informant's ID (the person reporting the death)"
+      ],
+      "process": [
+        "Death must be registered within 72 hours",
+        "Visit Home Affairs with the completed BI-1663 form",
+        "Submit the deceased's ID (it will be cancelled)",
+        "An abridged death certificate is issued immediately",
+        "Unabridged death certificate takes 6-8 weeks"
+      ],
+      "cost": "Free"
+    },
+    {
+      "name": "Marriage Registration",
+      "requirements": [
+        "Both parties must be 18 or older (or have parental consent if under 18)",
+        "Both parties' ID documents",
+        "If previously married: decree of divorce or death certificate of former spouse",
+        "Two witnesses with their IDs"
+      ],
+      "civil_marriage": "Performed at Home Affairs offices. Book at least 3 months in advance.",
+      "customary_marriage": "Must be registered at Home Affairs within 3 months of the ceremony. Bring letter from family/community confirming the marriage."
+    }
+  ],
+  "home_affairs_offices_ethekwini": [
+    {
+      "name": "Home Affairs Durban CBD",
+      "address": "2nd Floor, 83 Field Street, Durban CBD",
+      "hours": "Monday to Friday 08:00 - 15:30",
+      "tip": "Arrive before 07:00 for a manageable queue. The queue regularly exceeds building capacity by 09:00."
+    },
+    {
+      "name": "Home Affairs Umhlanga (Gateway)",
+      "address": "Gateway Theatre of Shopping, Palm Boulevard, Umhlanga",
+      "hours": "Monday to Friday 08:00 - 16:00, Saturday 08:00 - 12:00",
+      "tip": "Usually shorter queues than CBD. Saturday service available."
+    },
+    {
+      "name": "Home Affairs Pinetown",
+      "address": "Ground Floor, Pinetown Civic Centre, King George Avenue, Pinetown",
+      "hours": "Monday to Friday 08:00 - 15:30"
+    },
+    {
+      "name": "Home Affairs KwaMashu",
+      "address": "KwaMashu Civic Centre, D Section, KwaMashu",
+      "hours": "Monday to Friday 08:00 - 15:30"
+    },
+    {
+      "name": "Home Affairs Chatsworth",
+      "address": "1st Floor, Croftdene Centre, 20 Moorton Drive, Chatsworth",
+      "hours": "Monday to Friday 08:00 - 15:30"
+    },
+    {
+      "name": "Home Affairs Umlazi",
+      "address": "V Section, Umlazi Mega City, Umlazi",
+      "hours": "Monday to Friday 08:00 - 15:30"
+    }
+  ],
+  "bank_branch_services": [
+    "Standard Bank, FNB, and Nedbank selected branches offer Smart ID and passport applications",
+    "These are usually faster with shorter queues — but not all services are available",
+    "Check the DHA website for a list of participating bank branches"
+  ],
+  "important_contacts": {
+    "call_centre": "0800 60 11 90",
+    "website": "www.dha.gov.za",
+    "fraud_and_corruption": "0800 60 11 90 (option 6)"
+  },
+  "escalation": {
+    "step_1": "Ask to speak with the office manager at the branch where you applied",
+    "step_2": "Contact the Provincial Manager for KwaZulu-Natal via the DHA call centre",
+    "step_3": "Lodge a formal complaint via the Presidential Hotline: 17737",
+    "step_4": "Lodge a complaint with the Public Protector: 0800 11 20 40",
+    "step_5": "As a last resort, approach the High Court for a mandamus order compelling Home Affairs to process your application",
+    "legislation": "The Identification Act 68 of 1997 and the Births and Deaths Registration Act 51 of 1992 govern these services. Unreasonable delays can be challenged under Section 33 of the Constitution (right to just administrative action) and the Promotion of Administrative Justice Act (PAJA)."
+  },
+  "your_rights": [
+    "Section 28(1)(a) of the Constitution: every child has the right to a name and nationality from birth",
+    "Section 33: everyone has the right to administrative action that is lawful, reasonable, and procedurally fair",
+    "Home Affairs must process ID applications within a reasonable time — courts have found 3+ months unreasonable",
+    "You cannot be denied service because of system downtime — the office must record your details and process when systems restore",
+    "You may not be asked to pay a bribe or 'speed up' fee — report this immediately"
+  ]
+}

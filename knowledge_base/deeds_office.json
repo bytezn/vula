@@ -1,0 +1,107 @@
+{
+  "service": "Deeds Office — Property Registration",
+  "overview": "The Deeds Office (under the Department of Agriculture, Land Reform and Rural Development) is responsible for registering ownership of property in South Africa. Every property transfer, bond registration, and servitude must be registered here. The Durban Deeds Office serves the KwaZulu-Natal region.",
+  "services": [
+    {
+      "name": "Title Deed Search",
+      "description": "Check who owns a specific property, what bonds are registered against it, and if there are any restrictions.",
+      "how": [
+        "Visit the Durban Deeds Office in person — searches are done at the public search counter",
+        "You can search by property description (erf number, township name) or by owner name",
+        "A basic search costs approximately R30 per property",
+        "You can also use the online Deeds Web portal (www.deedsweb.gov.za) — registration required, costs apply",
+        "For more detailed information, engage a conveyancing attorney"
+      ],
+      "why_you_might_need_this": [
+        "Buying property — confirm the seller is the registered owner",
+        "Land claims — establish historical ownership",
+        "Boundary disputes — confirm exact property descriptions",
+        "Debt collection — check if a debtor owns property",
+        "Estate administration — identify deceased person's property"
+      ]
+    },
+    {
+      "name": "Property Transfer",
+      "description": "When property changes hands (sale, donation, inheritance), the transfer must be registered at the Deeds Office.",
+      "process": [
+        "A conveyancing attorney handles the transfer — this is legally required",
+        "The attorney prepares all transfer documents",
+        "Both buyer and seller sign documents at the attorney's office",
+        "The attorney lodges documents at the Deeds Office",
+        "The Deeds Office examines and registers the transfer",
+        "Processing time: approximately 2-3 weeks after lodgement",
+        "The new title deed is issued in the buyer's name"
+      ],
+      "costs": [
+        "Transfer duty: payable to SARS — calculated on the property value (first R1.1 million is exempt for natural persons)",
+        "Conveyancing fees: regulated by the Law Society, based on property value",
+        "Deeds Office fees: approximately R700-R2,000 depending on the transaction",
+        "Rates clearance certificate from the municipality"
+      ]
+    },
+    {
+      "name": "Bond Registration",
+      "description": "When you take a home loan, the bank registers a mortgage bond against your property at the Deeds Office.",
+      "process": [
+        "Your bank appoints a bond attorney",
+        "The attorney prepares bond documents",
+        "You sign at the attorney's office",
+        "The attorney lodges at the Deeds Office",
+        "Registration takes approximately 2-3 weeks"
+      ]
+    },
+    {
+      "name": "Bond Cancellation",
+      "description": "When you pay off your home loan in full, the bond must be cancelled at the Deeds Office.",
+      "process": [
+        "Notify your bank that the loan is paid in full",
+        "The bank instructs a cancellation attorney",
+        "The attorney prepares cancellation documents and lodges at the Deeds Office",
+        "The bank should cover the cancellation attorney's fees"
+      ]
+    }
+  ],
+  "deeds_office_durban": {
+    "address": "Salmon Grove Chambers, 407 Anton Lembede Street, Durban CBD",
+    "hours": "Monday to Friday 08:00 - 15:30",
+    "public_search_hours": "Monday to Friday 08:00 - 12:00 (morning only)",
+    "contact": "031 334 5300"
+  },
+  "important_contacts": {
+    "durban_deeds_office": "031 334 5300",
+    "chief_registrar": "012 338 7200",
+    "deedsweb_portal": "www.deedsweb.gov.za"
+  },
+  "common_problems": [
+    {
+      "problem": "Title deed lost",
+      "what_to_do": "Apply for a certified copy of the title deed at the Deeds Office. You will need an affidavit confirming the loss and payment of approximately R150."
+    },
+    {
+      "problem": "Property registered in deceased person's name",
+      "what_to_do": "The executor of the estate (appointed by the Master of the High Court) must transfer the property to the heir(s). Contact the Master's Office in Durban: 031 372 3000."
+    },
+    {
+      "problem": "Property sold but transfer not registered",
+      "what_to_do": "Contact the conveyancing attorney who handled the sale. If the attorney is unresponsive, lodge a complaint with the Law Society of South Africa: 012 366 8800."
+    },
+    {
+      "problem": "Suspicious activity on your title deed (someone trying to transfer without your knowledge)",
+      "what_to_do": "Register for Property Alert at the Deeds Office or online — you will be notified of any activity against your property. Report suspected fraud to SAPS immediately."
+    }
+  ],
+  "escalation": {
+    "step_1": "Contact the Durban Deeds Office directly: 031 334 5300",
+    "step_2": "Escalate to the Chief Registrar of Deeds: 012 338 7200",
+    "step_3": "Lodge a complaint with the Department of Agriculture, Land Reform and Rural Development",
+    "step_4": "If an attorney is involved in wrongdoing, report to the Legal Practice Council: 012 366 8800",
+    "legislation": "Deeds Registries Act 47 of 1937, Sectional Titles Act 95 of 1986"
+  },
+  "your_rights": [
+    "Section 25 of the Constitution protects property rights",
+    "No one may be deprived of property except in terms of a law of general application",
+    "You have the right to search the Deeds Office records — they are public records",
+    "You have the right to a certified copy of your title deed",
+    "Property Alert service helps protect against fraudulent transfers"
+  ]
+}

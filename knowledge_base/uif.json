@@ -1,0 +1,124 @@
+{
+  "service": "Unemployment Insurance Fund (UIF)",
+  "overview": "The UIF provides short-term financial relief to workers when they become unemployed, are unable to work due to illness, or take maternity/adoption leave. It also provides benefits to dependants of deceased workers. Contributions are mandatory for all employed persons.",
+  "benefits": [
+    {
+      "name": "Unemployment Benefits",
+      "description": "Paid when you lose your job through retrenchment, dismissal, or contract expiry.",
+      "eligibility": [
+        "You must have been contributing to UIF while employed",
+        "You must have been employed for at least 24 months in the last 4 years",
+        "You must be actively seeking employment",
+        "You must register as a work seeker at your nearest Department of Employment and Labour office",
+        "You must NOT have resigned voluntarily (exception: constructive dismissal)"
+      ],
+      "benefit_calculation": [
+        "Based on a sliding scale: higher earners get a lower percentage",
+        "Maximum benefit: 58% of your daily wage (for lowest earners)",
+        "Minimum benefit: 38% of your daily wage (for higher earners)",
+        "You get 1 day of benefits for every 4 days worked",
+        "Maximum total: 365 days of benefits",
+        "Benefits are paid monthly via bank transfer"
+      ],
+      "how_to_claim": [
+        "Step 1: Get your UI-19 form from your employer (this is your discharge certificate — they are LEGALLY REQUIRED to give it to you)",
+        "Step 2: Register as a work seeker at your nearest Labour Centre",
+        "Step 3: Complete the UI-2.1 (unemployment benefit application) form at the Labour Centre",
+        "Step 4: Bring your ID, UI-19 from employer, proof of banking details, proof of registration as work seeker",
+        "Step 5: The Labour Centre submits your claim — processing takes 2-6 weeks",
+        "Step 6: You must report to the Labour Centre every month to confirm you are still unemployed and seeking work"
+      ],
+      "common_problems": [
+        "Employer refuses to give UI-19 form — this is illegal. Report them to the Department of Employment and Labour. You can also submit a complaint at your Labour Centre.",
+        "Claim takes longer than 6 weeks — escalate at the Labour Centre, ask for the claims manager",
+        "Benefits stopped unexpectedly — you may have missed a monthly reporting date. Contact the Labour Centre immediately.",
+        "System shows 'no contributions' — your employer may not have been paying UIF contributions (illegal). Report this."
+      ]
+    },
+    {
+      "name": "Illness Benefits",
+      "description": "Paid when you cannot work due to illness for more than 14 consecutive days.",
+      "requirements": [
+        "A medical certificate from a registered medical practitioner confirming inability to work",
+        "You must have exhausted your employer's sick leave",
+        "Application must be submitted within 6 months of the first day of illness"
+      ]
+    },
+    {
+      "name": "Maternity Benefits",
+      "description": "Paid to pregnant employees for up to 4 months around the birth.",
+      "requirements": [
+        "You can start claiming up to 4 months before the expected birth date",
+        "Must apply at your nearest Labour Centre with your ID, UI-19 from employer, and medical proof of pregnancy",
+        "Benefits are 66% of your salary (higher than unemployment benefits)"
+      ]
+    },
+    {
+      "name": "Adoption Benefits",
+      "description": "Paid to the primary caregiver who adopts a child under 2 years old.",
+      "requirements": [
+        "Court order granting adoption",
+        "Apply at your Labour Centre with adoption order and employer UI-19"
+      ]
+    },
+    {
+      "name": "Dependants Benefits",
+      "description": "Paid to the dependants (spouse/children) of a deceased contributor.",
+      "requirements": [
+        "Death certificate of the contributor",
+        "Proof of dependency (marriage certificate, children's birth certificates)",
+        "ID of the claiming dependant",
+        "Last employer's UI-19 if available"
+      ]
+    }
+  ],
+  "labour_centres_ethekwini": [
+    {
+      "name": "Labour Centre Durban",
+      "address": "267 Anton Lembede Street, Durban CBD",
+      "hours": "Monday to Friday 07:30 - 15:30",
+      "tip": "Extremely busy. Arrive before 07:00. Bring all documents — if anything is missing you will be sent away and lose your queue position."
+    },
+    {
+      "name": "Labour Centre Pinetown",
+      "address": "7 Crompton Street, Pinetown",
+      "hours": "Monday to Friday 07:30 - 15:30"
+    },
+    {
+      "name": "Labour Centre Tongaat",
+      "address": "35 Gopalall Hurbans Road, Tongaat",
+      "hours": "Monday to Friday 07:30 - 15:30"
+    }
+  ],
+  "online_services": {
+    "uFiling": "www.ufiling.co.za — Check claim status, submit documents, register as work seeker online",
+    "note": "The uFiling system is frequently offline or slow. If you cannot access it, visit a Labour Centre in person."
+  },
+  "important_contacts": {
+    "call_centre": "012 337 1997 or 0800 843 843",
+    "email": "UIF_enquiries@labour.gov.za",
+    "fraud_hotline": "012 337 1907"
+  },
+  "escalation": {
+    "step_1": "Ask to speak with the claims manager at your Labour Centre",
+    "step_2": "Contact the UIF head office: 012 337 1680",
+    "step_3": "Lodge a complaint with the Commission for Conciliation, Mediation and Arbitration (CCMA): 011 377 6650",
+    "step_4": "Lodge a complaint with the Public Protector: 0800 11 20 40",
+    "legislation": "Unemployment Insurance Act 63 of 2001 and the Unemployment Insurance Contributions Act 4 of 2002"
+  },
+  "your_rights": [
+    "Your employer MUST register you for UIF and pay monthly contributions — failure to do so is a criminal offence under the UIA",
+    "Your employer MUST provide you with a UI-19 (discharge certificate) when your employment ends — refusal is illegal",
+    "UIF must process your claim within a reasonable timeframe",
+    "You are entitled to written reasons for any rejection",
+    "Domestic workers are covered by UIF — employers of domestic workers must register and contribute",
+    "Foreign nationals who contribute to UIF are entitled to claim benefits"
+  ],
+  "employer_obligations": [
+    "Register all employees for UIF within 30 days of starting employment",
+    "Deduct 1% of employee's salary as UIF contribution",
+    "Contribute an additional 1% as the employer's share",
+    "Submit monthly returns and payments to the UIF",
+    "Provide UI-19 discharge certificates when employment ends"
+  ]
+}

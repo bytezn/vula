@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pfula — AI That Opens Government for Every South African</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/whatsapp.css">
+</head>
+<body>
+    <!-- Stage Demo: Full-screen WhatsApp simulation -->
+    <div id="app">
+        <!-- Phone Frame -->
+        <div class="phone-frame">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <span class="time" id="current-time">09:41</span>
+                <div class="status-icons">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+                </div>
+            </div>
+
+            <!-- WhatsApp Header -->
+            <div class="wa-header">
+                <button class="back-btn" onclick="window.location.href='/dashboard'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                </button>
+                <div class="wa-avatar">
+                    <div class="avatar-circle">
+                        <span>P</span>
+                    </div>
+                </div>
+                <div class="wa-contact-info">
+                    <div class="wa-name">Pfula</div>
+                    <div class="wa-status" id="wa-status">online</div>
+                </div>
+                <div class="wa-header-actions">
+                    <div class="language-toggle" id="lang-toggle" onclick="toggleLanguage()">
+                        <span id="lang-label">EN</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area" id="chat-area">
+                <!-- Welcome message -->
+                <div class="date-divider">
+                    <span>Today</span>
+                </div>
+                <div class="message assistant" id="welcome-msg">
+                    <div class="message-bubble">
+                        <div class="message-text" id="welcome-text">
+                            Hi! I'm <strong>Pfula</strong> — I help South Africans navigate government services. What do you need help with today? 🤝<br><br>
+                            Whether it's <strong>SASSA</strong>, <strong>Home Affairs</strong>, <strong>SARS</strong>, <strong>UIF</strong>, <strong>municipal services</strong>, or anything else — I'm here to guide you step by step.
+                        </div>
+                        <div class="message-time">
+                            <span id="welcome-time">09:41</span>
+                            <svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#53bdeb"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick action buttons -->
+                <div class="quick-actions" id="quick-actions">
+                    <button class="quick-btn" onclick="sendQuickMessage('My SASSA SRD grant was rejected and I don\'t know why')">
+                        🏛️ SASSA Grant Help
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('I applied for my Smart ID 8 months ago and still haven\'t received it')">
+                        🪪 Home Affairs ID
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('My municipal rates bill tripled this month and I don\'t understand why')">
+                        🏠 Municipal Bill
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('I need to file my tax return for the first time and I have no idea how')">
+                        💰 SARS Tax Help
+                    </button>
+                    <button class="quick-btn zu-btn" onclick="sendQuickMessage('Sawubona, isicelo sami sesibonelelo se-SRD senqatshiwe. Ngicela ungisize.')">
+                        🇿🇦 IsiZulu — SASSA
+                    </button>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                <div class="message assistant">
+                    <div class="message-bubble typing-bubble">
+                        <div class="typing-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <button class="attach-btn" title="Demo scenarios" onclick="toggleDemoPanel()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#8696a0"><path d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647c1.501 0 2.91-.584 3.972-1.646l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.51-.266l-7.629 7.629c-.579.579-.579 1.519 0 2.098.579.58 1.519.58 2.098 0l4.96-4.962c.291-.291.291-.768 0-1.059s-.768-.291-1.059 0L9.39 12.07c-.15.15-.15.395 0 .546.15.15.395.15.546 0l4.96-4.962c.397-.397 1.058-.397 1.455 0 .396.397.396 1.057 0 1.454L8.722 16.74c-.776.776-2.04.776-2.816 0-.777-.777-.777-2.04 0-2.817l7.629-7.629c.863-.863 2.282-.863 3.146 0 .862.862.862 2.282 0 3.144l-9.547 9.548c-1.034 1.034-2.718 1.034-3.752 0-1.033-1.034-1.033-2.718 0-3.752l6.4-6.4"/></svg>
+                </button>
+                <div class="input-wrapper">
+                    <textarea
+                        id="message-input"
+                        placeholder="Type a message"
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                </div>
+                <button class="send-btn" id="send-btn" onclick="sendMessage()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Demo Panel (hidden by default) -->
+        <div class="demo-panel" id="demo-panel" style="display: none;">
+            <div class="demo-panel-header">
+                <h3>Stage Demo Scenarios</h3>
+                <button onclick="toggleDemoPanel()">✕</button>
+            </div>
+            <div class="demo-scenarios">
+                <div class="demo-card" onclick="runScenario('sassa_rejection')">
+                    <div class="demo-icon">🏛️</div>
+                    <div class="demo-info">
+                        <strong>SASSA Grant Rejection</strong>
+                        <p>SRD grant rejected without explanation</p>
+                    </div>
+                </div>
+                <div class="demo-card" onclick="runScenario('home_affairs_delay')">
+                    <div class="demo-icon">🪪</div>
+                    <div class="demo-info">
+                        <strong>Home Affairs 8-Month Delay</strong>
+                        <p>Smart ID application stuck for 8 months</p>
+                    </div>
+                </div>
+                <div class="demo-card" onclick="runScenario('municipal_bill')">
+                    <div class="demo-icon">🏠</div>
+                    <div class="demo-info">
+                        <strong>Municipal Bill Mystery</strong>
+                        <p>Rates bill tripled overnight</p>
+                    </div>
+                </div>
+                <div class="demo-card" onclick="runScenario('first_tax')">
+                    <div class="demo-icon">💰</div>
+                    <div class="demo-info">
+                        <strong>First-Time Taxpayer</strong>
+                        <p>Young person filing first SARS return</p>
+                    </div>
+                </div>
+                <div class="demo-card" onclick="runScenario('zulu_sassa')">
+                    <div class="demo-icon">🇿🇦</div>
+                    <div class="demo-info">
+                        <strong>IsiZulu — SASSA Help</strong>
+                        <p>Grant enquiry in isiZulu</p>
+                    </div>
+                </div>
+                <div class="demo-card" onclick="runScenario('escalation')">
+                    <div class="demo-icon">📝</div>
+                    <div class="demo-info">
+                        <strong>Escalation Letter</strong>
+                        <p>Generate formal complaint letter</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="bottom-nav">
+            <a href="/" class="nav-item active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                <span>Chat</span>
+            </a>
+            <a href="/tracker" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+                <span>Cases</span>
+            </a>
+            <a href="/dashboard" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                <span>Dashboard</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>

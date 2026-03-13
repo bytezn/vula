@@ -1,0 +1,158 @@
+{
+  "service": "eThekwini Municipality — Municipal Services",
+  "overview": "eThekwini Municipality provides essential services to residents of the greater Durban area including water, electricity, refuse removal, rates and taxes, housing, and infrastructure maintenance. It is the largest municipality in KwaZulu-Natal.",
+  "services": [
+    {
+      "name": "Rates and Taxes",
+      "description": "Property rates are charged annually based on the municipal valuation of your property. All property owners must pay rates.",
+      "common_problems": [
+        {
+          "problem": "Bill is much higher than expected",
+          "likely_cause": "Municipal revaluation increased your property value, or estimated readings were used instead of actual meter readings",
+          "what_to_do": [
+            "Check if the meter reading on your bill matches your actual meter",
+            "If estimated: submit your actual reading at an eThekwini customer care centre or online",
+            "If the property valuation is wrong: object during the next General Valuation period",
+            "You can object to your property valuation within the published objection period under the Municipal Property Rates Act 6 of 2004"
+          ]
+        },
+        {
+          "problem": "Receiving bills for a property you no longer own",
+          "what_to_do": [
+            "Contact eThekwini Revenue department with proof of sale (transfer deed)",
+            "The conveyancing attorney who handled the sale should have notified the municipality",
+            "If they didn't, you may need to lodge a formal complaint and provide the transfer documents"
+          ]
+        },
+        {
+          "problem": "Account in arrears and threatening disconnection",
+          "what_to_do": [
+            "Apply for an indigent subsidy if your household income is below R4,500 per month",
+            "Request a payment arrangement — eThekwini must offer this before disconnection",
+            "eThekwini may NOT disconnect water supply to residential properties for non-payment (Constitutional Court ruling: Mazibuko v City of Johannesburg)",
+            "They CAN restrict water flow but not cut it off completely"
+          ]
+        }
+      ],
+      "indigent_subsidy": {
+        "what": "Free basic services for qualifying households: 9kL of water, 50kWh of electricity, and free refuse removal per month",
+        "eligibility": "Combined household income below R4,500 per month",
+        "how_to_apply": [
+          "Visit your nearest eThekwini customer care centre",
+          "Bring ID documents of all household members",
+          "Proof of income or sworn affidavit of unemployment",
+          "Proof of residence"
+        ]
+      }
+    },
+    {
+      "name": "Water and Sanitation",
+      "description": "eThekwini Water and Sanitation (EWS) provides water supply and sewerage services.",
+      "report_problems": {
+        "burst_pipe": "Call 080 131 3013 (24-hour emergency) or use the eThekwini Connect app",
+        "no_water": "Check if there is a planned outage on the eThekwini website first. If not planned, report via 080 131 3013",
+        "sewage_overflow": "Report immediately to 080 131 3013 — this is a health emergency",
+        "water_quality": "Report discoloured or foul-smelling water to 080 131 3013"
+      },
+      "your_rights": [
+        "Section 27(1)(b) of the Constitution: everyone has the right of access to sufficient water",
+        "The Water Services Act 108 of 1997 guarantees basic water supply",
+        "eThekwini must provide at least 6,000 litres (6kL) of free water per household per month to registered indigent households"
+      ]
+    },
+    {
+      "name": "Electricity",
+      "description": "eThekwini Electricity provides power to most areas in the metro. Some areas are supplied directly by Eskom.",
+      "prepaid_vs_conventional": {
+        "prepaid": "Buy tokens at retail outlets, banks, or the eThekwini website. Enter the 20-digit token on your meter.",
+        "conventional": "Billed monthly based on meter readings. Pay at customer care centres, online, or via bank."
+      },
+      "common_problems": [
+        {
+          "problem": "Meter not accepting tokens",
+          "what_to_do": "Try Key Revision Number (KRN) change — contact eThekwini Electricity at 080 131 3111. Your meter may need a software update."
+        },
+        {
+          "problem": "No electricity and neighbours have power",
+          "what_to_do": "Check your circuit breaker first. If it's tripped, reset it. If it keeps tripping, you likely have a wiring fault — call a registered electrician. If it's not tripped, call 080 131 3111."
+        },
+        {
+          "problem": "Load shedding schedule",
+          "what_to_do": "Check the eThekwini or Eskom load shedding schedule for your area at loadshedding.eskom.co.za or the EskomSePush app"
+        }
+      ]
+    },
+    {
+      "name": "Housing",
+      "description": "eThekwini Human Settlements provides subsidised housing (RDP houses) and manages the housing waiting list.",
+      "how_to_apply": [
+        "Visit your nearest eThekwini housing office",
+        "You must be a South African citizen over 21",
+        "Combined household income must be below R3,500 per month",
+        "You must not own or have previously owned property",
+        "You will be placed on the National Housing Needs Register",
+        "Waiting periods are extremely long — 10-20+ years in some areas"
+      ],
+      "common_problems": [
+        "House allocated to the wrong person — report to the housing office with your registration number",
+        "RDP house has structural defects — report within 5 years to claim under the National Home Builders Registration Council (NHBRC) warranty"
+      ]
+    },
+    {
+      "name": "Refuse Removal and Waste Management",
+      "description": "eThekwini DSW (Durban Solid Waste) handles refuse collection, recycling, and illegal dumping.",
+      "collection_schedule": "Weekly collection on a fixed day for your area. Check the eThekwini website or call 080 131 3013 for your collection day.",
+      "missed_collection": "Report via the eThekwini Connect app or call 080 131 3013",
+      "illegal_dumping": "Report via the eThekwini Connect app or call 080 131 3013 — include photos and location if possible"
+    }
+  ],
+  "customer_care_centres": [
+    {
+      "name": "eThekwini Customer Care — Durban CBD",
+      "address": "Florence Mkhize Building, 251 Anton Lembede Street, Durban",
+      "hours": "Monday to Friday 07:30 - 16:00"
+    },
+    {
+      "name": "eThekwini Customer Care — Pinetown",
+      "address": "Pinetown Civic Centre, King George Avenue, Pinetown",
+      "hours": "Monday to Friday 07:30 - 16:00"
+    },
+    {
+      "name": "eThekwini Customer Care — Umlazi",
+      "address": "V Section Civic Centre, Umlazi",
+      "hours": "Monday to Friday 07:30 - 16:00"
+    },
+    {
+      "name": "eThekwini Customer Care — Chatsworth",
+      "address": "Unit 4, Chatsworth Centre, Chatsworth",
+      "hours": "Monday to Friday 07:30 - 16:00"
+    },
+    {
+      "name": "eThekwini Customer Care — Phoenix",
+      "address": "Phoenix Civic Centre, Stanmore Crescent, Phoenix",
+      "hours": "Monday to Friday 07:30 - 16:00"
+    }
+  ],
+  "important_contacts": {
+    "general_enquiries": "080 131 3013 (toll-free)",
+    "electricity_faults": "080 131 3111",
+    "water_emergencies": "080 131 3013",
+    "connect_app": "Download 'eThekwini Connect' from Google Play or App Store"
+  },
+  "escalation": {
+    "step_1": "Contact the eThekwini Customer Care Centre for your area",
+    "step_2": "If unresolved, email the City Manager's office: citymanager@durban.gov.za",
+    "step_3": "Contact your Ward Councillor — find yours at www.ethekwini.gov.za",
+    "step_4": "Lodge a complaint with the KZN MEC for Cooperative Governance and Traditional Affairs",
+    "step_5": "Lodge a complaint with the Public Protector: 0800 11 20 40",
+    "legislation": "Municipal Systems Act 32 of 2000, Municipal Property Rates Act 6 of 2004, Water Services Act 108 of 1997"
+  },
+  "your_rights": [
+    "Section 152 of the Constitution requires municipalities to provide services in a sustainable manner",
+    "The Municipal Systems Act requires municipalities to consult communities on service delivery changes",
+    "You have the right to access your municipal account and dispute any charges",
+    "You cannot be disconnected from water without due process",
+    "You have the right to a basic level of municipal services",
+    "You have the right to participate in your ward committee and raise service delivery issues"
+  ]
+}
