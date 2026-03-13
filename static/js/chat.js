@@ -570,41 +570,49 @@ function stopListening() {
 
 // --- Text-to-Speech ---
 
-// Extract a short, natural conversational response for speech.
-// Reads 1-2 key sentences — not bullet points or the full document.
+// Extract the most conversational spoken sentence from a response.
+// The system prompt now instructs Claude to open with a direct spoken sentence —
+// this function finds and surfaces it cleanly.
 function extractSpeechText(text) {
+    // Step 1: strip all markdown/formatting
     let clean = text
-        .replace(/\*\*(.*?)\*\*/g, '$1')          // strip bold
-        .replace(/\*(.*?)\*/g, '$1')               // strip italic
-        .replace(/#{1,4}\s+/g, '')                 // strip headings
-        .replace(/https?:\/\/[^\s]+/g, '')         // strip URLs
-        .replace(/^\s*[-*•]\s+/gm, '')             // strip bullet points
-        .replace(/^\s*\d+\.\s+/gm, '')             // strip numbered lists
-        .replace(/\n{2,}/g, ' ')                   // collapse paragraphs
-        .replace(/\n/g, ' ')                       // collapse line breaks
-        .replace(/\s{2,}/g, ' ')                   // collapse spaces
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1')
+        .replace(/`{1,3}[^`]*`{1,3}/g, '')
+        .replace(/#{1,4}\s+/g, '')
+        .replace(/https?:\/\/[^\s]+/g, '')
+        .replace(/^\s*[-*•]\s+/gm, ' ')           // bullets → space (keep content)
+        .replace(/^\s*\d+\.\s+/gm, ' ')           // numbered → space
+        .replace(/\n{2,}/g, ' ')
+        .replace(/\n/g, ' ')
+        .replace(/\s{2,}/g, ' ')
         .trim();
 
-    // Skip hollow openers — get straight to the substance
-    clean = clean.replace(/^(Sure[!,.]?\s*|Of course[!,.]?\s*|Great question[!,.]?\s*|Absolutely[!,.]?\s*|I['']d be happy to help[!,.]?\s*)/i, '');
+    // Step 2: cut hollow openers that add zero spoken value
+    clean = clean.replace(
+        /^(Sure[!,.]?\s*|Of course[!,.]?\s*|Great[!,.]?\s*|Absolutely[!,.]?\s*|Certainly[!,.]?\s*|No problem[!,.]?\s*|Happy to help[!,.]?\s*|I['']d be (happy|glad) to[^.]*\.\s*)/i,
+        ''
+    );
 
-    // Pull out the first 1–2 complete sentences, max ~200 chars
-    // This keeps the voice short, punchy, and conversational
+    // Step 3: collect full sentences
     const sentenceRx = /[^.?!]+[.?!]+/g;
     const sentences = [];
-    let match;
-    while ((match = sentenceRx.exec(clean)) !== null) {
-        const s = match[0].trim();
-        if (s.length < 12) continue;               // skip tiny fragments
+    let m;
+    while ((m = sentenceRx.exec(clean)) !== null) {
+        const s = m[0].trim();
+        if (s.length < 10) continue;
         sentences.push(s);
-        if (sentences.join(' ').length >= 160) break;
+        // Stop after 1 good sentence or when we hit ~170 chars
+        // One punchy sentence sounds far more conversational than two long ones
+        if (sentences[0].length >= 60) break;
+        if (sentences.join(' ').length >= 170) break;
         if (sentences.length >= 2) break;
     }
 
     if (sentences.length > 0) return sentences.join(' ');
 
-    // Fallback: first 160 chars at a word boundary
-    if (clean.length <= 200) return clean;
+    // Fallback for very short or unpunctuated responses
+    if (clean.length <= 220) return clean;
     const cut = clean.lastIndexOf(' ', 200);
     return clean.substring(0, cut > 80 ? cut : 200).trim() + '.';
 }
