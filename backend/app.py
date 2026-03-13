@@ -19,7 +19,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import anthropic
 
-from backend.knowledge import load_all_knowledge
+from backend.knowledge import load_knowledge_for_service
 from backend.system_prompt import get_system_prompt
 from backend.demo_responses import get_demo_response, stream_demo_response
 from backend.database import (
@@ -48,9 +48,9 @@ app.add_middleware(
 STATIC_DIR = Path(__file__).parent.parent / "static"
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
-# Initialize
-knowledge_base = load_all_knowledge()
-system_prompt = get_system_prompt(knowledge_base)
+# Build a base system prompt (no KB — KB is injected per-request based on detected service)
+# This keeps the static system prompt ~1,200 tokens instead of ~54,000 tokens.
+_base_system_prompt = get_system_prompt("")  # KB placeholder filled per-request
 
 # Demo mode detection
 DEMO_MODE = not os.getenv("ANTHROPIC_API_KEY")
@@ -142,6 +142,12 @@ async def chat(data: dict):
     # Get conversation history
     messages = get_conversation_messages(conv_id)
 
+    # Build per-request system prompt: base instructions + ONLY the relevant KB section
+    # (avoids sending all 54k KB tokens every request — stays under 30k/min rate limit)
+    service = _detect_service(message)
+    kb_section = load_knowledge_for_service(service)
+    request_system_prompt = get_system_prompt(kb_section)
+
     # Call Claude (or use demo responses)
     if DEMO_MODE:
         assistant_message = get_demo_response(message)
@@ -150,7 +156,7 @@ async def chat(data: dict):
             response = await client.messages.create(
                 model="claude-sonnet-4-20250514",
                 max_tokens=1024,
-                system=system_prompt,
+                system=request_system_prompt,
                 messages=messages,
             )
             assistant_message = response.content[0].text
@@ -206,10 +212,15 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
             add_message(conv_id, "user", user_message)
 
             language = _detect_language(user_message)
-            log_analytics("query", _detect_service(user_message), user_message, language)
+            service = _detect_service(user_message)
+            log_analytics("query", service, user_message, language)
 
             # Get history
             messages = get_conversation_messages(conv_id)
+
+            # Per-request system prompt with only the relevant KB section
+            kb_section = load_knowledge_for_service(service)
+            request_system_prompt = get_system_prompt(kb_section)
 
             # Stream response
             full_response = ""
@@ -225,7 +236,7 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
                     async with client.messages.stream(
                         model="claude-sonnet-4-20250514",
                         max_tokens=1024,
-                        system=system_prompt,
+                        system=request_system_prompt,
                         messages=messages,
                     ) as stream:
                         async for text in stream.text_stream:
