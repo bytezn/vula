@@ -9,10 +9,12 @@ import json
 import asyncio
 from pathlib import Path
 from datetime import datetime
+from xml.sax.saxutils import escape as xml_escape
 
+import httpx
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
+from fastapi.responses import HTMLResponse, FileResponse, JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import anthropic
@@ -55,7 +57,11 @@ DEMO_MODE = not os.getenv("ANTHROPIC_API_KEY")
 
 # Claude async client (None in demo mode)
 # Using AsyncAnthropic so streaming never blocks the event loop on Azure
-client = None if DEMO_MODE else anthropic.AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
+# Explicit timeout: 45s connect, 90s read — prevents Azure B1 hanging on slow responses
+client = None if DEMO_MODE else anthropic.AsyncAnthropic(
+    api_key=os.getenv("ANTHROPIC_API_KEY", ""),
+    timeout=httpx.Timeout(90.0, connect=15.0),
+)
 
 
 @app.on_event("startup")
@@ -231,10 +237,11 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
                 except Exception as e:
                     print(f"[Pfula ERROR /ws/chat] {type(e).__name__}: {e}")
                     full_response = (
-                        "I'm having trouble connecting right now. Please try again in a moment."
+                        "I'm having a moment of trouble — just tap send again and I'll be right with you. "
+                        "If it keeps happening: SASSA 0800 60 10 11 · Home Affairs 0800 60 11 90 · SARS 0800 00 7277."
                     )
                     await websocket.send_json({
-                        "type": "stream",
+                        "type": "error",
                         "content": full_response,
                     })
 
@@ -377,6 +384,65 @@ Return ONLY the JSON object, no other text."""
 async def list_letters():
     """List all escalation letters."""
     return {"letters": get_escalation_letters()}
+
+
+# --- Azure Neural TTS API ---
+
+@app.post("/api/tts")
+async def text_to_speech(data: dict):
+    """Convert text to speech using Azure Cognitive Services (en-ZA-LeahNeural).
+
+    Requires AZURE_SPEECH_KEY and AZURE_SPEECH_REGION env vars.
+    Returns MP3 audio bytes directly — the frontend plays them via the Audio API.
+    Falls back gracefully: if not configured, returns 503 so the frontend
+    can fall back to the browser's Web Speech API.
+    """
+    text = data.get("text", "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="text is required")
+
+    speech_key = os.getenv("AZURE_SPEECH_KEY")
+    speech_region = os.getenv("AZURE_SPEECH_REGION", "eastus")
+
+    if not speech_key:
+        raise HTTPException(status_code=503, detail="Azure TTS not configured — set AZURE_SPEECH_KEY")
+
+    # Use en-ZA-LeahNeural — natural South African English female voice
+    voice = "en-ZA-LeahNeural"
+    ssml = f"""<speak version='1.0' xml:lang='en-ZA'>
+  <voice name='{voice}'>
+    <prosody rate='+5%' pitch='+0%' volume='loud'>
+      {xml_escape(text)}
+    </prosody>
+  </voice>
+</speak>"""
+
+    tts_url = f"https://{speech_region}.tts.speech.microsoft.com/cognitiveservices/v1"
+    headers = {
+        "Ocp-Apim-Subscription-Key": speech_key,
+        "Content-Type": "application/ssml+xml",
+        "X-Microsoft-OutputFormat": "audio-16khz-128kbitrate-mono-mp3",
+        "User-Agent": "Pfula/1.0",
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(10.0, connect=5.0)) as http:
+            resp = await http.post(tts_url, content=ssml.encode("utf-8"), headers=headers)
+    except httpx.TimeoutException:
+        raise HTTPException(status_code=504, detail="Azure TTS timed out")
+    except Exception as e:
+        print(f"[Pfula TTS ERROR] {type(e).__name__}: {e}")
+        raise HTTPException(status_code=502, detail="Azure TTS request failed")
+
+    if resp.status_code != 200:
+        print(f"[Pfula TTS ERROR] Azure returned {resp.status_code}: {resp.text[:200]}")
+        raise HTTPException(status_code=502, detail=f"Azure TTS error {resp.status_code}")
+
+    return Response(
+        content=resp.content,
+        media_type="audio/mpeg",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 # --- Analytics API ---

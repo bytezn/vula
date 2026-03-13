@@ -15,6 +15,9 @@ let ttsEnabled = true;
 let hasSpokenThisMessage = false;
 let streamAccumulator = '';
 
+// Azure TTS: hold the currently playing Audio element so we can stop it
+let currentTTSAudio = null;
+
 // --- Sound Effects (subtle, WhatsApp-like) ---
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
@@ -109,6 +112,8 @@ function connectWebSocket() {
             handleStreamChunk(data.content);
         } else if (data.type === 'complete') {
             handleStreamComplete(data.content);
+        } else if (data.type === 'error') {
+            handleStreamError(data.content);
         }
     };
 
@@ -259,6 +264,32 @@ function handleStreamComplete(fullText) {
         speakConversational(fullText);
     }
 
+    scrollToBottom();
+}
+
+function handleStreamError(errorText) {
+    // Clean up any partial stream
+    if (currentStreamBubble) {
+        const parent = currentStreamBubble.closest('.message');
+        if (parent) parent.remove();
+    }
+    currentStreamBubble = null;
+    isStreaming = false;
+    hideTypingIndicator();
+
+    // Show as a subtle "retry" notice rather than a normal assistant message
+    const chatArea = document.getElementById('chat-area');
+    const errDiv = document.createElement('div');
+    errDiv.className = 'message assistant';
+    errDiv.innerHTML = `
+        <div class="message-bubble" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.25);">
+            <div class="message-text" style="color:#fca5a5; font-size:13px;">
+                ⚠️ ${escapeHtml(errorText)}
+            </div>
+            <div class="message-time"><span>${getCurrentTime()}</span></div>
+        </div>
+    `;
+    chatArea.appendChild(errDiv);
     scrollToBottom();
 }
 
@@ -602,7 +633,6 @@ function extractSpeechText(text) {
         const s = m[0].trim();
         if (s.length < 10) continue;
         sentences.push(s);
-        // Stop after 1 good sentence or when we hit ~170 chars
         // One punchy sentence sounds far more conversational than two long ones
         if (sentences[0].length >= 60) break;
         if (sentences.join(' ').length >= 170) break;
@@ -617,26 +647,88 @@ function extractSpeechText(text) {
     return clean.substring(0, cut > 80 ? cut : 200).trim() + '.';
 }
 
-function speakConversational(text) {
-    if (!window.speechSynthesis) return;
-
-    window.speechSynthesis.cancel();
+/**
+ * Primary TTS: Azure Neural (en-ZA-LeahNeural — natural SA female voice).
+ * Falls back to browser Web Speech API if Azure key not set or request fails.
+ */
+async function speakConversational(text) {
+    if (!ttsEnabled) return;
 
     const speech = extractSpeechText(text);
     if (!speech) return;
 
+    // Stop anything currently playing
+    _stopCurrentTTS();
+
+    const status = document.getElementById('wa-status');
+    const setStatus = (msg) => {
+        if (status) {
+            status.textContent = msg;
+            status.classList.toggle('typing', msg !== 'online');
+        }
+    };
+    setStatus('speaking...');
+
+    // ── Try Azure Neural TTS first ──
+    try {
+        const resp = await fetch('/api/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: speech, lang: currentLanguage }),
+        });
+
+        if (!resp.ok) throw new Error(`Azure TTS ${resp.status}`);
+
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        audio.volume = 0.95;
+        currentTTSAudio = audio;
+
+        audio.onended = () => { URL.revokeObjectURL(url); currentTTSAudio = null; setStatus('online'); };
+        audio.onerror = () => { URL.revokeObjectURL(url); currentTTSAudio = null; setStatus('online'); };
+
+        await audio.play();
+        return; // success — done
+
+    } catch (e) {
+        // 503 = not configured (expected until key is set), other = network/Azure issue
+        if (!e.message.includes('503')) {
+            console.warn('[Pfula] Azure TTS unavailable, falling back to Web Speech:', e.message);
+        }
+    }
+
+    // ── Fallback: browser Web Speech API ──
+    _webSpeechFallback(speech, () => setStatus('online'));
+}
+
+/** Stop whatever TTS is currently playing (Azure audio or Web Speech). */
+function _stopCurrentTTS() {
+    if (currentTTSAudio) {
+        try { currentTTSAudio.pause(); } catch(e) {}
+        currentTTSAudio = null;
+    }
+    if (window.speechSynthesis) {
+        try { window.speechSynthesis.cancel(); } catch(e) {}
+    }
+}
+
+/** Web Speech API fallback — best-effort SA voice selection. */
+function _webSpeechFallback(speech, onDone) {
+    if (!window.speechSynthesis) { if (onDone) onDone(); return; }
+
     const utterance = new SpeechSynthesisUtterance(speech);
-    utterance.rate = 1.05;    // very slightly faster — feels more natural/conversational
+    utterance.rate = 1.05;
     utterance.pitch = 1.0;
     utterance.volume = 0.92;
 
-    // Voice priority: en-ZA → en-AU → en-US → any non-GB English
     const voices = window.speechSynthesis.getVoices();
     const isZulu = currentLanguage === 'zu';
     let preferred = null;
     if (isZulu) {
         preferred = voices.find(v => v.lang.startsWith('zu'));
     } else {
+        // Prefer SA, then AU, then US — explicitly avoid en-GB robotic voice
         preferred = voices.find(v => v.lang === 'en-ZA')
             || voices.find(v => v.lang === 'en-AU')
             || voices.find(v => v.lang === 'en-US')
@@ -645,15 +737,8 @@ function speakConversational(text) {
     utterance.lang = isZulu ? 'zu-ZA' : 'en-ZA';
     if (preferred) utterance.voice = preferred;
 
-    const status = document.getElementById('wa-status');
-    if (status) { status.textContent = 'speaking...'; status.classList.add('typing'); }
-
-    utterance.onend = () => {
-        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
-    };
-    utterance.onerror = () => {
-        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
-    };
+    utterance.onend = () => { if (onDone) onDone(); };
+    utterance.onerror = () => { if (onDone) onDone(); };
 
     window.speechSynthesis.speak(utterance);
 }
@@ -666,12 +751,11 @@ function toggleTTS() {
         btn.title = ttsEnabled ? 'Voice responses ON' : 'Voice responses OFF';
     }
 
-    // Stop current speech if disabling
-    if (!ttsEnabled && window.speechSynthesis) {
-        window.speechSynthesis.cancel();
+    // Stop everything immediately when disabling
+    if (!ttsEnabled) {
+        _stopCurrentTTS();
         const status = document.getElementById('wa-status');
-        status.textContent = 'online';
-        status.classList.remove('typing');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
     }
 }
 
