@@ -1,24 +1,102 @@
 {
   "service": "CIPC — Companies and Intellectual Property Commission",
-  "overview": "CIPC registers companies, co-operatives, and intellectual property (trademarks, patents, designs) in South Africa. If you want to start a formal business, you register it here.",
+  "overview": "CIPC registers companies, co-operatives, and intellectual property (trademarks, patents, designs) in South Africa. If you want to start a formal business, you register it here. CIPC operates under the Companies Act 71 of 2008 and various intellectual property statutes.",
+  "company_types": [
+    {
+      "type": "Private Company (Pty Ltd)",
+      "description": "The most common business structure in South Africa. Offers limited liability, meaning the directors and shareholders are generally not personally liable for company debts.",
+      "key_features": [
+        "Minimum 1 director (must be a natural person, i.e. a real human)",
+        "Maximum 50 shareholders",
+        "Limited liability — shareholders only risk what they invested",
+        "Cannot offer shares to the public",
+        "Must file annual returns with CIPC",
+        "Separate legal entity from its owners"
+      ],
+      "best_for": "Most small and medium businesses, startups, freelancers wanting a formal structure, family businesses"
+    },
+    {
+      "type": "Personal Liability Company (Inc)",
+      "description": "Similar to a Pty Ltd, but directors are jointly and severally liable for debts and liabilities incurred during their period of office. Required by law for certain professions.",
+      "key_features": [
+        "Directors are personally liable for company debts",
+        "Uses 'Incorporated' or 'Inc' as suffix",
+        "Required for regulated professions such as auditors, attorneys, accountants, engineers, and architects",
+        "Governed by the same rules as Pty Ltd companies, with the added personal liability provision"
+      ],
+      "best_for": "Professionals required by professional body rules — auditors, lawyers, accountants, engineers"
+    },
+    {
+      "type": "Non-Profit Company (NPC)",
+      "description": "A company formed for a public benefit purpose, cultural or social activity, communal or group interest. Cannot distribute profits or dividends to its members or incorporators.",
+      "key_features": [
+        "Must have at least 3 directors",
+        "No shareholders — has members instead",
+        "All income must be used to advance the stated objectives",
+        "Cannot pay dividends or distribute profits to members",
+        "Can apply for tax exemption under Section 30 of the Income Tax Act",
+        "Can apply for PBO (Public Benefit Organisation) status with SARS",
+        "Must include 'NPC' as suffix in its name"
+      ],
+      "best_for": "NGOs, charities, community organisations, churches, sports clubs, professional associations"
+    },
+    {
+      "type": "External Company",
+      "description": "A foreign company that operates or has an office in South Africa. Must register with CIPC within 20 business days of beginning to conduct business in SA.",
+      "key_features": [
+        "Must appoint a local representative in South Africa",
+        "Must maintain a registered office in South Africa",
+        "Subject to South African laws while operating here",
+        "Must file annual returns with CIPC",
+        "Registration fee: R175"
+      ],
+      "best_for": "Foreign companies expanding into the South African market"
+    }
+  ],
+  "memorandum_of_incorporation": {
+    "description": "The MOI is the founding document of every company registered under the Companies Act. It sets out the rules governing the company's internal affairs.",
+    "standard_form": "Use CIPC standard short form CoR15.1A for simple companies — this is a pre-approved template that covers the basics and is accepted without further review.",
+    "custom_moi": "You can customise the MOI to suit your company's specific needs, but it must comply with the Companies Act 71 of 2008. A custom MOI should be prepared or reviewed by an attorney.",
+    "key_contents": [
+      "Company name and registration number",
+      "Type of company (Pty Ltd, NPC, Inc, etc.)",
+      "Financial year end date",
+      "Share structure — classes of shares, rights attached to each class, authorised number of shares",
+      "Director appointment and removal rules",
+      "Quorum requirements for shareholders' and directors' meetings",
+      "Powers and restrictions on directors",
+      "Provisions for amending the MOI itself",
+      "Any special conditions or restrictions on the company's business"
+    ],
+    "tips": [
+      "For most simple Pty Ltd companies, the standard CoR15.1A is sufficient — do not overcomplicate things",
+      "If you have multiple shareholders, get a shareholders' agreement in addition to the MOI",
+      "Keep a signed copy of the MOI at the registered office at all times — this is a legal requirement",
+      "Amendments to the MOI require a special resolution (75% of shareholder votes)"
+    ]
+  },
   "services": [
     {
       "name": "Company Registration (Pty Ltd)",
-      "description": "A private company (Proprietary Limited) is the most common business structure in South Africa.",
+      "description": "A private company (Proprietary Limited) is the most common business structure in South Africa. It provides limited liability protection to its shareholders.",
       "requirements": [
         "At least one director who is a natural person (a real human, not another company)",
         "A unique company name (check availability on the CIPC website)",
         "A registered address in South Africa",
-        "A Memorandum of Incorporation (MOI) — CIPC provides a standard template"
+        "A Memorandum of Incorporation (MOI) — CIPC provides a standard template (CoR15.1A)",
+        "Certified ID copies of all directors",
+        "Each director must have a valid South African ID number or passport (for foreign nationals)"
       ],
       "how_to_register": [
-        "Step 1: Create an account on www.cipc.co.za",
-        "Step 2: Reserve your company name (R50) — takes 1-2 business days for approval",
-        "Step 3: Once the name is approved, complete the company registration (CoR 14.1 form)",
-        "Step 4: Upload your MOI (use the CIPC standard template or a custom one prepared by an attorney)",
-        "Step 5: Pay the registration fee (R175 for online)",
-        "Step 6: CIPC issues a Registration Certificate — usually within 1-3 business days",
-        "Step 7: Register for tax with SARS immediately after receiving your registration certificate"
+        "Step 1: Create an account on www.cipc.co.za — you need a valid email address and SA ID or passport number",
+        "Step 2: Reserve your company name (R50) — takes 1-2 business days for approval. You can reserve up to 4 name options in one application",
+        "Step 3: Once the name is approved, complete the Notice of Incorporation (CoR14.1 form) — this includes company details, director information, and registered address",
+        "Step 4: Attach your MOI — use the CIPC standard short form CoR15.1A for a simple company, or upload a custom MOI prepared by an attorney",
+        "Step 5: Upload certified ID copies of all directors — the ID number must match exactly with Department of Home Affairs records",
+        "Step 6: Pay the registration fee of R175 online via credit/debit card or EFT",
+        "Step 7: CIPC issues a Registration Certificate and a B-BBEE Affidavit — usually within 1-5 business days",
+        "Step 8: Download your certificate and BEE affidavit from the CIPC portal under 'My Companies'",
+        "Step 9: Proceed immediately with post-registration steps (SARS, bank account, etc.)"
       ],
       "costs": {
         "name_reservation": "R50",
@@ -36,113 +114,408 @@
     {
       "name": "Annual Returns",
       "description": "Every registered company MUST file an annual return with CIPC every year. Failure to do so can result in your company being deregistered.",
-      "when": "Due every year on the anniversary month of your company's registration",
-      "cost": "R450 for a private company (Pty Ltd)",
+      "when": "Due within 30 business days of your company's registration anniversary date each year. Check your exact due date on the CIPC website under 'Compliance Checklist'.",
+      "cost": "R450 for a private company (Pty Ltd). R30 for a Close Corporation (CC).",
       "how": [
         "Log in to the CIPC website",
         "Navigate to 'Annual Returns'",
-        "Confirm or update your company details",
-        "Pay the fee online",
-        "Receipt is issued immediately"
+        "Confirm or update your company details (registered address, director information, financial year end)",
+        "Confirm your company's financial statements status",
+        "Pay the fee online via credit/debit card or EFT",
+        "Receipt is issued immediately upon payment"
       ],
       "what_happens_if_you_miss_it": [
-        "CIPC sends a compliance notice",
+        "Late filing results in a penalty fee added to the annual return cost",
+        "CIPC sends a compliance notice to the registered address",
         "If you still don't file, CIPC begins the deregistration process",
+        "After 2 consecutive missed annual returns, the company will be deregistered",
         "A deregistered company cannot trade, cannot enter contracts, and cannot sue or be sued",
-        "Re-registration is possible but costs approximately R700 and takes weeks"
+        "Bank accounts may be frozen when the bank discovers the deregistration",
+        "SARS may still hold directors personally liable for outstanding tax even after deregistration"
       ]
     },
     {
       "name": "Director Amendments",
       "description": "When you add, remove, or change directors of your company.",
       "how": [
-        "Log in to CIPC and submit a CoR 39 form (change of directors)",
-        "Upload the new director's ID and consent letter",
+        "Log in to CIPC and submit a CoR39 form (change of directors)",
+        "Upload the new director's certified ID copy and signed consent letter (CoR39 consent)",
+        "The new director's ID must pass Department of Home Affairs verification",
         "Fee: R50 per change",
-        "Processing: 1-3 business days"
+        "Processing: 1-3 business days",
+        "A director can resign by written notice to the company — the company must then file the CoR39 within 10 business days"
       ]
     },
     {
       "name": "Company Name Change",
       "how": [
-        "Reserve the new name (R50)",
-        "Submit a special resolution signed by all shareholders",
-        "Submit CoR 9.4 form on the CIPC website",
+        "Reserve the new name (R50) — check availability first on the CIPC name search",
+        "Submit a special resolution signed by shareholders holding at least 75% of voting rights",
+        "Submit CoR9.4 form on the CIPC website",
         "Fee: R175",
-        "Update your MOI to reflect the new name"
+        "Update your MOI to reflect the new name",
+        "Update your SARS registration with the new name",
+        "Update your business bank account details",
+        "Reprint any affected documents (letterheads, invoices, contracts)"
       ]
     },
     {
       "name": "Close Corporation (CC) Conversion",
-      "description": "Close Corporations (CCs) can no longer be registered, but existing CCs can continue to operate or convert to Pty Ltd companies.",
+      "description": "Close Corporations (CCs) can no longer be newly registered since 1 May 2011, but existing CCs can continue to operate or convert to Pty Ltd companies.",
       "how": [
         "Submit a CK2A form to convert from CC to Pty Ltd",
-        "Prepare a new MOI for the company",
+        "Prepare a new MOI for the company (CoR15.1A or custom)",
         "Fee: R175",
-        "The CC registration number changes to a company registration number"
-      ]
+        "The CC registration number changes to a company registration number",
+        "You will need to update SARS records, bank accounts, and all contracts to reflect the new entity type and number"
+      ],
+      "note": "Existing CCs are still governed by the Close Corporations Act 69 of 1984, but the Companies Act increasingly applies. Conversion is recommended for long-term operation."
     },
     {
       "name": "Trademark Registration",
-      "description": "Protect your brand name, logo, or slogan from being used by others.",
+      "description": "Protect your brand name, logo, or slogan from being used by others. Trademarks are classified under the Nice Classification system — you must register in each relevant class.",
       "process": [
-        "Search the trademark database to check availability",
-        "File a trademark application on the CIPC website or through a trademark attorney",
-        "CIPC examines the application (takes 6-12 months)",
-        "If approved, the trademark is published in the Patent Journal for opposition (3 months)",
-        "If no opposition, the trademark is registered — valid for 10 years, renewable"
+        "Step 1: Search existing trademarks at www.cipc.co.za (trademark search) to check if your desired mark is available or too similar to an existing one",
+        "Step 2: Identify the correct Nice Classification class(es) for your goods or services — there are 45 classes total (1-34 for goods, 35-45 for services)",
+        "Step 3: File a trademark application on the CIPC website or through a trademark attorney",
+        "Step 4: CIPC performs a formal examination of the application (takes 6-12 months due to backlogs)",
+        "Step 5: If approved, the trademark is published in the Patent Journal for a 3-month opposition window — any party can oppose during this period",
+        "Step 6: If no opposition (or opposition is unsuccessful), the trademark is registered",
+        "Step 7: Registration is valid for 10 years from the filing date, renewable for R400 per class"
       ],
-      "cost": "R590 per class per trademark",
-      "tip": "Consider using a trademark attorney for complex applications — errors can result in rejection and you lose the fee"
+      "cost": "R590 per class per trademark application",
+      "international_protection": "South Africa is a member of the Madrid Protocol. You can extend your SA trademark internationally through a single application via WIPO (World Intellectual Property Organization). Additional fees apply per designated country.",
+      "tips": [
+        "Consider using a trademark attorney for complex applications — errors can result in rejection and you lose the fee",
+        "A word mark protects the name regardless of font/style; a logo mark protects the specific visual design",
+        "Do a thorough search before applying — similar marks in the same class will be refused",
+        "You can use the TM symbol immediately upon filing; the registered symbol (R in a circle) only after registration is granted",
+        "Set a reminder to renew 6 months before the 10-year expiry"
+      ]
+    },
+    {
+      "name": "Patent Registration",
+      "description": "Protect a new invention — a product, process, or method that is novel, involves an inventive step, and is capable of being used in industry.",
+      "process": [
+        "Conduct a patent search to ensure your invention is novel",
+        "File a provisional patent application (gives you 12 months to file a complete application)",
+        "File a complete patent application with full specifications within 12 months of provisional filing",
+        "CIPC performs a formal examination (not a substantive search — SA uses a depository system)",
+        "Patent is granted if formalities are met"
+      ],
+      "cost": "R590 for application. Annual renewal fees apply to maintain the patent.",
+      "validity": "20 years from the filing date, subject to annual renewal fee payments",
+      "important_notes": [
+        "South Africa uses a non-examining (depository) patent system — CIPC checks formalities only, not whether the invention is truly novel",
+        "This means invalid patents can be granted and may be challenged in court",
+        "Consider filing in multiple jurisdictions if your invention has international commercial value",
+        "Strongly recommended to use a patent attorney — patent specifications are highly technical legal documents"
+      ]
+    },
+    {
+      "name": "Design Registration",
+      "description": "Protect the appearance of a product — either its aesthetic (how it looks) or functional (how it works) design.",
+      "types": [
+        {
+          "type": "Aesthetic Design",
+          "description": "Protects the visual appearance — shape, pattern, ornamentation, or configuration of an article",
+          "cost": "R250",
+          "validity": "15 years from registration date"
+        },
+        {
+          "type": "Functional Design",
+          "description": "Protects a design dictated by the function the article performs",
+          "cost": "R250",
+          "validity": "10 years from registration date"
+        }
+      ],
+      "note": "Designs must be new and not previously disclosed to the public before filing."
+    },
+    {
+      "name": "Copyright",
+      "description": "Protection for original literary, musical, artistic works, films, sound recordings, broadcasts, published editions, and computer programs.",
+      "key_facts": [
+        "Copyright is automatic in South Africa — no registration is required",
+        "Protection begins the moment the work is created in a material form (written down, recorded, etc.)",
+        "There is no copyright registration office in South Africa",
+        "Copyright lasts for 50 years after the death of the author (for literary, musical, and artistic works)",
+        "Keep dated records of your work creation process as evidence of ownership",
+        "Copyright infringement can be pursued through the courts"
+      ]
+    },
+    {
+      "name": "Deregistration and Re-instatement",
+      "description": "Companies that fail to comply with CIPC requirements can be deregistered. Deregistered companies can apply to be re-instated.",
+      "deregistration": [
+        "A company is deregistered after 2 consecutive missed annual returns",
+        "CIPC may also deregister a company if it has reason to believe the company is not carrying on business",
+        "Once deregistered, the company ceases to exist as a legal entity",
+        "The company cannot trade, enter into contracts, open bank accounts, or sue or be sued",
+        "Directors may face personal liability for debts incurred after deregistration"
+      ],
+      "re_instatement": [
+        "Submit a CoR40.5 application on the CIPC website",
+        "Pay the re-instatement fee of R700",
+        "File and pay all outstanding annual returns (approximately R450 each for a Pty Ltd)",
+        "Pay any penalty fees for late filing",
+        "Provide a reason why the company should be re-instated",
+        "Processing takes 2-4 weeks once all documents and payments are submitted",
+        "The company retains its original registration number upon re-instatement"
+      ]
     }
   ],
+  "post_registration_checklist": {
+    "description": "After registering your company with CIPC, you must complete several additional steps before you can fully operate.",
+    "steps": [
+      {
+        "step": "Register for tax at SARS",
+        "details": [
+          "Company Income Tax (CIT) — mandatory for all companies, register within 60 days of incorporation",
+          "Pay As You Earn (PAYE) — required if you have employees or directors earning a salary",
+          "Value Added Tax (VAT) — mandatory if annual turnover exceeds R1 million; voluntary registration allowed if turnover exceeds R50,000",
+          "Skills Development Levy (SDL) — required if annual payroll exceeds R500,000",
+          "Register via SARS eFiling (www.sarsefiling.co.za) or visit a SARS branch"
+        ]
+      },
+      {
+        "step": "Register for UIF and COIDA",
+        "details": [
+          "Unemployment Insurance Fund (UIF) — mandatory if you have any employees. Contribution: 2% of salary (1% employer, 1% employee). Register at your nearest Department of Employment and Labour office or via uFiling (www.ufiling.co.za)",
+          "Compensation for Occupational Injuries and Diseases Act (COIDA) — mandatory if you have any employees. Protects employees injured at work. Register at the Compensation Fund (www.labour.gov.za). Annual assessment fee varies by industry risk category"
+        ]
+      },
+      {
+        "step": "Open a business bank account",
+        "details": [
+          "Required documents: CIPC Registration Certificate, Memorandum of Incorporation (MOI), certified ID copies of all directors, proof of business address (utility bill or lease agreement), company resolution authorising account opening",
+          "All major banks (FNB, Standard Bank, Nedbank, Absa, Capitec Business) offer business accounts",
+          "Compare fees — monthly charges range from R0 (digital-only) to R500+ depending on the bank and account type",
+          "Some banks offer free or discounted banking for the first year for new businesses",
+          "Digital banks like TymeBank Business and Bank Zero have lower fees but fewer physical services"
+        ]
+      },
+      {
+        "step": "Register on the Central Supplier Database (CSD)",
+        "details": [
+          "Required if you want to do business with any government department, municipality, or state-owned entity",
+          "Register at www.csd.gov.za — it is free",
+          "You need: company registration certificate, tax clearance, bank account details, B-BBEE certificate or affidavit, director details",
+          "Registration is verified against CIPC, SARS, and bank records — ensure all details match exactly",
+          "CSD registration is valid for a set period and must be kept up to date"
+        ]
+      },
+      {
+        "step": "Consider additional registrations",
+        "details": [
+          "CIDB (Construction Industry Development Board) — if you are in the construction industry",
+          "Tourism grading — if you are in hospitality, apply via the Tourism Grading Council",
+          "Sector-specific licences — liquor licence, health permits for food businesses, environmental authorisations",
+          "Municipal business licence — check with your local municipality for requirements"
+        ]
+      }
+    ]
+  },
+  "bbbee": {
+    "title": "Broad-Based Black Economic Empowerment (B-BBEE)",
+    "description": "B-BBEE is a South African government policy aimed at redressing economic inequality. Your B-BBEE level affects your ability to win government contracts and do business with large corporates.",
+    "levels": [
+      {
+        "category": "Exempted Micro Enterprise (EME)",
+        "turnover": "Less than R10 million per year",
+        "level": "Automatic Level 4 (or Level 1 if 51%+ black-owned, Level 2 if 100% black-owned)",
+        "requirements": "No verification needed. Obtain a sworn affidavit from a Commissioner of Oaths confirming turnover and ownership. CIPC issues a B-BBEE affidavit with your registration certificate.",
+        "cost": "Free (affidavit from Commissioner of Oaths) or included in CIPC registration"
+      },
+      {
+        "category": "Qualifying Small Enterprise (QSE)",
+        "turnover": "R10 million to R50 million per year",
+        "level": "Depends on scorecard — must be verified",
+        "requirements": "Must obtain a B-BBEE certificate from an accredited verification agency (SANAS-accredited). Measured on all 5 elements of the scorecard: ownership, management control, skills development, enterprise and supplier development, socio-economic development.",
+        "cost": "R3,000 to R8,000 for verification, depending on the agency"
+      },
+      {
+        "category": "Large Enterprise",
+        "turnover": "More than R50 million per year",
+        "level": "Depends on full scorecard — must be verified",
+        "requirements": "Full verification by a SANAS-accredited B-BBEE verification agency. Measured on all 5 elements with stricter targets.",
+        "cost": "R8,000 to R15,000+ for verification, depending on complexity"
+      }
+    ],
+    "tips": [
+      "Keep your B-BBEE affidavit or certificate up to date — many tenders require it",
+      "If you are an EME, a simple sworn affidavit is all you need — do not pay a verification agency for this",
+      "Sector-specific codes (e.g., construction, ICT, tourism) may have different thresholds and targets",
+      "B-BBEE certificates are typically valid for 12 months"
+    ]
+  },
+  "director_responsibilities": {
+    "description": "Company directors in South Africa have significant legal responsibilities under the Companies Act 71 of 2008.",
+    "duties": [
+      {
+        "duty": "Fiduciary Duty (Section 76)",
+        "details": "Directors must act in good faith, in the best interest of the company, and for a proper purpose. They must not use their position or company information for personal gain."
+      },
+      {
+        "duty": "Duty of Care, Skill, and Diligence (Section 76)",
+        "details": "Directors must exercise the degree of care, skill, and diligence that may reasonably be expected of a person carrying out the same functions and having the same knowledge and experience."
+      },
+      {
+        "duty": "Avoid Conflicts of Interest (Section 75)",
+        "details": "Directors must declare any personal financial interest in a matter before the board. They must recuse themselves from voting on matters where they have a conflict."
+      },
+      {
+        "duty": "Not Trade While Insolvent (Section 22 and Section 77)",
+        "details": "Directors are personally liable if the company continues to trade when it is reasonably foreseeable that the company cannot pay its debts as they fall due. This is known as reckless trading."
+      }
+    ],
+    "disqualification": [
+      "A person is disqualified from being a director if they are under 18, declared mentally unfit by a court, or an unrehabilitated insolvent",
+      "A court can declare a director delinquent under Section 162 for gross abuse of position, fraud, or persistent non-compliance with the Companies Act",
+      "A delinquent director is prohibited from serving as a director for a period determined by the court (minimum 7 years)",
+      "CIPC maintains a register of disqualified directors — this is checked during company registration"
+    ],
+    "personal_liability_risks": [
+      "Trading while insolvent — directors are jointly and severally liable for company debts",
+      "Signing contracts on behalf of a deregistered company — directors are personally liable",
+      "Failure to pay SARS — directors can be held personally liable for outstanding company taxes",
+      "Fraud or misrepresentation — criminal charges and personal liability"
+    ]
+  },
+  "company_secretary": {
+    "description": "A company secretary is responsible for ensuring the company complies with the Companies Act and its MOI.",
+    "requirements": [
+      "Not required for private companies (Pty Ltd) with only 1 director",
+      "Required if the company has a board of directors (2+ directors) — though many small Pty Ltd companies overlook this requirement in practice",
+      "Required for public companies and state-owned companies",
+      "The company secretary can be a natural person or a company/firm",
+      "Must have the requisite knowledge of, or experience in, relevant laws and corporate governance"
+    ],
+    "duties": [
+      "Ensure CIPC filings (annual returns, director changes, etc.) are submitted on time",
+      "Maintain company records and minute books",
+      "Advise directors on their duties and responsibilities",
+      "Ensure shareholder meetings are properly convened and conducted"
+    ]
+  },
   "cipc_offices": [
+    {
+      "name": "CIPC Head Office — Pretoria",
+      "address": "the dti Campus, Block F, 77 Meintjies Street, Sunnyside, Pretoria",
+      "hours": "Monday to Friday 07:30 - 15:30",
+      "note": "Head office handles complex matters and escalations. Most services are online."
+    },
     {
       "name": "CIPC Self-Service Terminal — Durban",
       "address": "267 Anton Lembede Street, Durban CBD (at the Department of Employment and Labour)",
       "hours": "Monday to Friday 07:30 - 15:30",
       "note": "Limited services available in person — most CIPC services are online only"
+    },
+    {
+      "name": "CIPC Self-Service Terminal — Cape Town",
+      "address": "22 Long Street, Cape Town CBD (at the Department of Employment and Labour)",
+      "hours": "Monday to Friday 07:30 - 15:30",
+      "note": "Self-service terminals for basic CIPC transactions"
     }
   ],
   "online_portal": {
     "website": "www.cipc.co.za",
-    "services": "Company registration, annual returns, director changes, trademark applications, name reservations",
-    "tip": "The website can be slow. Use Chrome browser. Try early morning (before 08:00) for best performance."
+    "services": "Company registration, annual returns, director changes, trademark applications, name reservations, company searches, certificate downloads, B-BBEE affidavits",
+    "tips": [
+      "Use Chrome or Microsoft Edge browser — other browsers may cause issues",
+      "Clear your browser cache and cookies if pages don't load or you see errors",
+      "Best times to use the website: Monday to Thursday, 6:00 AM - 8:00 AM — the site is much faster during off-peak hours",
+      "Screenshot every step of your application — if something goes wrong, you have evidence",
+      "Save your reference numbers immediately — you will need them for any follow-up",
+      "Customer query queue system: book a callback or in-person appointment at www.cipc.co.za under 'Customer Query'",
+      "For payment issues, always use the exact reference number provided — do not modify it",
+      "EFT payments can take 24-48 hours to reflect on the CIPC system"
+    ]
   },
   "important_contacts": {
     "call_centre": "086 100 2472",
     "email": "info@cipc.co.za",
-    "website": "www.cipc.co.za"
+    "website": "www.cipc.co.za",
+    "customer_query_booking": "www.cipc.co.za (navigate to Customer Query section)",
+    "physical_office": "the dti Campus, Block F, 77 Meintjies Street, Sunnyside, Pretoria"
   },
   "common_problems": [
     {
       "problem": "CIPC website not working / constantly timing out",
-      "what_to_do": "This is a very common complaint. Try different browsers, try early morning, clear your cache. If persistent, call 086 100 2472. CIPC has acknowledged ongoing website performance issues."
+      "what_to_do": "This is a very common complaint. Use Chrome or Edge browser. Clear cache and cookies. Try early morning between 6:00 AM and 8:00 AM on weekdays. If persistent, call 086 100 2472. CIPC has acknowledged ongoing website performance issues. Screenshot error messages for your records."
+    },
+    {
+      "problem": "Company name already taken",
+      "what_to_do": "Try variations of your desired name — add a geographic qualifier (e.g., 'KZN', 'Durban'), change the word order, or use a creative spelling. You can submit up to 4 name options in one reservation. Avoid generic or descriptive names as they are more likely to clash. Use the CIPC name search tool to check before paying the reservation fee."
+    },
+    {
+      "problem": "Director ID not verified / verification failed",
+      "what_to_do": "The director's ID number and personal details must match exactly with Department of Home Affairs records. Check for typos in the ID number. Ensure the name used matches the ID document exactly (including middle names if on the ID). If the director recently changed their name or has a new ID, it may take time to update in the system. Foreign nationals must use their passport number and may need to verify at a CIPC office."
+    },
+    {
+      "problem": "Payment not reflecting on CIPC",
+      "what_to_do": "EFT payments take 24-48 hours to reflect. Use the exact reference number provided — do not add spaces or change any characters. If payment does not reflect after 48 hours, email proof of payment to info@cipc.co.za with your application reference number. Keep your bank proof of payment as evidence."
+    },
+    {
+      "problem": "Website crashes during application",
+      "what_to_do": "Try again during early morning hours (6:00 AM - 8:00 AM). Screenshot every page before clicking 'Next' or 'Submit'. If the application was partially submitted, log in later and check 'My Applications' — it may have been saved. Do not re-submit and pay twice without first checking."
     },
     {
       "problem": "Company deregistered for not filing annual returns",
-      "what_to_do": "Apply for re-registration on the CIPC website. Submit a CoR 40.5 form. Fee: R700. You will need to file all outstanding annual returns and pay all outstanding fees."
+      "what_to_do": "Apply for re-instatement on the CIPC website. Submit a CoR40.5 form. Fee: R700 plus all outstanding annual returns (approximately R450 each for Pty Ltd) plus penalty fees. Processing takes 2-4 weeks. You will need to provide a reason for the re-instatement."
     },
     {
       "problem": "Someone registered a company using your identity",
-      "what_to_do": "Report immediately to CIPC and to SAPS. CIPC will investigate and can deregister the fraudulent company. Check your credit report for any business accounts opened in your name."
+      "what_to_do": "Report immediately to CIPC and to SAPS (South African Police Service). CIPC will investigate and can deregister the fraudulent company. Check your credit report for any business accounts opened in your name. File a complaint with the Information Regulator if your personal information was misused."
     },
     {
       "problem": "Cannot get your registration certificate",
-      "what_to_do": "Download it from the CIPC website — log in and navigate to 'My Companies'. If it's not there, call 086 100 2472."
+      "what_to_do": "Download it from the CIPC website — log in and navigate to 'My Companies'. If it is not there, check under 'My Applications' for status. If the application is approved but the certificate is not showing, call 086 100 2472 with your reference number."
     }
   ],
+  "scams_and_fraud_warnings": {
+    "description": "There are numerous scams targeting business owners that impersonate CIPC or claim to offer CIPC services. Be vigilant.",
+    "common_scams": [
+      {
+        "scam": "Fake 'CIPC Compliance' letters",
+        "details": "Letters or emails demanding payment for 'compliance certificates', 'annual compliance fees', or 'company verification'. These are NOT from CIPC. CIPC does not send letters demanding immediate payment via third parties."
+      },
+      {
+        "scam": "Unofficial registration websites",
+        "details": "Websites that look similar to the official CIPC site but charge 5-10 times the official fee. They may or may not actually process your registration. The only official website is www.cipc.co.za — do not use any other site for CIPC services."
+      },
+      {
+        "scam": "Fake annual return notices",
+        "details": "SMS or email messages claiming your annual return is overdue and providing a link to pay. These links lead to fraudulent payment portals. Always go directly to www.cipc.co.za to check and file your annual return."
+      },
+      {
+        "scam": "Third parties claiming to be CIPC agents",
+        "details": "People visiting businesses in person claiming to be CIPC inspectors or agents demanding fees. CIPC does not send inspectors to demand payments at your premises."
+      }
+    ],
+    "how_to_protect_yourself": [
+      "Only use the official CIPC website: www.cipc.co.za",
+      "Never pay CIPC fees to a third party or via a link in an email/SMS",
+      "Verify any communication by calling CIPC directly: 086 100 2472",
+      "Report suspected scams to CIPC and to the SAPS",
+      "Check the CIPC website for official fee schedules — if someone charges significantly more, it is likely a scam"
+    ]
+  },
   "escalation": {
-    "step_1": "Contact CIPC call centre: 086 100 2472",
-    "step_2": "Email a formal complaint to info@cipc.co.za with all reference numbers",
-    "step_3": "Escalate to the CIPC Commissioner's office",
-    "step_4": "Lodge a complaint with the Department of Trade, Industry and Competition (DTIC)",
-    "legislation": "Companies Act 71 of 2008, Intellectual Property Laws"
+    "step_1": "Contact CIPC call centre: 086 100 2472 (Mon-Fri 08:00-16:00)",
+    "step_2": "Book a query via the CIPC customer query system at www.cipc.co.za",
+    "step_3": "Email a formal complaint to info@cipc.co.za with all reference numbers, screenshots, and a clear description of the issue",
+    "step_4": "Escalate to the CIPC Commissioner's office if no response within 10 business days",
+    "step_5": "Lodge a complaint with the Department of Trade, Industry and Competition (DTIC) — www.thedtic.gov.za",
+    "step_6": "As a last resort, approach the Companies Tribunal for disputes related to CIPC decisions",
+    "legislation": "Companies Act 71 of 2008, Close Corporations Act 69 of 1984, Trade Marks Act 194 of 1993, Patents Act 57 of 1978, Designs Act 195 of 1993, Copyright Act 98 of 1978"
   },
   "your_rights": [
-    "You have the right to register a company if you meet the requirements",
+    "You have the right to register a company if you meet the requirements — CIPC cannot unreasonably refuse",
     "CIPC must process applications within the published timeframes",
-    "You have the right to access the public company register",
-    "Your personal information held by CIPC is protected under POPIA"
+    "You have the right to access the public company register — anyone can search for company information",
+    "Your personal information held by CIPC is protected under POPIA (Protection of Personal Information Act)",
+    "You have the right to appeal CIPC decisions to the Companies Tribunal",
+    "You have the right to a refund if CIPC fails to deliver a paid service (submit a written request)",
+    "Trademark applicants have the right to respond to any objections raised during the examination process"
   ]
 }

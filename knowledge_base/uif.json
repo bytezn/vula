@@ -1,124 +1,523 @@
 {
   "service": "Unemployment Insurance Fund (UIF)",
-  "overview": "The UIF provides short-term financial relief to workers when they become unemployed, are unable to work due to illness, or take maternity/adoption leave. It also provides benefits to dependants of deceased workers. Contributions are mandatory for all employed persons.",
+  "overview": "The UIF provides short-term financial relief to workers when they become unemployed, are unable to work due to illness, or take maternity/adoption leave. It also provides benefits to dependants of deceased workers. Contributions are mandatory for all employed persons, including domestic workers (since 2003). Both the employer and employee contribute 1% of the employee's salary each (2% total). The UIF is governed by the Unemployment Insurance Act 63 of 2001 and the Unemployment Insurance Contributions Act 4 of 2002.",
+  "contribution_details": {
+    "employee_contribution": "1% of gross salary (capped at the earnings threshold)",
+    "employer_contribution": "1% of employee's gross salary (employer's own cost, not deducted from employee)",
+    "total": "2% of gross salary per month",
+    "earnings_threshold": "R17,712 per month (R212,544 per year) — contributions are only calculated on earnings up to this threshold",
+    "who_is_exempt": [
+      "Workers who work less than 24 hours per month for an employer",
+      "Learners under learnership agreements (SETA learners)",
+      "National and provincial government employees covered by other schemes",
+      "Foreign workers on contract with a foreign government or international organisation"
+    ]
+  },
   "benefits": [
     {
       "name": "Unemployment Benefits",
-      "description": "Paid when you lose your job through retrenchment, dismissal, or contract expiry.",
+      "description": "Paid when you lose your job through retrenchment, dismissal, or contract expiry. Also available for constructive dismissal (where you were forced to resign).",
       "eligibility": [
         "You must have been contributing to UIF while employed",
-        "You must have been employed for at least 24 months in the last 4 years",
-        "You must be actively seeking employment",
+        "You must have been employed for at least 24 months in the last 4 years (13 weeks minimum to qualify for reduced benefits)",
+        "You must be actively seeking employment and able to provide evidence of job search efforts",
         "You must register as a work seeker at your nearest Department of Employment and Labour office",
-        "You must NOT have resigned voluntarily (exception: constructive dismissal)"
+        "You must NOT have resigned voluntarily (exception: constructive dismissal — see constructive_dismissal section)"
       ],
-      "benefit_calculation": [
-        "Based on a sliding scale: higher earners get a lower percentage",
-        "Maximum benefit: 58% of your daily wage (for lowest earners)",
-        "Minimum benefit: 38% of your daily wage (for higher earners)",
-        "You get 1 day of benefits for every 4 days worked",
-        "Maximum total: 365 days of benefits",
-        "Benefits are paid monthly via bank transfer"
-      ],
-      "how_to_claim": [
-        "Step 1: Get your UI-19 form from your employer (this is your discharge certificate — they are LEGALLY REQUIRED to give it to you)",
-        "Step 2: Register as a work seeker at your nearest Labour Centre",
-        "Step 3: Complete the UI-2.1 (unemployment benefit application) form at the Labour Centre",
-        "Step 4: Bring your ID, UI-19 from employer, proof of banking details, proof of registration as work seeker",
-        "Step 5: The Labour Centre submits your claim — processing takes 2-6 weeks",
-        "Step 6: You must report to the Labour Centre every month to confirm you are still unemployed and seeking work"
-      ],
+      "benefit_calculation": {
+        "sliding_scale": [
+          "The percentage you receive depends on your income level — lower earners get a higher percentage",
+          "Maximum benefit rate: 58% of your daily wage (for lowest earners, earning around minimum wage)",
+          "Minimum benefit rate: 38% of your daily wage (for earners at or near the threshold)",
+          "The scale slides between 38% and 58% based on your earnings"
+        ],
+        "duration": [
+          "You get 1 day of benefits for every 4 days worked (credited days)",
+          "Maximum total: 365 days of benefits (if you contributed for the full 4-year cycle)",
+          "Benefits are paid monthly via bank transfer (EFT into your personal bank account)"
+        ],
+        "worked_example_1": {
+          "scenario": "You earned R8,000 per month and were retrenched after 3 years of continuous employment",
+          "daily_wage": "R8,000 / 21.67 working days = approximately R369 per day",
+          "benefit_rate": "At R8,000/month income, you fall at roughly 58% on the sliding scale",
+          "daily_benefit": "R369 x 58% = approximately R214 per day",
+          "monthly_benefit": "R214 x 21.67 = approximately R4,635 per month",
+          "credited_days": "3 years = approximately 1,095 days worked / 4 = approximately 274 days of benefits (about 12.6 months)",
+          "note": "This is an estimate. The exact calculation is done by the UIF system using your actual contribution record."
+        },
+        "worked_example_2": {
+          "scenario": "You earned R15,000 per month and were dismissed after 2 years",
+          "daily_wage": "R15,000 / 21.67 = approximately R692 per day",
+          "benefit_rate": "At R15,000/month, you fall at roughly 42% on the sliding scale",
+          "daily_benefit": "R692 x 42% = approximately R291 per day",
+          "monthly_benefit": "R291 x 21.67 = approximately R6,305 per month",
+          "credited_days": "2 years = approximately 730 days / 4 = approximately 183 days of benefits (about 8.4 months)"
+        },
+        "worked_example_3": {
+          "scenario": "You earned minimum wage R27.58/hour, worked 45 hours/week for 1 year",
+          "monthly_salary": "Approximately R5,372 per month",
+          "daily_wage": "R5,372 / 21.67 = approximately R248 per day",
+          "benefit_rate": "At this income level, you receive the maximum 58%",
+          "daily_benefit": "R248 x 58% = approximately R144 per day",
+          "monthly_benefit": "R144 x 21.67 = approximately R3,120 per month",
+          "credited_days": "1 year = 365 days / 4 = approximately 91 days of benefits (about 4.2 months)"
+        }
+      },
+      "claim_timeline": {
+        "deadline": "You must submit your claim within 6 months of becoming unemployed. After 6 months, you lose your right to claim for that period of unemployment.",
+        "first_payment": "Processing takes 2-6 weeks for the first payment after your claim is approved",
+        "subsequent_payments": "Paid monthly, usually around the same date each month, via EFT to your bank account",
+        "waiting_period": "There is a 14-day waiting period from the date of unemployment before benefits start accruing (you are not paid for the first 14 days)",
+        "tip": "Submit your claim as soon as possible after losing your job. Do not wait — the 6-month deadline is strict and the earlier you claim, the sooner you receive payment."
+      },
+      "monthly_reporting": {
+        "requirement": "You MUST report to your assigned Labour Centre on your designated reporting date every month to confirm you are still unemployed and actively seeking work",
+        "reporting_date": "Your reporting date is usually assigned based on the last 2 digits of your UIF reference number. The Labour Centre will tell you your specific date when you first register.",
+        "what_happens_if_you_miss": "If you miss your reporting date, your benefits will be SUSPENDED. You will not receive payment for that month.",
+        "how_to_reinstate": "Visit your Labour Centre as soon as possible after missing a reporting date. Explain your situation and ask to be reinstated. You may need to provide a reason for missing the date. Benefits can usually be reinstated but you will lose the payment for the missed month.",
+        "what_to_bring": [
+          "Your UIF reference number",
+          "Your ID document",
+          "Your job search register (proof you have been looking for work)",
+          "Any job interview letters or responses to applications"
+        ]
+      },
+      "job_seeking_requirement": {
+        "description": "You must prove you are actively looking for work to continue receiving UIF benefits. This is a legal requirement, not optional.",
+        "what_you_must_do": [
+          "Keep a written register of all job applications you submit (dates, companies, positions, how you applied)",
+          "Keep copies of application emails, online application confirmations, or letters",
+          "Attend any job readiness workshops or training programmes offered by your Labour Centre",
+          "Accept any reasonable job offers — refusing a reasonable offer without good cause can result in loss of benefits",
+          "Update your work seeker registration if your contact details or skills change"
+        ],
+        "job_readiness_workshops": "Some Labour Centres require you to attend workshops on CV writing, interview skills, or basic computer skills. Attendance may be mandatory to continue receiving benefits.",
+        "tip": "Even if the Labour Centre doesn't ask to see your job search register, keep one anyway. If you are audited or questioned, having proof of your job search protects your benefits."
+      },
+      "how_to_claim": {
+        "in_person": [
+          "Step 1: Get your UI-19 form (discharge certificate) from your employer — they are LEGALLY REQUIRED to give it to you within 15 working days of your last day",
+          "Step 2: Register as a work seeker at your nearest Labour Centre",
+          "Step 3: Complete the UI-2.1 (unemployment benefit application) form at the Labour Centre",
+          "Step 4: Bring your ID, UI-19 from employer, proof of banking details (bank statement or bank letter not older than 3 months), proof of registration as work seeker",
+          "Step 5: The Labour Centre submits your claim — processing takes 2-6 weeks for the first payment",
+          "Step 6: You must report to the Labour Centre every month on your assigned date to confirm you are still unemployed and seeking work"
+        ],
+        "online_via_ufiling": [
+          "Step 1: Go to www.ufiling.co.za",
+          "Step 2: Click 'Register' if you don't have an account — you will need your ID number, email address, and cellphone number",
+          "Step 3: Create your profile and verify your email and cellphone",
+          "Step 4: Once logged in, select 'Apply for Benefits' and choose 'Unemployment'",
+          "Step 5: Upload a scanned or photographed copy of your UI-19 certificate (clear, legible, all pages)",
+          "Step 6: Fill in the application form online with your personal details, banking details, and employment history",
+          "Step 7: Submit your application and note your reference number",
+          "Step 8: Track your claim status by logging in and checking 'My Applications'",
+          "Step 9: You will still need to report monthly at a Labour Centre unless notified otherwise"
+        ],
+        "ufiling_tips": [
+          "The uFiling website works best Monday to Thursday between 08:00 and 14:00 — outside these times it is frequently slow or offline",
+          "Use Google Chrome for best compatibility — other browsers may cause errors",
+          "Have all your documents scanned or photographed BEFORE you start the application",
+          "If the site crashes during your application, log back in — your progress may have been saved as a draft",
+          "If you cannot get uFiling to work after multiple attempts, visit a Labour Centre in person — do not let technical issues delay your claim past the 6-month deadline"
+        ]
+      },
       "common_problems": [
-        "Employer refuses to give UI-19 form — this is illegal. Report them to the Department of Employment and Labour. You can also submit a complaint at your Labour Centre.",
-        "Claim takes longer than 6 weeks — escalate at the Labour Centre, ask for the claims manager",
-        "Benefits stopped unexpectedly — you may have missed a monthly reporting date. Contact the Labour Centre immediately.",
-        "System shows 'no contributions' — your employer may not have been paying UIF contributions (illegal). Report this."
+        {
+          "problem": "Employer refuses to give UI-19 form",
+          "explanation": "This is illegal. Under the Unemployment Insurance Act, your employer MUST issue a UI-19 certificate within 15 working days of your last day of employment.",
+          "steps_to_resolve": [
+            "Request the UI-19 in writing (email, SMS, or WhatsApp) so you have proof of the request",
+            "If the employer still refuses after your written request, report them to the Department of Employment and Labour at your nearest Labour Centre",
+            "File a complaint at the CCMA (Commission for Conciliation, Mediation and Arbitration) — this is free",
+            "The employer faces a fine of up to R10,000 per employee for failure to issue a UI-19",
+            "The Labour Centre can still process your claim without a UI-19 if you provide payslips, employment contract, or other proof of employment — ask the claims officer about this"
+          ]
+        },
+        {
+          "problem": "System says 'no contributions found' or 'not registered'",
+          "explanation": "This usually means your employer was deducting UIF from your salary but NOT paying it over to the UIF — this is fraud by the employer.",
+          "steps_to_resolve": [
+            "Gather all your payslips showing UIF deductions",
+            "Get a copy of your employment contract",
+            "Report the employer to the Department of Employment and Labour — this is a criminal offence",
+            "Ask the Labour Centre claims officer to process your claim with payslip evidence — you may still be able to claim even though the employer did not pay contributions",
+            "The UIF can pursue the employer for the unpaid contributions",
+            "If the employer is a company, check on CIPC (www.cipc.co.za) whether they are still registered — if they have been deregistered, inform the Labour Centre"
+          ]
+        },
+        {
+          "problem": "Claim takes longer than 6 weeks",
+          "explanation": "While 2-6 weeks is normal, some claims take longer due to backlogs, missing information, or system errors.",
+          "steps_to_resolve": [
+            "Visit the Labour Centre and ask to speak with the claims manager (not just the front desk)",
+            "Bring your reference number and ask for a status update",
+            "If the claims manager cannot resolve it, escalate to the UIF head office: 012 337 1680",
+            "You can also email UIF_enquiries@labour.gov.za with your reference number",
+            "As a last resort, contact the Public Protector: 0800 11 20 40"
+          ]
+        },
+        {
+          "problem": "Benefits stopped unexpectedly",
+          "explanation": "This usually happens because you missed a monthly reporting date, or the system flagged your account for some reason.",
+          "steps_to_resolve": [
+            "Visit your Labour Centre immediately — do not wait until your next reporting date",
+            "Ask the claims officer why your benefits were suspended",
+            "If it was a missed reporting date, ask to be reinstated",
+            "If the system shows you as employed (e.g., a new employer registered you by mistake), bring proof that you are still unemployed",
+            "Check that your banking details on file are correct — payments may have bounced if your account was closed or changed"
+          ]
+        },
+        {
+          "problem": "Bank details changed or payment bounced",
+          "explanation": "If your bank account was closed or you changed banks, your UIF payment may have bounced back.",
+          "steps_to_resolve": [
+            "Visit your Labour Centre with a new bank statement or bank letter (not older than 3 months)",
+            "Complete a change of banking details form",
+            "The payment will be reprocessed to your new account — this may take an additional 2-4 weeks"
+          ]
+        }
       ]
     },
     {
       "name": "Illness Benefits",
-      "description": "Paid when you cannot work due to illness for more than 14 consecutive days.",
+      "description": "Paid when you cannot work due to illness or injury (not work-related — see COIDA section for workplace injuries) for more than 14 consecutive days and you have exhausted your employer's sick leave.",
+      "eligibility": [
+        "You must have been contributing to UIF while employed",
+        "You must be unable to work for more than 14 consecutive days due to illness",
+        "You must have exhausted your employer's paid sick leave",
+        "The illness or injury must NOT be work-related (work-related injuries are covered by COIDA, not UIF)"
+      ],
+      "benefit_details": {
+        "duration": "Up to 238 days in any 4-year cycle (roughly 11 months total across 4 years)",
+        "benefit_rate": "Same sliding scale as unemployment benefits (38%-58% of daily wage)",
+        "medical_certificate": "You must provide a medical certificate from a registered medical practitioner. A new certificate is required every 30 days for the duration of your illness claim.",
+        "application_deadline": "Must be submitted within 6 months of the first day of illness"
+      },
       "requirements": [
-        "A medical certificate from a registered medical practitioner confirming inability to work",
-        "You must have exhausted your employer's sick leave",
+        "A medical certificate from a registered medical practitioner (doctor, not a traditional healer) confirming inability to work",
+        "A new medical certificate every 30 days if the illness continues",
+        "You must have exhausted your employer's sick leave (usually 30 days in a 3-year cycle under the BCEA)",
+        "Your ID document",
+        "UI-19 from employer (or payslips if employer will not provide UI-19)",
+        "Proof of banking details",
         "Application must be submitted within 6 months of the first day of illness"
+      ],
+      "important_notes": [
+        "You remain employed while claiming illness benefits — this is not the same as being retrenched",
+        "Your employer continues to contribute to UIF during your illness if you are still employed",
+        "If your illness becomes permanent and you cannot return to work, you may need to apply for a disability grant from SASSA instead"
       ]
     },
     {
       "name": "Maternity Benefits",
-      "description": "Paid to pregnant employees for up to 4 months around the birth.",
+      "description": "Paid to pregnant employees or employees who have recently given birth. This benefit is available regardless of the size of your employer or how long you have been employed, as long as UIF contributions have been made.",
+      "benefit_details": {
+        "duration": "Up to 17.32 weeks (121 days) of maternity benefits",
+        "benefit_rate": "66% of your salary (higher than unemployment benefits because maternity has a fixed rate)",
+        "when_to_start_claiming": "You can start claiming up to 4 weeks (28 days) before your expected due date",
+        "minimum_leave": "You must take at least 6 weeks of maternity leave after giving birth (this is a legal requirement under the BCEA — your employer cannot ask you to return earlier)"
+      },
       "requirements": [
-        "You can start claiming up to 4 months before the expected birth date",
-        "Must apply at your nearest Labour Centre with your ID, UI-19 from employer, and medical proof of pregnancy",
-        "Benefits are 66% of your salary (higher than unemployment benefits)"
+        "A medical certificate confirming pregnancy and expected due date (from a registered doctor or midwife)",
+        "Your ID document",
+        "UI-19 from employer (your employer must provide this even though you are not being dismissed — it confirms your earnings for the benefit calculation)",
+        "Proof of banking details",
+        "Apply at your nearest Labour Centre or via uFiling"
+      ],
+      "important_notes": [
+        "You do NOT have to be married to claim maternity benefits",
+        "You continue to be employed during maternity leave — your employer cannot dismiss you because of pregnancy (this is automatic unfair dismissal under the LRA)",
+        "If your employer contributes to a maternity scheme that pays MORE than UIF, you claim from the employer's scheme, not UIF. But if the employer's scheme pays less, you can claim the difference from UIF.",
+        "UIF contributions should continue during your maternity leave if you are still employed",
+        "Fathers are not eligible for maternity benefits, but may qualify for parental leave (10 consecutive days under the Labour Laws Amendment Act)",
+        "Adoptive parents qualify for adoption benefits (see Adoption Benefits section)"
       ]
     },
     {
       "name": "Adoption Benefits",
       "description": "Paid to the primary caregiver who adopts a child under 2 years old.",
+      "benefit_details": {
+        "duration": "Same as maternity benefits — up to 17.32 weeks (121 days)",
+        "benefit_rate": "66% of salary",
+        "who_can_claim": "Only one parent (the primary caregiver) can claim adoption benefits. The other parent may qualify for parental leave (10 days)."
+      },
       "requirements": [
         "Court order granting adoption",
-        "Apply at your Labour Centre with adoption order and employer UI-19"
+        "The adopted child must be under 2 years old",
+        "Your ID document",
+        "UI-19 from employer",
+        "Proof of banking details",
+        "Apply at your Labour Centre with the adoption order"
       ]
     },
     {
       "name": "Dependants Benefits",
-      "description": "Paid to the dependants (spouse/children) of a deceased contributor.",
+      "description": "Paid to the dependants (spouse, life partner, or children) of a deceased UIF contributor. This provides financial relief while the family adjusts after the death of a breadwinner.",
+      "benefit_details": {
+        "duration": "Same as what the deceased contributor would have been entitled to based on their contribution record",
+        "benefit_rate": "Same sliding scale as unemployment benefits (38%-58% of the deceased's daily wage)"
+      },
       "requirements": [
         "Death certificate of the contributor",
-        "Proof of dependency (marriage certificate, children's birth certificates)",
+        "Proof of dependency (marriage certificate, customary marriage affidavit, children's birth certificates)",
         "ID of the claiming dependant",
-        "Last employer's UI-19 if available"
+        "Last employer's UI-19 if available (contact the employer or Labour Centre for assistance)",
+        "Proof of banking details of the claiming dependant",
+        "If there are multiple dependants, they must agree on who will receive the payment or it will be divided as determined by the UIF"
+      ],
+      "important_notes": [
+        "Life partners (not legally married) can claim if they can prove dependency",
+        "Children's claims are usually managed by the surviving parent or legal guardian",
+        "This is separate from any life insurance, pension, or provident fund payout — you can claim from all applicable sources"
       ]
     }
   ],
+  "constructive_dismissal": {
+    "description": "Constructive dismissal is when you resign because your employer made your working conditions so intolerable that you had no reasonable alternative but to leave. Even though you technically resigned, the law treats this as a dismissal.",
+    "examples": [
+      "Your employer drastically cuts your salary without your agreement",
+      "You are demoted without cause or consultation",
+      "Your employer creates a hostile or toxic work environment (bullying, harassment) and refuses to address it",
+      "Your employer fundamentally changes your job duties without your consent",
+      "Your employer fails to pay your salary repeatedly",
+      "You are moved to a dangerous work location without justification"
+    ],
+    "can_you_claim_uif": "Yes, you CAN claim UIF benefits if your resignation qualifies as constructive dismissal, but you need supporting evidence.",
+    "what_you_need": [
+      "A CCMA referral or ruling that confirms constructive dismissal (refer the matter to the CCMA within 30 days of your resignation)",
+      "Written evidence of the intolerable conditions (emails, letters, complaints you lodged, WhatsApp messages)",
+      "Proof that you raised the issue with your employer before resigning and they failed to resolve it",
+      "Your resignation letter (which should state the reasons for resigning)"
+    ],
+    "important_warning": "Do NOT resign without first gathering evidence and ideally getting legal advice. Once you resign, it is much harder to prove constructive dismissal. If possible, lodge a formal grievance with your employer BEFORE resigning, so there is a paper trail.",
+    "tip": "The CCMA can help you — referral is free. You can also contact LEGAL AID South Africa (0800 110 110) for free legal advice if you cannot afford a lawyer."
+  },
+  "domestic_workers": {
+    "description": "Domestic workers have been covered by the UIF since April 2003. This includes cleaners, gardeners, nannies, caregivers, and any other workers employed in a private household.",
+    "employer_obligations": [
+      "Any employer of a domestic worker who works 24 or more hours per month MUST register the worker for UIF",
+      "The employer must deduct 1% from the domestic worker's wages and contribute an additional 1% from their own pocket",
+      "The employer must register with the UIF and submit monthly declarations and payments",
+      "The employer must issue a UI-19 certificate when the employment relationship ends",
+      "Failure to register and contribute is a criminal offence — the employer can be fined or prosecuted"
+    ],
+    "part_time_domestic_workers": "If a domestic worker works for multiple employers but works 24+ hours per month for ONE employer, that employer must register and contribute. If the worker works less than 24 hours per month for a particular employer, that employer is exempt.",
+    "how_employers_register": [
+      "Register online at www.ufiling.co.za (employers section)",
+      "Or register in person at the nearest Labour Centre",
+      "You will need: your ID, the domestic worker's ID, proof of address, and the worker's banking details"
+    ],
+    "common_issues": [
+      "Many employers of domestic workers do not register or contribute — this is illegal and leaves the worker without protection",
+      "If you are a domestic worker and suspect your employer is not contributing, ask to see your UIF registration confirmation",
+      "You can check your UIF contribution status at www.ufiling.co.za or at any Labour Centre",
+      "If your employer refuses to register you, report them to the Department of Employment and Labour"
+    ]
+  },
+  "ui19_certificate": {
+    "description": "The UI-19 is a discharge certificate that your employer MUST give you when your employment ends, regardless of the reason for separation (retrenchment, dismissal, resignation, contract expiry, or death).",
+    "legal_requirement": "Under the Unemployment Insurance Act, employers are legally required to issue the UI-19 within 15 working days of the employee's last working day.",
+    "what_it_contains": [
+      "Your personal details (name, ID number)",
+      "Your employer's UIF registration number",
+      "Your employment dates (start and end)",
+      "Your salary/wage information",
+      "The reason for separation (retrenchment, dismissal, resignation, contract expiry, etc.)",
+      "The employer's signature and stamp"
+    ],
+    "if_employer_refuses": {
+      "step_1": "Request the UI-19 in writing (email, WhatsApp, or letter) — keep proof of the request",
+      "step_2": "If no response after 15 working days, send a final written demand giving them 5 more working days",
+      "step_3": "Report the employer to the Department of Employment and Labour at your nearest Labour Centre",
+      "step_4": "File a complaint at the CCMA — this is free and can be done online at www.ccma.org.za",
+      "step_5": "The employer faces a fine of up to R10,000 per employee for each offence",
+      "step_6": "In the meantime, ask the Labour Centre to process your UIF claim using alternative documents: payslips, employment contract, bank statements showing salary deposits"
+    },
+    "tip": "Always get a copy of your UI-19 when you leave a job, even if you are moving to another job immediately. You may need it in the future if you become unemployed."
+  },
+  "ccma_referral": {
+    "description": "The Commission for Conciliation, Mediation and Arbitration (CCMA) is a free dispute resolution body that handles workplace disputes. You do not need a lawyer to use the CCMA.",
+    "when_to_use_ccma": [
+      "You were unfairly dismissed (including constructive dismissal)",
+      "Your employer refuses to provide your UI-19",
+      "You believe your retrenchment was not done properly (no consultation, no selection criteria, no severance pay)",
+      "Your employer owes you money (unpaid wages, leave pay, notice pay)",
+      "You were discriminated against in the workplace"
+    ],
+    "how_to_refer": {
+      "deadline": "You must refer an unfair dismissal dispute within 30 days of the date of dismissal. For other disputes, the deadline may be 6 months. Do not delay.",
+      "how": [
+        "Complete a CCMA referral form (LRA Form 7.11) — available at any CCMA office or at www.ccma.org.za",
+        "Submit the form at your nearest CCMA office, by fax, or online",
+        "You will be given a case number and a date for conciliation"
+      ],
+      "process": [
+        "Step 1: Conciliation — a CCMA commissioner tries to help you and your employer reach an agreement (usually within 30 days)",
+        "Step 2: If conciliation fails, the matter goes to arbitration — the commissioner hears both sides and makes a binding decision (award)",
+        "Step 3: The arbitration award is enforceable as a court order — if the employer does not comply, you can have it enforced through the Labour Court"
+      ],
+      "cost": "FREE. The CCMA does not charge any fees. You can represent yourself or bring a co-worker or union representative. You do NOT need a lawyer (but you may bring one for arbitration in certain cases).",
+      "important_notes": [
+        "Keep ALL evidence: dismissal letter, emails, WhatsApp messages, payslips, employment contract, witness details",
+        "Be on time for your CCMA date — if you don't attend, your case may be dismissed",
+        "You can request postponement if you have a valid reason, but do so before the hearing date",
+        "CCMA awards can include reinstatement, compensation (up to 12 months' salary for unfair dismissal), or an order for the employer to pay what is owed"
+      ]
+    },
+    "ccma_contact": {
+      "phone": "011 377 6650",
+      "website": "www.ccma.org.za",
+      "tip": "The CCMA also has offices in most major towns. Check the website for your nearest office."
+    }
+  },
+  "coida_vs_uif": {
+    "description": "COIDA (Compensation for Occupational Injuries and Diseases Act) and UIF are two separate systems that are often confused. They cover different situations.",
+    "coida": {
+      "full_name": "Compensation for Occupational Injuries and Diseases Act (Act 130 of 1993)",
+      "what_it_covers": "Injuries, diseases, or death that happen AT WORK or BECAUSE OF your work (e.g., falling off scaffolding, chemical exposure, repetitive strain injury)",
+      "who_pays": "The EMPLOYER pays COIDA premiums — there is NO employee contribution",
+      "who_administers": "The Compensation Fund (Department of Employment and Labour) or a licensed mutual association like Rand Mutual Assurance or Federated Employers' Mutual Assurance",
+      "benefits": "Medical expenses, temporary disability payments, permanent disability lump sums or pensions, death benefits to dependants"
+    },
+    "uif": {
+      "what_it_covers": "Unemployment (retrenchment, dismissal), illness NOT related to work, maternity leave, adoption leave, death of a contributor",
+      "who_pays": "Shared — 1% from employee, 1% from employer",
+      "who_administers": "The Unemployment Insurance Fund (Department of Employment and Labour)"
+    },
+    "key_difference": "If you were injured AT WORK, claim from COIDA, not UIF. If you are ill due to a non-work-related condition and have exhausted your sick leave, claim from UIF. If you were retrenched or dismissed, claim from UIF. Do NOT confuse them — claiming from the wrong fund will delay your payment.",
+    "can_you_claim_both": "In some cases, yes. For example, if you were injured at work (claim COIDA for medical costs and disability) and then retrenched while recovering (claim UIF for unemployment). But you cannot claim UIF illness benefits for a work-related injury that should be covered by COIDA."
+  },
+  "ufiling_online_services": {
+    "website": "www.ufiling.co.za",
+    "description": "uFiling is the UIF's online portal where you can register, apply for benefits, submit documents, and track your claim status without visiting a Labour Centre.",
+    "what_you_can_do": [
+      "Register as a new user (worker or employer)",
+      "Apply for unemployment, illness, maternity, adoption, or dependant benefits",
+      "Upload supporting documents (UI-19, ID, medical certificates, etc.)",
+      "Check your contribution history",
+      "Track the status of your claim",
+      "Update your personal and banking details",
+      "Register as a work seeker"
+    ],
+    "step_by_step_registration": [
+      "Step 1: Go to www.ufiling.co.za and click 'Register'",
+      "Step 2: Select 'Worker' as your user type",
+      "Step 3: Enter your South African ID number",
+      "Step 4: Enter your personal details (name, surname, date of birth)",
+      "Step 5: Provide a valid email address and cellphone number for verification",
+      "Step 6: Create a password (must include uppercase, lowercase, numbers, and a special character)",
+      "Step 7: You will receive an OTP (one-time pin) on your cellphone — enter it to verify",
+      "Step 8: You will receive a verification email — click the link to activate your account",
+      "Step 9: Log in with your ID number and password"
+    ],
+    "tips_for_using_ufiling": [
+      "The site works best Monday to Thursday between 08:00 and 14:00 — it is often slow or completely offline outside these hours and on Fridays",
+      "Use Google Chrome browser for best results — Internet Explorer and some mobile browsers cause errors",
+      "Have all your documents scanned or photographed clearly BEFORE starting your application",
+      "Save your reference number — you will need it to track your claim",
+      "If the site is down, try again during off-peak hours (early morning) or visit a Labour Centre",
+      "Clear your browser cache if you get repeated errors",
+      "Do not use public Wi-Fi for security reasons — use mobile data if possible"
+    ],
+    "system_issues_note": "The uFiling system is known for frequent downtime and technical issues. If you cannot complete your application online after multiple attempts over several days, do not risk missing the 6-month claim deadline — visit your nearest Labour Centre in person to submit your claim."
+  },
   "labour_centres_ethekwini": [
     {
       "name": "Labour Centre Durban",
       "address": "267 Anton Lembede Street, Durban CBD",
       "hours": "Monday to Friday 07:30 - 15:30",
-      "tip": "Extremely busy. Arrive before 07:00. Bring all documents — if anything is missing you will be sent away and lose your queue position."
+      "tip": "Extremely busy. Arrive before 07:00 to get a place in the queue. Bring ALL documents — if anything is missing you will be sent away and lose your queue position. Bring water and a snack as wait times can exceed 3-4 hours."
     },
     {
       "name": "Labour Centre Pinetown",
       "address": "7 Crompton Street, Pinetown",
-      "hours": "Monday to Friday 07:30 - 15:30"
+      "hours": "Monday to Friday 07:30 - 15:30",
+      "tip": "Generally less busy than Durban CBD. Still arrive early to avoid long waits."
     },
     {
       "name": "Labour Centre Tongaat",
       "address": "35 Gopalall Hurbans Road, Tongaat",
-      "hours": "Monday to Friday 07:30 - 15:30"
+      "hours": "Monday to Friday 07:30 - 15:30",
+      "tip": "Serves the North Coast area. Usually quieter than Durban and Pinetown."
     }
   ],
-  "online_services": {
-    "uFiling": "www.ufiling.co.za — Check claim status, submit documents, register as work seeker online",
-    "note": "The uFiling system is frequently offline or slow. If you cannot access it, visit a Labour Centre in person."
-  },
   "important_contacts": {
-    "call_centre": "012 337 1997 or 0800 843 843",
-    "email": "UIF_enquiries@labour.gov.za",
-    "fraud_hotline": "012 337 1907"
+    "uif_call_centre": "012 337 1997",
+    "uif_toll_free": "0800 843 843 (toll-free from landlines)",
+    "uif_email": "UIF_enquiries@labour.gov.za",
+    "uif_head_office": "012 337 1680",
+    "uif_fraud_hotline": "012 337 1907",
+    "ccma": "011 377 6650",
+    "ccma_website": "www.ccma.org.za",
+    "department_of_employment_and_labour": "012 309 4000",
+    "legal_aid_south_africa": "0800 110 110 (free legal advice)",
+    "public_protector": "0800 11 20 40",
+    "sassa": "0800 601 011 (for disability and social grants — not UIF)"
   },
   "escalation": {
-    "step_1": "Ask to speak with the claims manager at your Labour Centre",
-    "step_2": "Contact the UIF head office: 012 337 1680",
-    "step_3": "Lodge a complaint with the Commission for Conciliation, Mediation and Arbitration (CCMA): 011 377 6650",
-    "step_4": "Lodge a complaint with the Public Protector: 0800 11 20 40",
+    "step_1": "Ask to speak with the claims manager at your Labour Centre (not just the front desk clerk)",
+    "step_2": "If the claims manager cannot help, contact the UIF head office directly: 012 337 1680",
+    "step_3": "Email UIF_enquiries@labour.gov.za with your full name, ID number, reference number, and a clear description of the problem",
+    "step_4": "Lodge a complaint with the CCMA: 011 377 6650 or online at www.ccma.org.za",
+    "step_5": "Lodge a complaint with the Public Protector: 0800 11 20 40 — the Public Protector investigates government service delivery failures",
+    "step_6": "As a last resort, consult Legal Aid South Africa (0800 110 110) about taking legal action",
     "legislation": "Unemployment Insurance Act 63 of 2001 and the Unemployment Insurance Contributions Act 4 of 2002"
   },
   "your_rights": [
     "Your employer MUST register you for UIF and pay monthly contributions — failure to do so is a criminal offence under the UIA",
-    "Your employer MUST provide you with a UI-19 (discharge certificate) when your employment ends — refusal is illegal",
+    "Your employer MUST provide you with a UI-19 (discharge certificate) within 15 working days of your employment ending — refusal is illegal and carries a fine of up to R10,000 per employee",
     "UIF must process your claim within a reasonable timeframe",
-    "You are entitled to written reasons for any rejection",
-    "Domestic workers are covered by UIF — employers of domestic workers must register and contribute",
-    "Foreign nationals who contribute to UIF are entitled to claim benefits"
+    "You are entitled to written reasons for any rejection of your claim",
+    "You have the right to appeal any UIF decision you disagree with",
+    "Domestic workers are covered by UIF — employers of domestic workers must register and contribute (since 2003)",
+    "Foreign nationals who contribute to UIF are entitled to claim benefits",
+    "You cannot be victimised or dismissed for claiming UIF or reporting your employer for non-compliance",
+    "You have the right to access the CCMA for free if you were unfairly dismissed or your employer is not complying with UIF obligations",
+    "Your UIF information is confidential — the UIF may not share your personal information without your consent"
   ],
   "employer_obligations": [
-    "Register all employees for UIF within 30 days of starting employment",
-    "Deduct 1% of employee's salary as UIF contribution",
-    "Contribute an additional 1% as the employer's share",
-    "Submit monthly returns and payments to the UIF",
-    "Provide UI-19 discharge certificates when employment ends"
+    "Register all employees for UIF within 30 days of starting employment (including domestic workers working 24+ hours per month)",
+    "Deduct 1% of each employee's salary as the employee UIF contribution",
+    "Contribute an additional 1% as the employer's share (this is the employer's cost, not deducted from the employee)",
+    "Submit monthly declarations and payments to the UIF by the 7th of each month",
+    "Provide UI-19 discharge certificates within 15 working days when employment ends",
+    "Keep records of all UIF contributions for at least 5 years",
+    "Display the UIF poster in the workplace where employees can see it",
+    "Failure to comply can result in fines, penalties, and criminal prosecution"
+  ],
+  "frequently_asked_questions": [
+    {
+      "question": "Can I claim UIF if I resigned?",
+      "answer": "Generally no. Voluntary resignation does not qualify for UIF unemployment benefits. However, if you were forced to resign (constructive dismissal), you may qualify — see the constructive_dismissal section."
+    },
+    {
+      "question": "How long do I have to claim?",
+      "answer": "You must submit your UIF claim within 6 months of becoming unemployed. After 6 months, you lose your right to claim."
+    },
+    {
+      "question": "Can I work part-time while claiming UIF?",
+      "answer": "If you earn any income, you must declare it. Your UIF benefits may be reduced or stopped depending on how much you earn. Always declare any income — failure to do so is fraud."
+    },
+    {
+      "question": "What if my employer has closed down or disappeared?",
+      "answer": "Visit the Labour Centre with whatever documents you have (payslips, employment contract, bank statements showing salary payments). The Labour Centre can still process your claim. The UIF will pursue the employer for contributions."
+    },
+    {
+      "question": "Can I claim UIF if I was on a fixed-term contract that expired?",
+      "answer": "Yes. Expiry of a fixed-term contract counts as a valid reason for UIF unemployment benefits."
+    },
+    {
+      "question": "Is there a maximum salary for UIF?",
+      "answer": "UIF contributions are calculated on earnings up to the threshold (currently R17,712 per month). If you earn more, contributions are only on the threshold amount, and your benefits are calculated based on the threshold too."
+    },
+    {
+      "question": "Can I claim UIF and a SASSA grant at the same time?",
+      "answer": "Generally no. If you receive UIF benefits, you may be disqualified from certain SASSA grants (such as the SRD grant). Check with SASSA about your specific situation."
+    },
+    {
+      "question": "What is the difference between UIF and COIDA?",
+      "answer": "UIF covers unemployment, non-work-related illness, maternity, and death. COIDA covers injuries and diseases that happen at work or because of work. See the coida_vs_uif section for a detailed comparison."
+    }
   ]
 }

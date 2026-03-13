@@ -1,107 +1,596 @@
 {
   "service": "Deeds Office — Property Registration",
-  "overview": "The Deeds Office (under the Department of Agriculture, Land Reform and Rural Development) is responsible for registering ownership of property in South Africa. Every property transfer, bond registration, and servitude must be registered here. The Durban Deeds Office serves the KwaZulu-Natal region.",
+  "overview": "The Deeds Office (under the Department of Agriculture, Land Reform and Rural Development) is responsible for registering ownership of property in South Africa. Every property transfer, bond registration, and servitude must be registered here. The Durban Deeds Office serves the KwaZulu-Natal region. The Deeds Registry is a public record — anyone can search it to verify ownership, bonds, and conditions on a property.",
   "services": [
     {
       "name": "Title Deed Search",
-      "description": "Check who owns a specific property, what bonds are registered against it, and if there are any restrictions.",
+      "description": "Check who owns a specific property, what bonds are registered against it, and if there are any restrictions (servitudes, conditions, endorsements).",
       "how": [
-        "Visit the Durban Deeds Office in person — searches are done at the public search counter",
-        "You can search by property description (erf number, township name) or by owner name",
+        "Visit the Durban Deeds Office in person — searches are done at the public search counter (morning only, 08:00-12:00, bring your ID)",
+        "You can search by property description (erf number + township name) or by owner name",
         "A basic search costs approximately R30 per property",
-        "You can also use the online Deeds Web portal (www.deedsweb.gov.za) — registration required, costs apply",
+        "You can also use the online DeedsWeb portal (www.deedsweb.gov.za) — registration required, R30 per search",
         "For more detailed information, engage a conveyancing attorney"
       ],
+      "search_results_include": [
+        "Registered owner name and ID number",
+        "Property description (erf number, township, extent in square metres)",
+        "Registered mortgage bonds (which bank, bond amount)",
+        "Servitudes (rights of way, municipal access, Eskom power lines)",
+        "Endorsements (court orders, estate endorsements, caveats)",
+        "Conditions of title (building restrictions, use restrictions)"
+      ],
       "why_you_might_need_this": [
-        "Buying property — confirm the seller is the registered owner",
+        "Buying property — confirm the seller is the registered owner before paying any money",
         "Land claims — establish historical ownership",
-        "Boundary disputes — confirm exact property descriptions",
+        "Boundary disputes — confirm exact property descriptions and compare to Surveyor-General diagrams",
         "Debt collection — check if a debtor owns property",
-        "Estate administration — identify deceased person's property"
+        "Estate administration — identify deceased person's property",
+        "Verifying legitimacy — protect yourself from property scams"
       ]
     },
     {
       "name": "Property Transfer",
-      "description": "When property changes hands (sale, donation, inheritance), the transfer must be registered at the Deeds Office.",
+      "description": "When property changes hands (sale, donation, inheritance), the transfer must be registered at the Deeds Office. Only a registered conveyancer (not just any attorney) can handle property transfers.",
       "process": [
-        "A conveyancing attorney handles the transfer — this is legally required",
-        "The attorney prepares all transfer documents",
+        "A registered conveyancing attorney handles the transfer — this is legally required (verify the conveyancer's registration with the Legal Practice Council)",
+        "The attorney prepares all transfer documents including the deed of transfer",
         "Both buyer and seller sign documents at the attorney's office",
+        "Transfer duty must be paid to SARS before lodgement (the attorney handles this)",
+        "A rates clearance certificate must be obtained from the municipality",
         "The attorney lodges documents at the Deeds Office",
-        "The Deeds Office examines and registers the transfer",
-        "Processing time: approximately 2-3 weeks after lodgement",
+        "The Deeds Office examines and registers the transfer — processing time approximately 2-3 weeks after lodgement",
         "The new title deed is issued in the buyer's name"
       ],
       "costs": [
-        "Transfer duty: payable to SARS — calculated on the property value (first R1.1 million is exempt for natural persons)",
-        "Conveyancing fees: regulated by the Law Society, based on property value",
+        "Transfer duty: payable to SARS — see transfer_duty_table below",
+        "Conveyancing fees: see conveyancing_fees_guideline below — shop around, these are guidelines not fixed prices",
         "Deeds Office fees: approximately R700-R2,000 depending on the transaction",
-        "Rates clearance certificate from the municipality"
+        "Rates clearance certificate from the municipality: R100-R500 depending on the municipality",
+        "FICA compliance costs (certified ID copies, proof of address)",
+        "Postage and petties: R1,000-R2,500"
       ]
     },
     {
       "name": "Bond Registration",
-      "description": "When you take a home loan, the bank registers a mortgage bond against your property at the Deeds Office.",
+      "description": "When you take a home loan, the bank registers a mortgage bond against your property at the Deeds Office. The bond gives the bank the right to sell the property if you default on the loan.",
       "process": [
-        "Your bank appoints a bond attorney",
+        "Your bank appoints a bond attorney (the bank chooses, not you — but you pay the fees)",
         "The attorney prepares bond documents",
         "You sign at the attorney's office",
         "The attorney lodges at the Deeds Office",
-        "Registration takes approximately 2-3 weeks"
+        "Registration takes approximately 2-3 weeks",
+        "The bond is noted against your title deed in the Deeds Office records"
       ]
     },
     {
       "name": "Bond Cancellation",
-      "description": "When you pay off your home loan in full, the bond must be cancelled at the Deeds Office.",
+      "description": "When you pay off your home loan in full, the bond must be cancelled at the Deeds Office. The bank is obligated to cancel the bond — do not let them delay.",
       "process": [
         "Notify your bank that the loan is paid in full",
         "The bank instructs a cancellation attorney",
         "The attorney prepares cancellation documents and lodges at the Deeds Office",
-        "The bank should cover the cancellation attorney's fees"
+        "The bank should cover the cancellation attorney's fees — do not pay this yourself",
+        "Cancellation takes approximately 2-3 weeks after lodgement",
+        "Confirm the bond has been cancelled by checking at the Deeds Office or on DeedsWeb"
       ]
     }
   ],
+  "transfer_duty_table": {
+    "description": "Transfer duty is a tax paid to SARS when property is acquired. The rates below apply to natural persons (individuals). Companies and trusts pay a flat 12% on the full value. Transfer duty must be paid before the Deeds Office will register the transfer.",
+    "effective_date": "As per current SARS schedule — always confirm with SARS or your conveyancer as rates may change in the annual Budget Speech",
+    "brackets": [
+      {
+        "range": "R0 to R1,100,000",
+        "rate": "0%",
+        "calculation": "No transfer duty payable",
+        "example": "Property worth R900,000 = R0 transfer duty"
+      },
+      {
+        "range": "R1,100,001 to R1,512,500",
+        "rate": "3% of the value above R1,100,000",
+        "calculation": "3% x (property value - R1,100,000)",
+        "example": "Property worth R1,400,000 = 3% x R300,000 = R9,000"
+      },
+      {
+        "range": "R1,512,501 to R2,117,500",
+        "rate": "R12,375 + 6% of the value above R1,512,500",
+        "calculation": "R12,375 + 6% x (property value - R1,512,500)",
+        "example": "Property worth R1,800,000 = R12,375 + 6% x R287,500 = R12,375 + R17,250 = R29,625"
+      },
+      {
+        "range": "R2,117,501 to R2,722,500",
+        "rate": "R48,675 + 8% of the value above R2,117,500",
+        "calculation": "R48,675 + 8% x (property value - R2,117,500)",
+        "example": "Property worth R2,500,000 = R48,675 + 8% x R382,500 = R48,675 + R30,600 = R79,275"
+      },
+      {
+        "range": "R2,722,501 to R12,100,000",
+        "rate": "R97,075 + 11% of the value above R2,722,500",
+        "calculation": "R97,075 + 11% x (property value - R2,722,500)",
+        "example": "Property worth R5,000,000 = R97,075 + 11% x R2,277,500 = R97,075 + R250,525 = R347,600"
+      },
+      {
+        "range": "Above R12,100,000",
+        "rate": "R1,128,600 + 13% of the value above R12,100,000",
+        "calculation": "R1,128,600 + 13% x (property value - R12,100,000)",
+        "example": "Property worth R15,000,000 = R1,128,600 + 13% x R2,900,000 = R1,128,600 + R377,000 = R1,505,600"
+      }
+    ],
+    "important_notes": [
+      "First-time buyers still pay transfer duty — there is no exemption, only the 0% bracket up to R1.1M helps",
+      "Transfer duty is based on the purchase price or market value, whichever is higher",
+      "VAT-registered sellers charge VAT instead of transfer duty — you do not pay both",
+      "Transfer duty must be paid within 6 months of the transaction date",
+      "The conveyancing attorney usually handles the SARS transfer duty submission on your behalf"
+    ]
+  },
+  "conveyancing_fees_guideline": {
+    "description": "Conveyancing fees are what the attorney charges to handle the property transfer. These are guideline tariffs — not fixed by law. You can and should shop around for competitive quotes. Always use a registered conveyancer (not just any attorney). Verify registration with the Legal Practice Council or Law Society of South Africa.",
+    "guideline_fees": [
+      {
+        "property_value": "R500,000",
+        "approximate_fee": "R15,000 (excluding VAT)",
+        "note": "Includes attorney fee, Deeds Office fee, and postage/petties"
+      },
+      {
+        "property_value": "R1,000,000",
+        "approximate_fee": "R20,000 (excluding VAT)",
+        "note": "Includes attorney fee, Deeds Office fee, and postage/petties"
+      },
+      {
+        "property_value": "R2,000,000",
+        "approximate_fee": "R30,000 (excluding VAT)",
+        "note": "Includes attorney fee, Deeds Office fee, and postage/petties"
+      },
+      {
+        "property_value": "R5,000,000",
+        "approximate_fee": "R50,000-R60,000 (excluding VAT)",
+        "note": "At higher values, fees become more negotiable — always get multiple quotes"
+      }
+    ],
+    "what_the_fee_covers": [
+      "Preparation of all transfer documents",
+      "SARS transfer duty submission",
+      "Obtaining rates clearance certificate from municipality",
+      "Lodgement at the Deeds Office",
+      "FICA compliance checks",
+      "Liaison with buyer, seller, banks, and other attorneys",
+      "Attending to any Deeds Office queries or rejections"
+    ],
+    "tips": [
+      "Get at least 3 quotes before choosing a conveyancer",
+      "Ask for a detailed breakdown — not just a lump sum",
+      "Verify the conveyancer is registered with the Legal Practice Council (www.lpc.org.za)",
+      "The seller usually appoints the transferring attorney in a sale, but you can negotiate this",
+      "Bond registration attorney is appointed by the bank — you cannot choose, but you pay the fees"
+    ]
+  },
+  "deedsweb_portal": {
+    "url": "www.deedsweb.gov.za",
+    "description": "DeedsWeb is the official online portal for searching the Deeds Registry from anywhere. You do not need to visit the Deeds Office in person if you use DeedsWeb.",
+    "how_to_register": [
+      "Go to www.deedsweb.gov.za",
+      "Click on 'Register' to create a new account",
+      "Complete the registration form with your personal details and valid email",
+      "You will receive a confirmation email — follow the link to activate your account",
+      "Once activated, you can top up your account with credit to perform searches"
+    ],
+    "cost": "R30 per search",
+    "search_options": [
+      "Search by property description: you need the erf number and township name (e.g., Erf 1234 Umbilo)",
+      "Search by owner name: enter the registered owner's name to find all properties registered to them",
+      "Search by ID number: find all properties registered to a specific person"
+    ],
+    "results_include": [
+      "Registered owner name and identity number",
+      "Full property description (erf number, township, extent)",
+      "All registered mortgage bonds (bank, bond amount, date of registration)",
+      "Servitudes registered against the property",
+      "Endorsements (court orders, caveats, Section 42 endorsements)",
+      "Conditions of title",
+      "Historical transfers (previous owners)"
+    ],
+    "tips": [
+      "You need the correct erf number and township name — get this from your rates account or the municipality",
+      "If you are searching by owner name, try variations (initials vs full names)",
+      "DeedsWeb is available 24/7 but may have maintenance downtime",
+      "Print or save your search results — you are charged per search, not per page view"
+    ]
+  },
+  "property_alert": {
+    "description": "Property Alert is a free early-warning service from the Department of Agriculture, Land Reform and Rural Development. It notifies you by SMS or email if any transaction (transfer, bond, cancellation) is lodged against your property at the Deeds Office. This is your best protection against property fraud.",
+    "how_to_register": [
+      "SMS the word 'ALERT' to 35991 (standard SMS rates apply)",
+      "Or register online at www.dfrdar.gov.za",
+      "Or visit the Deeds Office in person and ask to register for Property Alert",
+      "You will need your property description (erf number and township) and your ID number"
+    ],
+    "what_it_does": [
+      "Sends you an SMS or email notification whenever any transaction is lodged against your registered property",
+      "This includes transfers, bond registrations, bond cancellations, and endorsements",
+      "Gives you early warning so you can take action if the transaction is fraudulent",
+      "Notifications are sent within 24 hours of lodgement at the Deeds Office"
+    ],
+    "cost": "Free — there is no charge for this service",
+    "important": "Every property owner should register for Property Alert. It is the single most effective way to detect fraudulent activity on your property. If you receive a notification for a transaction you did not authorise, contact the Deeds Office and SAPS immediately."
+  },
+  "title_deed_explained": {
+    "description": "A title deed is the official document that proves you own a specific property. It is registered at the Deeds Office and is the definitive proof of ownership in South Africa.",
+    "what_is_on_it": [
+      "Property description: the erf number, township name, extent (size in square metres), and province",
+      "Owner details: full name, identity number, and marital status of the registered owner",
+      "How the property was acquired: whether by sale, donation, inheritance, or court order",
+      "Conditions of title: restrictions on what you can do with the property (e.g., residential use only, no subdivision without consent)",
+      "Servitudes: rights that other parties have over your property (e.g., right of way, municipal pipeline, Eskom power line)",
+      "Reference to the Surveyor-General diagram: the official survey diagram showing the exact boundaries"
+    ],
+    "why_it_matters": [
+      "It is your legal proof of ownership — without it, you cannot prove the property is yours",
+      "Banks require sight of the title deed before granting a home loan",
+      "The municipality uses it to confirm ownership for rates and services",
+      "In disputes (boundary, inheritance, divorce), the title deed is the primary evidence",
+      "You need it to sell, donate, or mortgage your property",
+      "It is used to verify that the person selling you a property is actually the owner"
+    ],
+    "tips": [
+      "Keep your original title deed in a safe place — a bank safe deposit box is ideal",
+      "If your bank holds a bond over your property, the bank keeps the title deed until the bond is cancelled",
+      "You can request a certified copy from the Deeds Office if the original is lost (see lost_title_deed section)",
+      "Always read the conditions and servitudes on your title deed — they affect what you can do with the property"
+    ]
+  },
+  "sectional_title": {
+    "description": "Sectional title is a form of property ownership different from freehold. It applies to apartments, townhouses, and complexes where multiple owners share common property. It is governed by the Sectional Titles Act 95 of 1986 and the Sectional Titles Schemes Management Act 8 of 2011.",
+    "how_it_differs_from_freehold": [
+      "You own your individual unit (called a 'section') but share ownership of common property (gardens, parking, driveways, pools) with all other owners",
+      "A Body Corporate is established to manage the common property and enforce rules",
+      "You must pay monthly levies to the Body Corporate for maintenance, insurance, and administration",
+      "You are bound by conduct rules and management rules — you cannot do whatever you want",
+      "Building alterations require Body Corporate approval (even inside your unit in some cases)",
+      "The Body Corporate has the right to levy special contributions for unexpected expenses (e.g., roof repair)"
+    ],
+    "levies": [
+      "Levies are mandatory monthly payments to the Body Corporate",
+      "They cover insurance of the building, maintenance of common areas, security, water, refuse, and administration",
+      "Levy amounts vary — typically R800-R5,000+ per month depending on the complex",
+      "If you do not pay your levies, the Body Corporate can get a court order and attach your property",
+      "Levy arrears transfer to the new owner on sale — always check levy clearance before buying"
+    ],
+    "transfer_differences": [
+      "The conveyancer needs a Body Corporate consent letter before lodging the transfer",
+      "A levy clearance certificate must be obtained from the managing agent — this confirms all levies are paid up to date",
+      "A compliance certificate under the Community Schemes Ombud Service Act may be required",
+      "The buyer must be given a copy of the conduct rules and management rules before transfer",
+      "Transfer may take longer because of the extra requirements"
+    ],
+    "body_corporate": {
+      "what_it_is": "The Body Corporate is the collective of all sectional title owners in a scheme. It is automatically created when the scheme is registered.",
+      "responsibilities": [
+        "Maintains and insures the common property",
+        "Collects levies from all owners",
+        "Enforces conduct rules and management rules",
+        "Holds an Annual General Meeting (AGM) — all owners should attend and vote",
+        "Appoints a managing agent (optional but common) to handle day-to-day administration"
+      ],
+      "your_rights_as_an_owner": [
+        "You can attend and vote at AGMs",
+        "You can inspect the Body Corporate's financial records",
+        "You can challenge unreasonable rules or levies through the Community Schemes Ombud Service (CSOS)",
+        "CSOS contact: 010 593 0533 or www.csos.org.za"
+      ]
+    }
+  },
+  "estate_property": {
+    "description": "When a property owner dies, the property forms part of their deceased estate. It cannot simply be sold or transferred — it must go through a formal estate administration process overseen by the Master of the High Court.",
+    "process": [
+      "Step 1: Report the death to the Master of the High Court within 14 days. Submit the death certificate, will (if any), and asset inventory",
+      "Step 2: The Master appoints an executor — either the person nominated in the will or a professional (usually an attorney or trust company)",
+      "Step 3: The executor advertises for creditors in the Government Gazette and a local newspaper (creditors have 30 days to submit claims)",
+      "Step 4: The executor prepares a Liquidation and Distribution Account showing all assets, debts, and how the estate will be distributed",
+      "Step 5: The L&D Account is advertised for inspection — anyone can object within 21 days",
+      "Step 6: Once approved, the executor distributes the estate according to the will or the Intestate Succession Act (if there is no will)",
+      "Step 7: For property — the executor either endorses the title deed to the heir (Section 42 endorsement — no transfer duty, faster) or does a formal transfer through a conveyancer (transfer duty may apply)"
+    ],
+    "section_42_endorsement_vs_formal_transfer": {
+      "section_42": "A Section 42 endorsement is a simpler, cheaper process where the executor endorses the existing title deed in favour of the heir. No conveyancer is needed, and no transfer duty is payable. This is used when the heir inherits the property and keeps it.",
+      "formal_transfer": "A formal transfer is required when the property is sold from the estate to a third party, or when the estate has debts and the property must be sold to pay them. Transfer duty applies, and a conveyancer must handle the transfer."
+    },
+    "timeline": "Estate administration typically takes 6 to 24 months, depending on complexity. Delays are common if there are disputes among heirs, missing documents, or if the Master's Office has a backlog.",
+    "masters_office_durban": {
+      "address": "2 Devonshire Place, Durban, 4001",
+      "telephone": "031 372 3000",
+      "hours": "Monday to Friday 07:30-15:30",
+      "what_to_bring": "Death certificate, original will (if any), ID of the deceased, IDs of heirs, marriage certificate, inventory of assets and liabilities"
+    },
+    "common_issues": [
+      "No will — the property is distributed according to the Intestate Succession Act, which may not match the deceased's wishes",
+      "Multiple heirs disagree on what to do with the property — the executor may need to sell and divide the proceeds",
+      "The property has an outstanding bond — the estate must continue payments or the bank may foreclose",
+      "The Master's Office is slow — follow up regularly, keep records of all submissions and reference numbers",
+      "Illegal occupation — sometimes family members or tenants refuse to vacate after the owner dies. The executor has the authority to deal with this"
+    ]
+  },
+  "servitudes": {
+    "description": "A servitude is a right that someone else has over your property. It is registered on the title deed and runs with the land — it does not disappear when the property is sold. Servitudes can significantly affect what you can do with your property and its value.",
+    "types": [
+      {
+        "type": "Right of way (praedial servitude)",
+        "description": "Allows a neighbour or the public to cross your property to access their own property or a public road. Common in rural and semi-rural areas."
+      },
+      {
+        "type": "Municipal servitude",
+        "description": "Allows the municipality to install, maintain, and access water pipes, sewer lines, or stormwater drains on your property. Very common in urban areas."
+      },
+      {
+        "type": "Eskom servitude (power line servitude)",
+        "description": "Allows Eskom to run power lines over or through your property and to access the property for maintenance. You cannot build under or near these power lines."
+      },
+      {
+        "type": "Personal servitude (usufruct or usus)",
+        "description": "Gives a specific person the right to use your property (or its fruits/income) for their lifetime. Common in wills — e.g., 'my wife may live in the house for her lifetime'."
+      },
+      {
+        "type": "Conservation servitude",
+        "description": "Restricts development to protect the environment, wetlands, or heritage sites."
+      }
+    ],
+    "how_they_affect_property_value": [
+      "A servitude can reduce property value because it limits what you can build or do on that portion of land",
+      "You cannot build on a servitude area without the consent of the servitude holder (e.g., the municipality, Eskom, or the neighbour)",
+      "Insurance may be affected — some insurers exclude damage related to servitude areas",
+      "A servitude can also benefit your property — e.g., a right of way over a neighbour's land to access a main road"
+    ],
+    "important_notes": [
+      "Always check the title deed for servitudes before buying property",
+      "If you build on a servitude area without consent, you may be ordered to demolish at your own cost",
+      "Servitudes are registered at the Deeds Office and appear on the title deed",
+      "To cancel or amend a servitude, you generally need the consent of the servitude holder and a formal Deeds Office process",
+      "The Surveyor-General diagram shows exactly where servitudes fall on the property"
+    ]
+  },
+  "boundary_disputes": {
+    "description": "Boundary disputes arise when neighbours disagree about where one property ends and another begins. This is more common than people think, especially with older properties, informal fencing, or where improvements encroach on neighbouring land.",
+    "how_to_resolve": [
+      "Step 1: Get the Surveyor-General diagram for both properties. This is the official survey diagram showing the exact boundaries. You can get it from the Deeds Office or the Surveyor-General's office.",
+      "Step 2: Compare the Surveyor-General diagram to the title deed and to what is physically on the ground (fences, walls, beacons).",
+      "Step 3: If the diagrams are unclear or the beacons are missing, hire a professional land surveyor to re-peg the boundaries. Cost: approximately R5,000-R15,000 depending on the property.",
+      "Step 4: Try to mediate with your neighbour — show them the diagrams and surveyor's report. Many disputes can be resolved amicably.",
+      "Step 5: If mediation fails, you can approach a community advice office or the municipality's dispute resolution office.",
+      "Step 6: As a last resort, apply to the Magistrate's Court or High Court for a declaratory order confirming the boundary. You will need the surveyor's report and title deeds as evidence."
+    ],
+    "important_notes": [
+      "Do not move, remove, or damage boundary beacons — this is a criminal offence under the Land Survey Act",
+      "Long-term occupation of a neighbour's land does not give you ownership (South Africa does not recognise 'squatter's rights' or adverse possession on registered land)",
+      "If a neighbour's building encroaches on your property, you may be entitled to have it removed or to claim compensation",
+      "Always try to resolve amicably before going to court — court is expensive and slow"
+    ],
+    "surveyor_general_kzn": {
+      "address": "Durban — contact via the Deeds Office or the Department of Agriculture, Land Reform and Rural Development",
+      "note": "The Surveyor-General's diagrams are definitive — they override fences, walls, and informal boundaries"
+    }
+  },
+  "lost_title_deed": {
+    "description": "If your title deed is lost, stolen, or destroyed, you can obtain a certified copy from the Deeds Office. The original title deed will be endorsed as 'lost' in the Deeds Office records.",
+    "process": [
+      "Step 1: Go to your nearest SAPS station and make an affidavit (sworn statement) confirming that the title deed is lost or destroyed. Explain the circumstances (lost in a fire, stolen, misplaced, etc.)",
+      "Step 2: Take the affidavit to the Deeds Office (or have your conveyancer do it) and apply for a certified copy of the title deed",
+      "Step 3: Pay the application fee — approximately R150",
+      "Step 4: The Deeds Office will process your application — this takes approximately 2 to 4 weeks",
+      "Step 5: The original title deed is endorsed as 'lost' in the records, so it cannot be used fraudulently",
+      "Step 6: Collect your certified copy from the Deeds Office — it has the same legal standing as the original"
+    ],
+    "what_you_need": [
+      "Your ID document (original and copy)",
+      "SAPS affidavit confirming the loss",
+      "Property description (erf number and township name — get this from your rates account if you do not know it)",
+      "Application fee of approximately R150"
+    ],
+    "tips": [
+      "Register for Property Alert immediately if your title deed is lost or stolen — this protects against fraudulent transfers",
+      "If the title deed was held by a bank (because of a home loan bond), contact the bank — they may have it or can confirm its status",
+      "A certified copy is legally equivalent to the original — you can use it for any purpose"
+    ]
+  },
+  "verification_of_ownership": {
+    "description": "Before buying property, you must verify that the seller is the registered owner. Property fraud is a real and growing problem in South Africa — scammers sell properties they do not own using fake title deeds and forged identity documents.",
+    "how_to_verify": [
+      "Search the Deeds Office records (in person or via DeedsWeb at www.deedsweb.gov.za) to confirm the registered owner",
+      "Compare the seller's name and ID number to the registered owner on the Deeds Office records",
+      "Ask to see the original title deed — not a copy — and compare it to the Deeds Office records",
+      "If the seller claims to act on behalf of the owner (e.g., power of attorney), verify the power of attorney is genuine and has not been revoked",
+      "Use a reputable, registered conveyancer to handle the transaction — they are required to do FICA checks on both parties"
+    ],
+    "red_flags": [
+      "Seller is in a hurry and pressures you to pay quickly — legitimate sellers allow time for due diligence",
+      "Seller wants cash payment or payment into a personal account — always pay into the conveyancer's trust account",
+      "The title deed looks altered, has inconsistent fonts, or lacks the Deeds Office stamp",
+      "Seller cannot produce the original title deed or rates account",
+      "Property price is significantly below market value — if it seems too good to be true, it probably is",
+      "Seller's ID does not match the registered owner's details at the Deeds Office"
+    ],
+    "what_to_do_if_you_suspect_fraud": [
+      "Do not pay any money",
+      "Report to SAPS immediately",
+      "Contact the Deeds Office to flag the property",
+      "Report to the Legal Practice Council if a fake attorney is involved",
+      "Register for Property Alert on the property in question"
+    ]
+  },
+  "rates_clearance_certificate": {
+    "description": "A rates clearance certificate is a document from the municipality confirming that all municipal rates, taxes, and service charges on a property are paid up to date. It is a legal requirement for property transfer — the Deeds Office will not register a transfer without it.",
+    "process": [
+      "Step 1: The conveyancing attorney applies to the municipality for the rates clearance certificate",
+      "Step 2: The municipality checks if all rates, water, electricity, sewerage, and refuse charges are paid",
+      "Step 3: If there are outstanding amounts, they must be paid before the certificate is issued — the attorney usually arranges payment from the sale proceeds",
+      "Step 4: The municipality issues the certificate — this takes 5 to 10 business days (sometimes longer with eThekwini Municipality)",
+      "Step 5: The certificate is valid for 60 days from date of issue — if the transfer is not registered within 60 days, a new certificate must be obtained"
+    ],
+    "cost": "Approximately R100 to R500 depending on the municipality. eThekwini Municipality charges approximately R300.",
+    "important_notes": [
+      "The seller is responsible for paying outstanding rates before transfer — not the buyer",
+      "If the municipality is slow in issuing the certificate, this can delay the entire transfer",
+      "The conveyancer may require the seller to pay rates in advance (up to the expected transfer date) to avoid delays",
+      "eThekwini Municipality rates clearance: apply at Customer Service Centres or via the eThekwini website"
+    ],
+    "ethekwini_municipality": {
+      "rates_enquiries": "031 311 1111",
+      "customer_service_centres": "Multiple locations — Florence Mkhize Building (251 Anton Lembede Street, Durban CBD) is the main centre",
+      "website": "www.durban.gov.za"
+    }
+  },
   "deeds_office_durban": {
-    "address": "Salmon Grove Chambers, 407 Anton Lembede Street, Durban CBD",
-    "hours": "Monday to Friday 08:00 - 15:30",
-    "public_search_hours": "Monday to Friday 08:00 - 12:00 (morning only)",
-    "contact": "031 334 5300"
+    "address": "209 Peter Mokaba Road (formerly Ridge Road), Morningside, Durban 4001",
+    "hours": "Monday to Friday 08:00-15:30",
+    "public_search_hours": "Monday to Friday 08:00-12:00 (morning only — arrive early, it gets busy)",
+    "contact": "031 309 2950",
+    "what_to_bring": [
+      "Your ID document (original — not a copy)",
+      "Property details if doing a search (erf number, township name)",
+      "Cash or card for search fees (R30 per property search)",
+      "Reference numbers for any pending applications"
+    ],
+    "tips": [
+      "Arrive before 08:00 for public searches — the counter closes at 12:00 and queues can be long",
+      "If you are not comfortable searching yourself, bring a conveyancer or paralegal",
+      "Parking is available on-site but limited — consider using a ride service",
+      "The staff can be helpful but are often very busy — be patient and have all your information ready"
+    ]
   },
   "important_contacts": {
-    "durban_deeds_office": "031 334 5300",
-    "chief_registrar": "012 338 7200",
-    "deedsweb_portal": "www.deedsweb.gov.za"
+    "durban_deeds_office": {
+      "telephone": "031 309 2950",
+      "address": "209 Peter Mokaba Road, Morningside, Durban 4001"
+    },
+    "chief_registrar_of_deeds": {
+      "telephone": "012 338 7200",
+      "location": "Pretoria"
+    },
+    "deedsweb_portal": "www.deedsweb.gov.za",
+    "masters_office_durban": {
+      "telephone": "031 372 3000",
+      "address": "2 Devonshire Place, Durban 4001"
+    },
+    "legal_practice_council": {
+      "telephone": "012 366 8800",
+      "website": "www.lpc.org.za",
+      "purpose": "Verify conveyancers, report attorney misconduct"
+    },
+    "community_schemes_ombud_service": {
+      "telephone": "010 593 0533",
+      "website": "www.csos.org.za",
+      "purpose": "Sectional title and body corporate disputes"
+    },
+    "sars_transfer_duty": {
+      "telephone": "0800 00 7277",
+      "website": "www.sars.gov.za",
+      "purpose": "Transfer duty enquiries and payments"
+    },
+    "ethekwini_municipality": {
+      "telephone": "031 311 1111",
+      "website": "www.durban.gov.za",
+      "purpose": "Rates clearance, rates enquiries, property valuations"
+    },
+    "property_alert": {
+      "sms": "SMS 'ALERT' to 35991",
+      "website": "www.dfrdar.gov.za"
+    }
   },
   "common_problems": [
     {
-      "problem": "Title deed lost",
-      "what_to_do": "Apply for a certified copy of the title deed at the Deeds Office. You will need an affidavit confirming the loss and payment of approximately R150."
+      "problem": "Title deed lost or destroyed",
+      "what_to_do": "Make an affidavit at SAPS confirming the loss. Take the affidavit to the Deeds Office and apply for a certified copy. Cost approximately R150. Takes 2-4 weeks. The original is endorsed as 'lost' to prevent fraud. Register for Property Alert immediately."
     },
     {
       "problem": "Property registered in deceased person's name",
-      "what_to_do": "The executor of the estate (appointed by the Master of the High Court) must transfer the property to the heir(s). Contact the Master's Office in Durban: 031 372 3000."
+      "what_to_do": "Report the death to the Master of the High Court within 14 days. The Master will appoint an executor to administer the estate. The executor will either do a Section 42 endorsement (simpler, no transfer duty) or a formal transfer. Timeline: 6-24 months. Master's Office Durban: 031 372 3000, 2 Devonshire Place."
     },
     {
       "problem": "Property sold but transfer not registered",
-      "what_to_do": "Contact the conveyancing attorney who handled the sale. If the attorney is unresponsive, lodge a complaint with the Law Society of South Africa: 012 366 8800."
+      "what_to_do": "Contact the conveyancing attorney who handled the sale — demand a status update in writing. If the attorney is unresponsive or has absconded, lodge a complaint with the Legal Practice Council: 012 366 8800 or www.lpc.org.za. You may have a claim against the Attorneys Fidelity Fund."
     },
     {
       "problem": "Suspicious activity on your title deed (someone trying to transfer without your knowledge)",
-      "what_to_do": "Register for Property Alert at the Deeds Office or online — you will be notified of any activity against your property. Report suspected fraud to SAPS immediately."
+      "what_to_do": "If you receive a Property Alert notification for a transaction you did not authorise: (1) Contact the Deeds Office immediately to flag the property, (2) Open a case at SAPS — this is fraud, (3) Contact the Legal Practice Council if a conveyancer is involved, (4) Apply for an urgent court interdict to prevent the transfer if it has not yet been registered."
+    },
+    {
+      "problem": "Outstanding rates blocking transfer",
+      "what_to_do": "The seller must pay all outstanding rates, water, and service charges before the municipality will issue a rates clearance certificate. The conveyancer can arrange for payment from the sale proceeds. Contact eThekwini Municipality: 031 311 1111."
+    },
+    {
+      "problem": "Body Corporate not issuing consent or levy clearance for sectional title transfer",
+      "what_to_do": "The managing agent must issue a levy clearance certificate. If the Body Corporate is obstructive, contact the Community Schemes Ombud Service (CSOS) at 010 593 0533 or www.csos.org.za. They can intervene and order compliance."
+    },
+    {
+      "problem": "Boundary dispute with neighbour",
+      "what_to_do": "Get the Surveyor-General diagram from the Deeds Office. Hire a land surveyor to re-peg the boundaries if beacons are missing (cost R5,000-R15,000). Try to mediate with the neighbour. If that fails, apply for a declaratory order from the Magistrate's Court or High Court."
+    },
+    {
+      "problem": "Building encroaches on servitude area",
+      "what_to_do": "You should not have built on the servitude area without the consent of the servitude holder (municipality, Eskom, neighbour). The servitude holder can demand demolition at your cost. Try to negotiate — you may be able to get retrospective consent or relocate the servitude. Consult a property attorney."
+    },
+    {
+      "problem": "Suspected property fraud or scam",
+      "what_to_do": "Do not pay any money. Verify ownership at the Deeds Office or via DeedsWeb (www.deedsweb.gov.za). Compare the seller's ID to the registered owner. Report to SAPS immediately. Contact the Deeds Office to flag the property. If a fake attorney is involved, report to the Legal Practice Council."
     }
   ],
+  "common_scams": {
+    "description": "Property fraud is a serious and growing problem in South Africa. Be vigilant and always verify before paying.",
+    "types": [
+      {
+        "scam": "Fake title deeds",
+        "how_it_works": "Scammers create forged title deeds and sell property they do not own. The fake deed may look authentic but will not match Deeds Office records.",
+        "how_to_protect_yourself": "Always verify ownership at the Deeds Office or via DeedsWeb before paying any money. Use a registered conveyancer who will do proper checks."
+      },
+      {
+        "scam": "Property sold without owner's knowledge",
+        "how_it_works": "Fraudsters use forged identity documents or powers of attorney to instruct a conveyancer to transfer property without the real owner knowing. This often targets elderly people, absentee owners, or deceased estates.",
+        "how_to_protect_yourself": "Register for Property Alert (SMS 'ALERT' to 35991) — you will be notified of any transaction lodged against your property. Act immediately if you receive an unexpected notification."
+      },
+      {
+        "scam": "Fraudulent conveyancers",
+        "how_it_works": "Someone poses as a conveyancer or attorney, collects money into a personal account, and disappears. They may have a professional-looking office and website.",
+        "how_to_protect_yourself": "Verify the conveyancer's registration with the Legal Practice Council (www.lpc.org.za or 012 366 8800). Never pay into a personal account — only pay into the conveyancer's trust account. Check that the trust account is registered."
+      },
+      {
+        "scam": "Fake property listings",
+        "how_it_works": "Scammers list properties for sale or rent that they do not own, often at below-market prices to attract victims. They collect deposits and disappear.",
+        "how_to_protect_yourself": "Verify ownership at the Deeds Office. Visit the property in person. Use reputable estate agents registered with the Property Practitioners Regulatory Authority (PPRA). Never pay a deposit without a written agreement and verification."
+      },
+      {
+        "scam": "Email interception (man-in-the-middle)",
+        "how_it_works": "Scammers intercept emails between the conveyancer and buyer, and send fake banking details. The buyer pays into the scammer's account instead of the attorney's trust account.",
+        "how_to_protect_yourself": "Always confirm banking details telephonically with the conveyancer using a number you verified independently (not from the email). Never change payment details based on an email alone."
+      }
+    ]
+  },
   "escalation": {
-    "step_1": "Contact the Durban Deeds Office directly: 031 334 5300",
-    "step_2": "Escalate to the Chief Registrar of Deeds: 012 338 7200",
+    "step_1": "Contact the Durban Deeds Office directly: 031 309 2950",
+    "step_2": "Escalate to the Chief Registrar of Deeds in Pretoria: 012 338 7200",
     "step_3": "Lodge a complaint with the Department of Agriculture, Land Reform and Rural Development",
-    "step_4": "If an attorney is involved in wrongdoing, report to the Legal Practice Council: 012 366 8800",
-    "legislation": "Deeds Registries Act 47 of 1937, Sectional Titles Act 95 of 1986"
+    "step_4": "If a conveyancer or attorney is involved in wrongdoing, report to the Legal Practice Council: 012 366 8800 or www.lpc.org.za",
+    "step_5": "For sectional title disputes, contact the Community Schemes Ombud Service (CSOS): 010 593 0533",
+    "step_6": "For municipal delays (rates clearance), escalate to the eThekwini Municipal Ombudsman or your ward councillor",
+    "step_7": "For fraud, open a case at SAPS and consider applying for an urgent court interdict",
+    "legislation": [
+      "Deeds Registries Act 47 of 1937",
+      "Sectional Titles Act 95 of 1986",
+      "Sectional Titles Schemes Management Act 8 of 2011",
+      "Transfer Duty Act 40 of 1949",
+      "Alienation of Land Act 68 of 1981",
+      "Community Schemes Ombud Service Act 9 of 2011",
+      "Administration of Estates Act 66 of 1965"
+    ]
   },
   "your_rights": [
-    "Section 25 of the Constitution protects property rights",
-    "No one may be deprived of property except in terms of a law of general application",
-    "You have the right to search the Deeds Office records — they are public records",
-    "You have the right to a certified copy of your title deed",
-    "Property Alert service helps protect against fraudulent transfers"
+    "Section 25 of the Constitution protects property rights — no one may be deprived of property except in terms of a law of general application",
+    "You have the right to search the Deeds Office records — they are public records, anyone can search them",
+    "You have the right to a certified copy of your title deed if the original is lost",
+    "The Property Alert service is free and helps protect against fraudulent transfers",
+    "You have the right to choose your own conveyancer for a transfer (but the bank chooses the bond attorney)",
+    "You have the right to inspect Body Corporate financial records if you are a sectional title owner",
+    "You have the right to challenge municipal property valuations through the objection process",
+    "You have the right to report attorney or conveyancer misconduct to the Legal Practice Council",
+    "You have the right to approach the Community Schemes Ombud Service for sectional title disputes"
   ]
 }

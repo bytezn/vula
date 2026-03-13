@@ -1,19 +1,67 @@
 {
   "service": "eThekwini Municipality — Municipal Services",
-  "overview": "eThekwini Municipality provides essential services to residents of the greater Durban area including water, electricity, refuse removal, rates and taxes, housing, and infrastructure maintenance. It is the largest municipality in KwaZulu-Natal.",
+  "overview": "eThekwini Municipality provides essential services to residents of the greater Durban area including water, electricity, refuse removal, rates and taxes, housing, and infrastructure maintenance. It is the largest municipality in KwaZulu-Natal, serving approximately 3.9 million residents across 2,556 square kilometres.",
   "services": [
     {
       "name": "Rates and Taxes",
-      "description": "Property rates are charged annually based on the municipal valuation of your property. All property owners must pay rates.",
+      "description": "Property rates are charged annually based on the municipal valuation of your property. All property owners must pay rates unless they qualify for a rebate or exemption.",
+      "rates_calculation": {
+        "how_it_works": "Your annual rates are calculated as: Municipal Valuation × Rate in the Rand. The rate in the rand differs by property category.",
+        "residential_rate": "Approximately R0.0157 (i.e. R15.70 per R1,000 of property valuation). For example, a property valued at R800,000 would pay roughly R800,000 × 0.0157 = R12,560 per year, or about R1,047 per month.",
+        "other_categories": {
+          "commercial": "Higher rate than residential — approximately R0.0250 to R0.0300 per rand of valuation",
+          "industrial": "Similar to commercial rates",
+          "agricultural": "Reduced rate, typically 25% of the residential rate",
+          "vacant_land": "Higher rate to encourage development — approximately R0.0300 or more"
+        },
+        "rebates": [
+          {
+            "type": "Pensioner rebate",
+            "description": "Rebate of up to 100% on rates for registered pensioners depending on property value and income. Typically applies to pensioners over 60 with a combined household income below a set threshold (approximately R13,000/month). Apply at a customer care centre with ID, proof of pension/income, and proof of ownership."
+          },
+          {
+            "type": "Disabled persons rebate",
+            "description": "Persons with a permanent disability may qualify for a rates rebate similar to the pensioner rebate. Requires a medical certificate confirming permanent disability, ID, proof of income, and proof of property ownership."
+          },
+          {
+            "type": "Indigent rebate",
+            "description": "Households earning below R4,500/month qualify for a full or partial rates rebate as part of the indigent support package. See indigent policy for details."
+          },
+          {
+            "type": "Residential rebate threshold",
+            "description": "Properties valued below a certain threshold (approximately R250,000) may receive a reduction or exemption from rates. The first portion of residential property value is typically excluded from the rates calculation."
+          }
+        ],
+        "general_valuation": "eThekwini conducts a General Valuation every 4-5 years under the Municipal Property Rates Act 6 of 2004. A supplementary valuation roll is published annually for new developments and changes. The valuation roll is open for public inspection."
+      },
+      "rates_objection_process": {
+        "overview": "If you believe your property valuation is incorrect, you have the right to formally object.",
+        "steps": [
+          "Check your property valuation on the published General Valuation Roll (available at customer care centres or online)",
+          "You must object within 30 days of the date the General Valuation notice is published in the newspaper",
+          "Submit your objection via email to valuations@durban.gov.za or in person at a customer care centre",
+          "Your objection must include: property description (ERF number, address), your proposed value, comparable recent sales in the area, and a clear reason for why the valuation is incorrect",
+          "The Municipal Valuer will review your objection and may inspect the property",
+          "You will receive a written decision on your objection",
+          "If your objection is rejected and you still disagree, you may appeal to the Valuation Appeal Board within 30 days of receiving the rejection",
+          "You may also approach the High Court on a point of law if the Appeal Board decision is unreasonable"
+        ],
+        "tips": [
+          "Gather comparable sales data from property websites (Property24, Lightstone) before objecting",
+          "Take photos of any defects, flood damage, or features that reduce value",
+          "Note that you must continue paying rates at the current valuation while your objection is being processed — any overpayment will be credited if the objection succeeds"
+        ]
+      },
       "common_problems": [
         {
           "problem": "Bill is much higher than expected",
-          "likely_cause": "Municipal revaluation increased your property value, or estimated readings were used instead of actual meter readings",
+          "likely_cause": "Municipal revaluation increased your property value, or estimated readings were used instead of actual meter readings, or tariff increases at the start of the financial year (July)",
           "what_to_do": [
             "Check if the meter reading on your bill matches your actual meter",
-            "If estimated: submit your actual reading at an eThekwini customer care centre or online",
-            "If the property valuation is wrong: object during the next General Valuation period",
-            "You can object to your property valuation within the published objection period under the Municipal Property Rates Act 6 of 2004"
+            "If estimated: submit your actual reading at an eThekwini customer care centre, via the eThekwini Connect app, or online",
+            "If the property valuation is wrong: object during the next General Valuation period (see rates objection process)",
+            "You can object to your property valuation within the published objection period under the Municipal Property Rates Act 6 of 2004",
+            "Check whether a new tariff has been applied — tariffs typically increase on 1 July each year"
           ]
         },
         {
@@ -21,7 +69,8 @@
           "what_to_do": [
             "Contact eThekwini Revenue department with proof of sale (transfer deed)",
             "The conveyancing attorney who handled the sale should have notified the municipality",
-            "If they didn't, you may need to lodge a formal complaint and provide the transfer documents"
+            "If they didn't, you may need to lodge a formal complaint and provide the transfer documents",
+            "Request a clearance certificate from the municipality confirming final account settled on date of transfer"
           ]
         },
         {
@@ -29,81 +78,389 @@
           "what_to_do": [
             "Apply for an indigent subsidy if your household income is below R4,500 per month",
             "Request a payment arrangement — eThekwini must offer this before disconnection",
-            "eThekwini may NOT disconnect water supply to residential properties for non-payment (Constitutional Court ruling: Mazibuko v City of Johannesburg)",
-            "They CAN restrict water flow but not cut it off completely"
+            "eThekwini may NOT disconnect water supply to residential properties for non-payment without a court order (Constitutional Court ruling: Mazibuko v City of Johannesburg)",
+            "They CAN restrict water flow but must still provide a minimum of 6kL per day per household",
+            "Electricity can be restricted or disconnected for non-payment, but the municipality must follow a fair process including written notice"
           ]
         }
       ],
       "indigent_subsidy": {
-        "what": "Free basic services for qualifying households: 9kL of water, 50kWh of electricity, and free refuse removal per month",
-        "eligibility": "Combined household income below R4,500 per month",
+        "what": "Free basic services for qualifying households: 9kL of water, 50kWh of electricity, free refuse removal, and a rates rebate per month",
+        "eligibility": "Combined household income below R4,500 per month. Only one indigent registration per household. Must be a South African citizen or permanent resident.",
+        "free_services_included": {
+          "water": "9 kilolitres (9,000 litres) per household per month at no charge",
+          "electricity": "50 kilowatt-hours (kWh) per household per month at no charge",
+          "refuse_removal": "Free weekly refuse collection",
+          "rates": "Full or partial rebate on property rates",
+          "sewerage": "Reduction or exemption from sewerage charges"
+        },
         "how_to_apply": [
-          "Visit your nearest eThekwini customer care centre",
-          "Bring ID documents of all household members",
-          "Proof of income or sworn affidavit of unemployment",
-          "Proof of residence"
+          "Visit your nearest eThekwini customer care centre in person — the application cannot be done online",
+          "Bring certified copies of ID documents of all household members over 16",
+          "Bring proof of income: payslips, SASSA grant letter, or UIF documentation",
+          "If unemployed: bring a sworn affidavit of unemployment (can be done at a police station or commissioner of oaths)",
+          "Bring proof of residence: municipal account, lease agreement, or affidavit from the property owner",
+          "Complete the indigent application form at the centre",
+          "The municipality may conduct a home verification visit",
+          "Approval typically takes 30-60 days. Benefits are backdated to the date of application once approved."
+        ],
+        "renewal": "Indigent registration must be renewed annually. The municipality will notify you when renewal is due. Failure to renew will result in normal billing resuming.",
+        "important_notes": [
+          "If your income increases above R4,500/month you must notify the municipality",
+          "Providing false information on the application is a criminal offence",
+          "If you are denied, you may appeal the decision to the municipal manager in writing within 21 days"
         ]
       }
     },
     {
       "name": "Water and Sanitation",
-      "description": "eThekwini Water and Sanitation (EWS) provides water supply and sewerage services.",
+      "description": "eThekwini Water and Sanitation (EWS) provides water supply and sewerage services to the metro area. Water is sourced primarily from Umgeni Water (Midmar, Albert Falls, Inanda, and Nagle dams).",
+      "water_tariffs": {
+        "structure": "eThekwini uses a stepped (inclining block) tariff to encourage water conservation. The more you use, the higher the per-kilolitre rate.",
+        "residential_tariff_bands": [
+          {
+            "band": "Lifeline (0–9 kL/month)",
+            "rate": "Free for registered indigent households. Non-indigent households pay a nominal rate.",
+            "note": "This is the constitutionally guaranteed free basic water allocation."
+          },
+          {
+            "band": "9–25 kL/month",
+            "rate": "Approximately R18 per kilolitre",
+            "note": "Normal domestic use for a typical household."
+          },
+          {
+            "band": "25–30 kL/month",
+            "rate": "Approximately R28 per kilolitre",
+            "note": "Above-average consumption; the higher rate is designed to discourage wastage."
+          },
+          {
+            "band": "Above 30 kL/month",
+            "rate": "Approximately R45 per kilolitre",
+            "note": "Heavy consumption band. Consider checking for leaks if your usage is consistently this high."
+          }
+        ],
+        "additional_charges": [
+          "Fixed monthly water availability charge (infrastructure charge) regardless of consumption",
+          "Sewerage charge based on a percentage of water consumed (typically 80% of water consumption is assumed to go to sewer)",
+          "Sewerage availability charge (fixed monthly)"
+        ],
+        "conservation_tips": [
+          "Fix dripping taps immediately — a single dripping tap can waste 30+ litres per day",
+          "Check your toilet for leaks by putting food colouring in the cistern — if colour appears in the bowl without flushing, you have a leak",
+          "A running toilet can waste 200+ litres per day and push you into a higher tariff band",
+          "Read your water meter weekly to track consumption and detect leaks early"
+        ]
+      },
+      "water_restriction_vs_disconnection": {
+        "restriction": {
+          "what": "A flow restriction device is installed that reduces water pressure/flow to the property. The household still receives water but at a reduced rate.",
+          "minimum_supply": "Under the Mazibuko v City of Johannesburg ruling, the municipality must provide a minimum of 6 kilolitres per day (approximately 25 litres per person per day for a household of 8)",
+          "when_applied": "Typically applied when the account is 120+ days in arrears and payment arrangement efforts have failed",
+          "how_to_remove": "Pay the outstanding amount in full or enter into a formal payment arrangement. The restriction device will be removed within 7 working days of payment/arrangement."
+        },
+        "disconnection": {
+          "what": "Complete disconnection of the water supply.",
+          "residential": "Full water disconnection of a residential property requires a court order. The municipality cannot simply cut off water to a home — this is a constitutional right (Section 27(1)(b)).",
+          "commercial": "Commercial/industrial properties may be disconnected with written notice (typically 14 days) for non-payment.",
+          "illegal_disconnection": "If your water is disconnected without proper process, contact the Legal Resources Centre (031 301 7572) or your ward councillor immediately."
+        },
+        "arrears_process": [
+          "30 days overdue: Reminder on your next bill",
+          "60 days overdue: Formal written demand letter",
+          "90 days overdue: Final notice and offer of payment arrangement",
+          "120+ days overdue: Water flow restriction may be applied (residential) or disconnection process begins (commercial)",
+          "At any stage: You may approach the customer care centre to negotiate a payment arrangement"
+        ]
+      },
       "report_problems": {
         "burst_pipe": "Call 080 131 3013 (24-hour emergency) or use the eThekwini Connect app",
-        "no_water": "Check if there is a planned outage on the eThekwini website first. If not planned, report via 080 131 3013",
-        "sewage_overflow": "Report immediately to 080 131 3013 — this is a health emergency",
-        "water_quality": "Report discoloured or foul-smelling water to 080 131 3013"
+        "no_water": "Check if there is a planned outage on the eThekwini website first. If not planned, report via 080 131 3013 or the eThekwini Connect app",
+        "sewage_overflow": "Report immediately to 080 131 3013 — this is a health emergency. Do not allow children to play near sewage. Avoid contact with contaminated water.",
+        "water_quality": "Report discoloured or foul-smelling water to 080 131 3013. Do not drink or cook with the water until cleared.",
+        "water_leak_on_your_property": "Leaks before the meter are the municipality's responsibility. Leaks after the meter are the property owner's responsibility. If unsure, report it and the municipality will determine the boundary."
       },
       "your_rights": [
         "Section 27(1)(b) of the Constitution: everyone has the right of access to sufficient water",
-        "The Water Services Act 108 of 1997 guarantees basic water supply",
-        "eThekwini must provide at least 6,000 litres (6kL) of free water per household per month to registered indigent households"
+        "The Water Services Act 108 of 1997 guarantees basic water supply of at least 25 litres per person per day",
+        "eThekwini must provide at least 6,000 litres (6kL) of free water per household per month to registered indigent households",
+        "Water supply cannot be fully disconnected from a residential property without a court order",
+        "You have the right to be notified of planned water outages at least 24 hours in advance"
       ]
     },
     {
       "name": "Electricity",
-      "description": "eThekwini Electricity provides power to most areas in the metro. Some areas are supplied directly by Eskom.",
+      "description": "eThekwini Electricity provides power to most areas in the metro. Some areas (particularly peripheral/rural areas) are supplied directly by Eskom. Check your bill or meter to determine your supplier.",
       "prepaid_vs_conventional": {
-        "prepaid": "Buy tokens at retail outlets, banks, or the eThekwini website. Enter the 20-digit token on your meter.",
-        "conventional": "Billed monthly based on meter readings. Pay at customer care centres, online, or via bank."
+        "prepaid": {
+          "description": "Buy electricity tokens in advance. Your power is cut when your credit runs out.",
+          "how_to_buy_tokens": [
+            "EasyPay number: Use your EasyPay number at any EasyPay-enabled outlet",
+            "Municipal offices: Purchase at any eThekwini customer care centre during business hours",
+            "Banks: Via FNB, ABSA, Nedbank, Standard Bank, or Capitec banking apps and ATMs",
+            "Retail stores: Shoprite, Checkers, Pick n Pay, Boxer, Spar, and most spaza shops with EasyPay terminals",
+            "Online: Via the eThekwini website (www.durban.gov.za) or your bank's online platform",
+            "USSD: Some banks offer USSD purchase (e.g., FNB *120*321#)"
+          ],
+          "how_to_read_meter_number": "Your prepaid meter number is the 11-digit number displayed on the meter itself (not the EasyPay number). Press the blue/black button on the meter to cycle through displays. The meter number is also on your original installation certificate. You need this number when reporting faults or requesting a Key Revision Number (KRN) update.",
+          "entering_tokens": "Enter the 20-digit token number using the keypad on the meter. If accepted, the meter will beep and display the units added. If rejected, check the number carefully and try again. If it still fails, contact 080 131 3111.",
+          "free_basic_electricity": "Indigent households receive 50 kWh free per month. This is loaded automatically if you are registered as indigent."
+        },
+        "conventional": {
+          "description": "Billed monthly based on meter readings. Pay after consumption.",
+          "billing_cycle": "Bills are generated monthly. Check the billing date on your account. Payment is due within 21 days of the bill date.",
+          "how_to_pay": "At customer care centres, online via www.durban.gov.za, via bank EFT, debit order, or at retail payment points."
+        }
+      },
+      "meter_problems": {
+        "tamper_detected": {
+          "what_it_means": "The meter has detected that someone has attempted to interfere with it, bypass it, or open the casing. This is a serious matter.",
+          "what_to_do": [
+            "Do NOT attempt to fix or reset the meter yourself — this is dangerous and illegal",
+            "Contact eThekwini Electricity immediately at 080 131 3111",
+            "A technician will be dispatched to inspect the meter",
+            "If tampering is confirmed, you may face criminal charges under the Electricity Regulation Act and be liable for estimated consumption during the tamper period",
+            "If you did not tamper with the meter (e.g., a previous owner or tenant did), explain this to the technician and request an investigation"
+          ]
+        },
+        "faulty_meter": {
+          "signs": [
+            "Meter not displaying anything (blank screen)",
+            "Meter displaying an error code",
+            "Meter spinning/counting even when all appliances are off",
+            "Meter not accepting any tokens despite correct entry",
+            "Meter beeping continuously"
+          ],
+          "how_to_report": [
+            "Call 080 131 3111 and describe the fault",
+            "Provide your meter number (11-digit number on the meter)",
+            "Provide your account number or EasyPay number",
+            "Request a reference number for tracking",
+            "A technician will be dispatched — you may need to be home for access",
+            "Do not attempt to repair or open the meter yourself"
+          ]
+        },
+        "key_revision_number_krn": "If your meter rejects tokens after a system update, you may need a new KRN token. Contact 080 131 3111 and provide your meter number. The KRN token is free and must be entered before your purchased token."
+      },
+      "load_shedding": {
+        "what_is_it": "Load shedding is scheduled, rotational power cuts implemented by Eskom or eThekwini to prevent a total collapse of the national electricity grid when demand exceeds supply.",
+        "how_to_check_schedule": [
+          "eThekwini website: www.durban.gov.za — search 'load shedding schedule' and enter your area or block number",
+          "EskomSePush app: Download from Google Play or App Store — the most popular and reliable load shedding app. Set your area for push notifications.",
+          "eThekwini Connect app: Also shows load shedding schedules for your registered address",
+          "Call 080 131 3111 for your load shedding block and schedule"
+        ],
+        "finding_your_block": "Your load shedding block number determines your schedule. Find it on the eThekwini website by entering your address or suburb. It is also printed on some municipal bills.",
+        "during_load_shedding": [
+          "Switch off and unplug sensitive electronics (TVs, computers, microwaves) to protect against power surges when power returns",
+          "Keep fridge and freezer doors closed — a full freezer stays cold for up to 24 hours",
+          "Use battery-powered or rechargeable lights rather than candles (fire risk)",
+          "Do not use gas stoves or braais indoors (carbon monoxide poisoning risk)",
+          "Charge devices and fill water containers before scheduled load shedding starts"
+        ],
+        "extended_outage_beyond_schedule": {
+          "what_to_do": [
+            "Check EskomSePush or the eThekwini website — the schedule may have been updated",
+            "If your power has not returned within 30 minutes after the scheduled end time, report it",
+            "Call 080 131 3111 (eThekwini supply) or 086 003 7566 (Eskom supply)",
+            "The outage may be caused by a separate fault (transformer failure, cable theft) that coincided with load shedding",
+            "Request a reference number and estimated restoration time"
+          ]
+        }
+      },
+      "illegal_connections": {
+        "what": "An illegal electricity connection is any connection that bypasses the meter or is not authorised by the municipality. This includes bridging the meter, connecting directly to overhead lines, or using someone else's connection without authorisation.",
+        "dangers": [
+          "Electrocution risk — illegal connections are not installed by qualified electricians and frequently cause fatal shocks",
+          "Fire risk — overloaded connections cause house fires, especially in informal settlements",
+          "Criminal offence under the Electricity Regulation Act 4 of 2006 — punishable by a fine or imprisonment"
+        ],
+        "how_to_report": [
+          "Call 080 131 3013 to report illegal connections anonymously",
+          "You can also report via the eThekwini Connect app",
+          "Do NOT attempt to disconnect or fix an illegal connection yourself — call the municipality"
+        ]
       },
       "common_problems": [
         {
           "problem": "Meter not accepting tokens",
-          "what_to_do": "Try Key Revision Number (KRN) change — contact eThekwini Electricity at 080 131 3111. Your meter may need a software update."
+          "what_to_do": "Try entering a Key Revision Number (KRN) token first — contact eThekwini Electricity at 080 131 3111. Your meter may need a software update. Provide your 11-digit meter number."
         },
         {
           "problem": "No electricity and neighbours have power",
-          "what_to_do": "Check your circuit breaker first. If it's tripped, reset it. If it keeps tripping, you likely have a wiring fault — call a registered electrician. If it's not tripped, call 080 131 3111."
+          "what_to_do": "Check your circuit breaker/main switch first. If it's tripped, reset it. If it keeps tripping, you likely have a wiring fault — call a registered electrician. If the breaker is fine and you still have no power, call 080 131 3111. Check if your prepaid meter has run out of credit."
         },
         {
           "problem": "Load shedding schedule",
-          "what_to_do": "Check the eThekwini or Eskom load shedding schedule for your area at loadshedding.eskom.co.za or the EskomSePush app"
+          "what_to_do": "Check the eThekwini or Eskom load shedding schedule for your area at loadshedding.eskom.co.za, the EskomSePush app, or the eThekwini website. Your block number determines your schedule."
+        },
+        {
+          "problem": "Electricity token purchased but units seem too few",
+          "what_to_do": "Tariff increases (especially in July) mean the same rand amount buys fewer units. Also check your tariff band — the more you use, the higher the cost per kWh. Free basic electricity (50 kWh) is only for registered indigent households."
         }
       ]
     },
     {
-      "name": "Housing",
-      "description": "eThekwini Human Settlements provides subsidised housing (RDP houses) and manages the housing waiting list.",
-      "how_to_apply": [
-        "Visit your nearest eThekwini housing office",
-        "You must be a South African citizen over 21",
-        "Combined household income must be below R3,500 per month",
-        "You must not own or have previously owned property",
-        "You will be placed on the National Housing Needs Register",
-        "Waiting periods are extremely long — 10-20+ years in some areas"
+      "name": "Meter Reading and Billing",
+      "description": "eThekwini reads water and electricity meters to calculate your monthly bill. Understanding how billing works helps you avoid disputes.",
+      "meter_reading_process": {
+        "how_it_works": "Municipal meter readers visit properties to read water and electricity meters. If they cannot access your meter, an estimated reading is generated based on your historical usage.",
+        "self_reading": {
+          "description": "You can submit your own meter readings to ensure accurate billing.",
+          "how_to_submit": [
+            "Via the eThekwini Connect app: Navigate to 'Submit Meter Reading' and enter the reading shown on your meter",
+            "Via the eThekwini website: Log in to your account at www.durban.gov.za and submit under 'Meter Readings'",
+            "In person: Submit at any customer care centre",
+            "By phone: Call 080 131 3013 and provide your account number and meter reading"
+          ],
+          "tips": [
+            "Read your meter on the same day each month for consistency",
+            "Take a photo of the meter showing the reading and date — useful if there is a dispute later",
+            "For water meters: read the black numbers only (kilolitres), ignore the red numbers (litres)",
+            "For electricity meters: read all digits shown on the display"
+          ]
+        }
+      },
+      "estimated_vs_actual_billing": {
+        "estimated": "If the meter reader could not access your meter (locked gate, aggressive dog, overgrown vegetation covering the meter), the municipality generates an estimated bill based on your average historical consumption. The letter 'E' will appear next to the reading on your bill.",
+        "actual": "An actual reading reflects your real consumption. The letter 'A' appears next to the reading on your bill.",
+        "problems_with_estimated_readings": [
+          "Multiple estimated readings in a row can lead to a large 'catch-up' bill when an actual reading is eventually taken",
+          "Estimates may be too high or too low compared to real usage",
+          "If you notice estimated readings on consecutive bills, submit a self-reading or request an actual reading"
+        ],
+        "how_to_dispute_estimated_reading": [
+          "Read your meter and note the actual reading",
+          "Take a clear photo of the meter showing the reading",
+          "Visit a customer care centre or call 080 131 3013",
+          "Request that the estimated reading be replaced with your actual reading",
+          "If the municipality refuses, request a formal meter inspection",
+          "You may also request that a new actual meter reading be conducted by a municipal technician",
+          "The municipality must adjust your bill within one billing cycle if the error is confirmed"
+        ]
+      }
+    },
+    {
+      "name": "Billing Disputes",
+      "description": "If you believe your municipal bill is incorrect, you have the right to dispute it formally.",
+      "how_to_dispute": [
+        "Visit your nearest customer care centre with the following documents: your latest municipal account, proof of payment for any amounts you believe have already been paid, and photos of your meter readings",
+        "Request to log a 'billing query' — insist on receiving a reference number",
+        "Explain clearly what you believe is wrong: incorrect reading, duplicate charge, payment not reflected, etc.",
+        "The municipality must acknowledge your query and provide a resolution within 30 business days",
+        "You are not required to pay the disputed portion while the query is being investigated, but you should continue paying the undisputed portion to avoid disconnection",
+        "If the dispute is not resolved within 30 business days, escalate to the municipal ombudsman or the City Manager's office"
       ],
+      "common_billing_issues": [
+        {
+          "issue": "Payment not reflecting on account",
+          "what_to_do": "Bring proof of payment (bank statement, receipt) to the customer care centre. Payments via retail outlets (Shoprite, PnP) can take 48-72 hours to reflect."
+        },
+        {
+          "issue": "Charged for services not received",
+          "what_to_do": "If you are being charged for refuse removal but collection is not happening, or for sewerage when you have a septic tank, dispute the charge with evidence."
+        },
+        {
+          "issue": "Account in someone else's name",
+          "what_to_do": "If you are the property owner, bring your title deed and ID to transfer the account into your name. If you are a new tenant, the landlord must update the account."
+        },
+        {
+          "issue": "Unexplained large bill",
+          "what_to_do": "Request a detailed breakdown of charges. Check for estimated readings (marked 'E'). Check for leaks (a running toilet or underground pipe leak can dramatically increase water consumption)."
+        }
+      ]
+    },
+    {
+      "name": "Housing (RDP/Subsidised Housing)",
+      "description": "eThekwini Human Settlements provides subsidised housing (commonly called RDP houses) and manages the housing waiting list. The housing programme is funded by the national Department of Human Settlements.",
+      "how_to_apply": [
+        "Visit your nearest eThekwini housing office (Human Settlements department)",
+        "You must be a South African citizen with a valid ID",
+        "You must be over 21 years of age, or under 21 with dependants",
+        "Combined household income must be below R3,500 per month",
+        "You must not currently own or have previously owned any residential property",
+        "You must never have received a government housing subsidy before",
+        "You must have dependants (spouse, children, or other family members)",
+        "You will be placed on the National Housing Needs Register (NHNR)",
+        "Waiting periods are extremely long — 10-20+ years in some areas due to high demand and limited housing stock"
+      ],
+      "required_documents": [
+        "Certified copy of your South African ID",
+        "Certified copies of IDs/birth certificates of all dependants",
+        "Proof of income or affidavit of unemployment",
+        "Marriage certificate or affidavit of cohabitation (if applicable)",
+        "Proof of current residence"
+      ],
+      "alternative_housing_options": {
+        "social_housing": {
+          "what": "Rental accommodation provided by Social Housing Institutions (SHIs) approved by the Social Housing Regulatory Authority (SHRA). These are typically apartment complexes in urban areas at below-market rental rates.",
+          "eligibility": "Household income between R1,850 and R22,000 per month",
+          "how_to_apply": "Contact SHRA-approved institutions operating in eThekwini directly. Examples include: Ithemba Property Trust, Johannesburg Social Housing Company (also operates in KZN)",
+          "advantages": "Much shorter waiting period than RDP housing, located in well-serviced urban areas, maintained by the housing institution"
+        },
+        "community_residential_units": {
+          "what": "Publicly owned and managed rental units, often converted from old hostel complexes",
+          "eligibility": "Household income below R3,500 per month",
+          "how_to_apply": "Apply at the eThekwini Human Settlements office"
+        },
+        "flisp": {
+          "what": "Finance Linked Individual Subsidy Programme — a government subsidy to help you buy or build your own home",
+          "eligibility": "Household income between R3,501 and R22,000 per month. You must be a first-time home buyer.",
+          "subsidy_amount": "Ranges from approximately R27,960 to R130,505 depending on household income (higher income = lower subsidy)",
+          "how_to_apply": "Apply through a bank when applying for a home loan, or at an eThekwini Human Settlements office"
+        }
+      },
       "common_problems": [
-        "House allocated to the wrong person — report to the housing office with your registration number",
-        "RDP house has structural defects — report within 5 years to claim under the National Home Builders Registration Council (NHBRC) warranty"
+        {
+          "problem": "House allocated to the wrong person",
+          "what_to_do": "Report to the housing office with your registration number. Lodge a formal complaint. If someone has fraudulently taken your allocation, open a case at the police station and report to the Anti-Fraud Hotline: 0800 701 701."
+        },
+        {
+          "problem": "RDP house has structural defects",
+          "what_to_do": "Report within 5 years to claim under the National Home Builders Registration Council (NHBRC) warranty. Contact NHBRC at 0800 200 824. Also report to eThekwini Human Settlements — they may rectify defects through their rectification programme."
+        },
+        {
+          "problem": "Been on the waiting list for years with no progress",
+          "what_to_do": "Visit the housing office to confirm your registration is still active. Verify that your contact details are up to date. Contact your ward councillor to enquire about housing projects planned for your area. Attend your local ward committee meetings."
+        },
+        {
+          "problem": "Want to sell your RDP house",
+          "what_to_do": "You may NOT sell an RDP house within 8 years of receiving it (Housing Act restriction). After 8 years, you may sell it on the open market. You must first offer it back to the government at the original subsidy value before selling privately."
+        }
       ]
     },
     {
       "name": "Refuse Removal and Waste Management",
-      "description": "eThekwini DSW (Durban Solid Waste) handles refuse collection, recycling, and illegal dumping.",
-      "collection_schedule": "Weekly collection on a fixed day for your area. Check the eThekwini website or call 080 131 3013 for your collection day.",
-      "missed_collection": "Report via the eThekwini Connect app or call 080 131 3013",
-      "illegal_dumping": "Report via the eThekwini Connect app or call 080 131 3013 — include photos and location if possible"
+      "description": "eThekwini DSW (Durban Solid Waste) handles refuse collection, recycling, and illegal dumping. The service is funded through rates and a monthly refuse removal charge on your municipal bill.",
+      "collection_schedule": "Weekly collection on a fixed day for your area. Check the eThekwini website or call 080 131 3013 for your collection day. Place your bin at the kerb by 06:00 on your collection day.",
+      "missed_collection": "Report via the eThekwini Connect app or call 080 131 3013. Include your address, account number, and the date that collection was missed. The municipality should collect within 48 hours of the report.",
+      "illegal_dumping": "Report via the eThekwini Connect app or call 080 131 3013 — include photos and location if possible. Illegal dumping is a criminal offence punishable by a fine of up to R10 million or imprisonment under the National Environmental Management: Waste Act.",
+      "recycling": "eThekwini is expanding kerb-side recycling to more areas. Separate recyclables (paper, cardboard, plastic, glass, cans) and place in a clear bag next to your refuse bin on collection day. Check with DSW if your area has kerb-side recycling."
+    },
+    {
+      "name": "eThekwini Connect App",
+      "description": "The official eThekwini municipality mobile app for reporting faults, tracking service requests, and managing your account.",
+      "features": [
+        "Report faults: potholes, water leaks, burst pipes, streetlight outages, traffic light faults, illegal dumping, sewage overflows, fallen trees",
+        "Track service request status: view progress on reported faults using your reference number",
+        "View your municipal account balance and billing history",
+        "Submit meter readings for water and electricity",
+        "View load shedding schedules for your area",
+        "Make payments towards your municipal account",
+        "Find your nearest customer care centre and its operating hours"
+      ],
+      "how_to_get_it": [
+        "Download 'eThekwini Connect' from the Google Play Store (Android) or the Apple App Store (iOS)",
+        "Register with your municipal account number and ID number",
+        "Enable notifications to receive alerts about outages and service updates in your area"
+      ],
+      "reporting_a_fault": [
+        "Open the app and select 'Report a Fault'",
+        "Choose the category (water, electricity, roads, waste, etc.)",
+        "Enter the location — the app can use your GPS or you can type an address",
+        "Add a description and attach photos if possible",
+        "Submit and note the reference number provided",
+        "You will receive updates on your report via the app and/or SMS"
+      ]
     }
   ],
   "customer_care_centres": [
@@ -131,28 +488,102 @@
       "name": "eThekwini Customer Care — Phoenix",
       "address": "Phoenix Civic Centre, Stanmore Crescent, Phoenix",
       "hours": "Monday to Friday 07:30 - 16:00"
+    },
+    {
+      "name": "eThekwini Customer Care — KwaMashu",
+      "address": "KwaMashu Civic Centre, D Section, KwaMashu",
+      "hours": "Monday to Friday 07:30 - 16:00"
+    },
+    {
+      "name": "eThekwini Customer Care — Tongaat",
+      "address": "Tongaat Civic Centre, 15 Plane Street, Tongaat",
+      "hours": "Monday to Friday 07:30 - 16:00"
     }
   ],
+  "payment_options": {
+    "online": {
+      "method": "eThekwini website",
+      "details": "Pay via www.durban.gov.za using your account number. Accepts credit/debit card payments. Payments reflect within 24 hours."
+    },
+    "eft_bank_transfer": {
+      "method": "Electronic Funds Transfer (EFT)",
+      "details": "Pay via your bank's online banking platform. Use your municipal account number as the reference. Payments may take 48-72 hours to reflect."
+    },
+    "debit_order": {
+      "method": "Debit order",
+      "details": "Set up a monthly debit order at any customer care centre. Bring your bank details (bank statement or cancelled cheque) and your municipal account number. The debit order runs on a fixed date each month."
+    },
+    "retail_outlets": {
+      "method": "Shoprite, Checkers, Pick n Pay, Boxer, and other EasyPay outlets",
+      "details": "Pay using your EasyPay number at the till. Payments may take 48-72 hours to reflect on your municipal account. Keep your receipt as proof of payment."
+    },
+    "municipal_offices": {
+      "method": "eThekwini customer care centres",
+      "details": "Pay in person at any customer care centre during business hours (Monday-Friday 07:30-16:00). Cash, cheque, and card payments accepted."
+    },
+    "post_office": {
+      "method": "South African Post Office",
+      "details": "Pay at any Post Office branch using your municipal account number. Allow 5-7 working days for the payment to reflect."
+    },
+    "banks": {
+      "method": "Bank branches and ATMs",
+      "details": "Most major banks (FNB, ABSA, Nedbank, Standard Bank, Capitec) allow municipal bill payments via their apps, online banking, and ATMs. Use your account number as reference."
+    }
+  },
+  "ward_councillor": {
+    "what": "Your ward councillor is your elected local government representative. They serve as the link between you and the municipality and are responsible for addressing service delivery issues in your ward.",
+    "how_to_find_yours": [
+      "Visit www.durban.gov.za/councillors and enter your address to find your ward and councillor details",
+      "Call the eThekwini switchboard at 031 311 1111 and ask for your ward councillor's contact details",
+      "Visit your nearest customer care centre and ask for the ward councillor information for your area",
+      "Check your municipal bill — some bills include your ward number"
+    ],
+    "what_they_can_help_with": [
+      "Escalating unresolved service delivery issues (water, electricity, refuse, roads) to the relevant municipal department",
+      "Reporting infrastructure problems in your area (potholes, broken streetlights, damaged storm drains)",
+      "Facilitating community meetings on local issues",
+      "Connecting you with municipal departments (housing, planning, social services)",
+      "Advocating for budget allocation for projects in your ward"
+    ],
+    "ward_committees": "Each ward has a ward committee of up to 10 community members who meet regularly with the councillor. Attend ward committee meetings to raise issues and participate in local governance. Meeting schedules are available from your councillor's office."
+  },
   "important_contacts": {
     "general_enquiries": "080 131 3013 (toll-free)",
     "electricity_faults": "080 131 3111",
     "water_emergencies": "080 131 3013",
-    "connect_app": "Download 'eThekwini Connect' from Google Play or App Store"
+    "illegal_connections_reporting": "080 131 3013",
+    "switchboard": "031 311 1111",
+    "city_manager_office": "citymanager@durban.gov.za",
+    "valuations": "valuations@durban.gov.za",
+    "connect_app": "Download 'eThekwini Connect' from Google Play or App Store",
+    "website": "www.durban.gov.za",
+    "fraud_hotline": "0800 701 701",
+    "eskom_faults": "086 003 7566 (for Eskom-supplied areas)",
+    "nhbrc_housing_defects": "0800 200 824",
+    "legal_resources_centre_durban": "031 301 7572"
   },
   "escalation": {
-    "step_1": "Contact the eThekwini Customer Care Centre for your area",
-    "step_2": "If unresolved, email the City Manager's office: citymanager@durban.gov.za",
-    "step_3": "Contact your Ward Councillor — find yours at www.ethekwini.gov.za",
+    "step_1": "Contact the eThekwini Customer Care Centre for your area — get a reference number",
+    "step_2": "If unresolved within 30 business days, contact your Ward Councillor — find yours at www.durban.gov.za/councillors or call 031 311 1111",
+    "step_3": "If the councillor cannot resolve it, email the City Manager's office: citymanager@durban.gov.za",
     "step_4": "Lodge a complaint with the KZN MEC for Cooperative Governance and Traditional Affairs",
-    "step_5": "Lodge a complaint with the Public Protector: 0800 11 20 40",
-    "legislation": "Municipal Systems Act 32 of 2000, Municipal Property Rates Act 6 of 2004, Water Services Act 108 of 1997"
+    "step_5": "Lodge a complaint with the SA Human Rights Commission (for water/housing/basic services): 031 304 7323",
+    "step_6": "Lodge a complaint with the Public Protector: 0800 11 20 40",
+    "step_7": "As a last resort, approach the High Court for relief — the Legal Resources Centre (031 301 7572) may assist with public interest cases at no cost",
+    "legislation": "Municipal Systems Act 32 of 2000, Municipal Property Rates Act 6 of 2004, Water Services Act 108 of 1997, Municipal Finance Management Act 56 of 2003, Electricity Regulation Act 4 of 2006, Housing Act 107 of 1997, National Environmental Management: Waste Act 59 of 2008"
   },
   "your_rights": [
     "Section 152 of the Constitution requires municipalities to provide services in a sustainable manner",
-    "The Municipal Systems Act requires municipalities to consult communities on service delivery changes",
+    "Section 27(1)(b): Everyone has the right of access to sufficient water",
+    "Section 26(1): Everyone has the right of access to adequate housing",
+    "Section 33: Everyone has the right to just administrative action — the municipality must act lawfully, reasonably, and fairly",
+    "The Municipal Systems Act requires municipalities to consult communities on service delivery changes and provide access to information",
     "You have the right to access your municipal account and dispute any charges",
-    "You cannot be disconnected from water without due process",
-    "You have the right to a basic level of municipal services",
-    "You have the right to participate in your ward committee and raise service delivery issues"
+    "You cannot be disconnected from water without due process — full disconnection of residential water requires a court order",
+    "You have the right to a basic level of municipal services (free basic water, electricity for qualifying households)",
+    "You have the right to participate in your ward committee and raise service delivery issues",
+    "You have the right to object to your property valuation during the objection period",
+    "You have the right to be treated with dignity and respect at all municipal offices",
+    "Under the Promotion of Access to Information Act (PAIA), you can request access to municipal records that affect your rights"
   ]
 }
