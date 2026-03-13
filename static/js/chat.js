@@ -198,7 +198,7 @@ function handleStreamChunk(text) {
                 <div class="message-text streaming-cursor" id="streaming-text"></div>
                 <div class="message-time">
                     <span>${getCurrentTime()}</span>
-                    <svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#53bdeb"/></svg>
+                    <svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#d4a853"/></svg>
                 </div>
             </div>
         `;
@@ -226,6 +226,10 @@ function handleStreamComplete(fullText) {
     }
     currentStreamBubble = null;
     isStreaming = false;
+
+    // Generate smart follow-up suggestions
+    showFollowUpSuggestions(fullText);
+
     scrollToBottom();
 }
 
@@ -242,7 +246,7 @@ function addMessageToChat(role, content, justSent) {
     const formattedContent = role === 'assistant' ? formatMessage(content) : escapeHtml(content);
 
     const readReceipt = role === 'user'
-        ? '<svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#53bdeb"/></svg>'
+        ? '<svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#d4a853"/></svg>'
         : '';
 
     msgDiv.innerHTML = `
@@ -421,4 +425,242 @@ function runScenario(scenario) {
             sendQuickMessage(messages[0]);
         }, 250);
     }
+}
+
+// --- Voice Input (Web Speech API) ---
+
+let recognition = null;
+let isListening = false;
+
+function initSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return null;
+
+    const rec = new SpeechRecognition();
+    rec.continuous = false;
+    rec.interimResults = true;
+    rec.maxAlternatives = 1;
+
+    // Set language based on current toggle
+    rec.lang = currentLanguage === 'zu' ? 'zu-ZA' : 'en-ZA';
+
+    rec.onresult = (event) => {
+        let transcript = '';
+        let isFinal = false;
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+            if (event.results[i].isFinal) isFinal = true;
+        }
+
+        const input = document.getElementById('message-input');
+        input.value = transcript;
+        autoResize(input);
+
+        // Auto-send on final result
+        if (isFinal) {
+            stopListening();
+            setTimeout(() => sendMessage(), 200);
+        }
+    };
+
+    rec.onend = () => {
+        stopListening();
+    };
+
+    rec.onerror = (event) => {
+        console.error('Speech error:', event.error);
+        stopListening();
+    };
+
+    return rec;
+}
+
+function toggleVoiceInput() {
+    initAudio();
+
+    if (isListening) {
+        stopListening();
+        return;
+    }
+
+    // Update language before starting
+    recognition = initSpeechRecognition();
+    if (!recognition) {
+        // Fallback: show a brief message
+        const input = document.getElementById('message-input');
+        input.placeholder = 'Voice not supported in this browser';
+        setTimeout(() => {
+            input.placeholder = currentLanguage === 'zu' ? 'Bhala umyalezo' : 'Type a message';
+        }, 2000);
+        return;
+    }
+
+    isListening = true;
+    const micBtn = document.getElementById('mic-btn');
+    micBtn.classList.add('listening');
+
+    // Update status
+    const status = document.getElementById('wa-status');
+    status.textContent = 'listening...';
+    status.classList.add('typing');
+
+    // Update placeholder
+    const input = document.getElementById('message-input');
+    input.placeholder = currentLanguage === 'zu' ? 'Khuluma manje...' : 'Speak now...';
+    input.value = '';
+
+    playSound('send');
+
+    try {
+        recognition.start();
+    } catch(e) {
+        stopListening();
+    }
+}
+
+function stopListening() {
+    isListening = false;
+    const micBtn = document.getElementById('mic-btn');
+    if (micBtn) micBtn.classList.remove('listening');
+
+    const status = document.getElementById('wa-status');
+    if (status) {
+        status.textContent = 'online';
+        status.classList.remove('typing');
+    }
+
+    const input = document.getElementById('message-input');
+    if (input) {
+        input.placeholder = currentLanguage === 'zu' ? 'Bhala umyalezo' : 'Type a message';
+    }
+
+    if (recognition) {
+        try { recognition.stop(); } catch(e) {}
+    }
+}
+
+// --- Smart Follow-Up Suggestions ---
+
+const FOLLOW_UP_MAP = [
+    {
+        keywords: ['sassa', 'srd', 'grant', 'social relief', 'declined', 'rejected'],
+        suggestions: [
+            'How do I appeal this decision?',
+            'What documents do I need to reapply?',
+            'Help me write a PAJA written reasons request',
+        ]
+    },
+    {
+        keywords: ['home affairs', 'smart id', 'id card', 'passport', 'birth certificate'],
+        suggestions: [
+            'What are my rights under PAJA if they delay?',
+            'Can I collect at a bank branch instead?',
+            'Help me write a formal escalation letter',
+        ]
+    },
+    {
+        keywords: ['tax', 'sars', 'efiling', 'tax return', 'tax bracket'],
+        suggestions: [
+            'What deductions can I claim?',
+            'How do medical tax credits work?',
+            'What happens if I file late?',
+        ]
+    },
+    {
+        keywords: ['uif', 'unemployment', 'ui-19', 'retrenched', 'maternity'],
+        suggestions: [
+            'My employer didn\'t register me — what now?',
+            'How long will it take to get paid?',
+            'Can I claim if I resigned?',
+        ]
+    },
+    {
+        keywords: ['municipal', 'rates', 'electricity', 'water', 'ethekwini', 'bill'],
+        suggestions: [
+            'How do I qualify for indigent support?',
+            'Can they disconnect without notice?',
+            'Help me dispute this bill formally',
+        ]
+    },
+    {
+        keywords: ['company', 'cipc', 'registration', 'annual return', 'deregistered'],
+        suggestions: [
+            'What are the annual return deadlines?',
+            'How do I reinstate a deregistered company?',
+            'What BEE level is my company?',
+        ]
+    },
+    {
+        keywords: ['property', 'transfer', 'deeds', 'title deed', 'conveyancing'],
+        suggestions: [
+            'What is the transfer duty on my property?',
+            'How long does transfer take?',
+            'What if my title deed is lost?',
+        ]
+    },
+    {
+        keywords: ['letter', 'formal', 'complaint', 'escalat', 'paja', 'public protector'],
+        suggestions: [
+            'Can you also draft a Public Protector complaint?',
+            'What is the deadline for their response?',
+            'What are my next steps if they ignore this?',
+        ]
+    },
+    {
+        keywords: ['isibonelelo', 'umama', 'sawubona', 'ngicela', 'imali'],
+        suggestions: [
+            'Ngicela ungisize ngokubhala incwadi yokukhalaza',
+            'Yimaphi amaphepha engiwadingayo?',
+            'Ngingathola kanjani usizo ngokushesha?',
+        ]
+    },
+];
+
+function showFollowUpSuggestions(responseText) {
+    // Remove any existing follow-ups
+    const existing = document.querySelector('.follow-up-suggestions');
+    if (existing) existing.remove();
+
+    if (!responseText) return;
+
+    const lower = responseText.toLowerCase();
+    let suggestions = null;
+
+    // Find matching suggestions based on response content
+    for (const mapping of FOLLOW_UP_MAP) {
+        const matchCount = mapping.keywords.filter(k => lower.includes(k)).length;
+        if (matchCount >= 1) {
+            suggestions = mapping.suggestions;
+            break;
+        }
+    }
+
+    // Fallback generic suggestions
+    if (!suggestions) {
+        suggestions = [
+            'Tell me more about my rights',
+            'What documents do I need?',
+            'Help me write a formal letter',
+        ];
+    }
+
+    const chatArea = document.getElementById('chat-area');
+    const container = document.createElement('div');
+    container.className = 'follow-up-suggestions';
+
+    suggestions.forEach(text => {
+        const btn = document.createElement('button');
+        btn.className = 'follow-up-btn';
+        btn.textContent = text;
+        btn.onclick = () => {
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(-4px)';
+            setTimeout(() => container.remove(), 200);
+            sendQuickMessage(text);
+        };
+        container.appendChild(btn);
+    });
+
+    chatArea.appendChild(container);
+    scrollToBottom();
 }
