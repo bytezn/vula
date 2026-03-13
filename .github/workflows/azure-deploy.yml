@@ -27,10 +27,22 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies into antenv
+        run: |
+          python -m venv antenv
+          source antenv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Zip artifact for deployment
         run: zip -r release.zip . -x '.git/*' '__pycache__/*' '*.pyc' '.env'
 
-      - name: Deploy to Azure Web App (with remote build)
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
