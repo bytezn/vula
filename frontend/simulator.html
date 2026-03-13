@@ -3,197 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pfula — iPhone Simulator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Pfula — Live Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
+            background: #050505;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Stage presentation background */
+        /* Animated background */
         .stage-bg {
             position: fixed;
             inset: 0;
             background:
-                radial-gradient(ellipse at 30% 50%, rgba(0, 168, 132, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 50%, rgba(200, 150, 60, 0.06) 0%, transparent 60%),
-                #0a0a0a;
+                radial-gradient(ellipse at 25% 50%, rgba(0, 168, 132, 0.07) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 50%, rgba(212, 168, 83, 0.05) 0%, transparent 55%),
+                radial-gradient(circle at 50% 100%, rgba(0, 168, 132, 0.03) 0%, transparent 40%),
+                #050505;
         }
 
-        /* Branding */
-        .brand-left {
+        /* Subtle animated particles */
+        .particles {
             position: fixed;
-            left: 48px;
-            top: 50%;
-            transform: translateY(-50%);
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(0, 168, 132, 0.3);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        .particle:nth-child(odd) { background: rgba(212, 168, 83, 0.2); }
+        .particle:nth-child(1) { left: 10%; animation-duration: 25s; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-duration: 20s; animation-delay: -5s; }
+        .particle:nth-child(3) { left: 35%; animation-duration: 28s; animation-delay: -10s; }
+        .particle:nth-child(4) { left: 50%; animation-duration: 22s; animation-delay: -3s; }
+        .particle:nth-child(5) { left: 65%; animation-duration: 26s; animation-delay: -7s; }
+        .particle:nth-child(6) { left: 80%; animation-duration: 24s; animation-delay: -12s; }
+        .particle:nth-child(7) { left: 90%; animation-duration: 21s; animation-delay: -2s; }
+        .particle:nth-child(8) { left: 45%; animation-duration: 30s; animation-delay: -8s; }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+        }
+
+        /* Layout */
+        .stage-layout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            position: relative;
             z-index: 10;
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 48px;
+        }
+
+        /* Left branding */
+        .brand-left {
+            flex-shrink: 0;
+            max-width: 340px;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
         .brand-name {
-            font-size: 48px;
-            font-weight: 800;
+            font-size: 56px;
+            font-weight: 900;
             color: #fff;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
             line-height: 1;
+            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .brand-meaning {
-            font-size: 16px;
-            color: #c8963c;
+            font-size: 18px;
+            color: #d4a853;
             font-style: italic;
             font-weight: 300;
-            margin-top: 4px;
+        }
+
+        .brand-divider {
+            width: 48px;
+            height: 3px;
+            background: linear-gradient(90deg, #00a884, #d4a853);
+            border-radius: 2px;
+            margin: 20px 0;
         }
 
         .brand-tagline {
-            font-size: 14px;
+            font-size: 15px;
+            color: #94a3b8;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .brand-tagline strong {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
+        .brand-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #00a884;
+            letter-spacing: -1px;
+        }
+
+        .stat-number.gold { color: #d4a853; }
+
+        .stat-label {
+            font-size: 10px;
             color: #64748b;
-            margin-top: 16px;
-            max-width: 280px;
-            line-height: 1.5;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
         }
 
         .brand-event {
-            margin-top: 32px;
-            font-size: 11px;
+            margin-top: 40px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+        }
+
+        .brand-event .event-label {
+            font-size: 10px;
             color: #475569;
             text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .brand-event strong {
-            color: #00a884;
-            display: block;
-            margin-top: 4px;
-            font-size: 12px;
-        }
-
-        /* Right side info */
-        .info-right {
-            position: fixed;
-            right: 48px;
-            top: 50%;
-            transform: translateY(-50%);
-            text-align: right;
-            z-index: 10;
-        }
-
-        .demo-badge {
-            display: inline-block;
-            background: rgba(0, 168, 132, 0.15);
-            border: 1px solid rgba(0, 168, 132, 0.3);
-            color: #00a884;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
+            letter-spacing: 2px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
         }
 
-        .services-list {
-            list-style: none;
-            text-align: right;
-        }
-
-        .services-list li {
-            font-size: 13px;
-            color: #64748b;
-            padding: 4px 0;
-            transition: color 0.2s;
-        }
-
-        .services-list li:hover {
+        .brand-event .event-name {
             color: #e2e8f0;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 6px;
         }
 
-        .services-list li span {
-            color: #475569;
-            margin-left: 6px;
-        }
-
-        .nav-links {
-            margin-top: 32px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        .nav-link {
-            font-size: 12px;
+        .brand-event .event-detail {
             color: #00a884;
-            text-decoration: none;
-            padding: 4px 12px;
-            border: 1px solid rgba(0, 168, 132, 0.2);
-            border-radius: 6px;
-            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 2px;
         }
 
-        .nav-link:hover {
-            background: rgba(0, 168, 132, 0.1);
-            border-color: rgba(0, 168, 132, 0.4);
-        }
-
-        /* iPhone Frame */
+        /* iPhone Frame — Premium */
         .iphone-container {
             position: relative;
-            z-index: 20;
+            flex-shrink: 0;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glow behind phone */
+        .iphone-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 900px;
+            background: radial-gradient(ellipse, rgba(0,168,132,0.08) 0%, transparent 70%);
+            pointer-events: none;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         .iphone-frame {
             width: 390px;
             height: 844px;
             border-radius: 55px;
-            background: #1a1a1a;
-            border: 3px solid #333;
+            background: #1c1c1e;
+            border: 2.5px solid #3a3a3c;
             box-shadow:
-                0 0 0 2px #111,
-                0 0 80px rgba(0, 168, 132, 0.1),
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                inset 0 0 0 2px rgba(255,255,255,0.05);
+                0 0 0 1px #111,
+                0 0 100px rgba(0, 168, 132, 0.08),
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                inset 0 -1px 0 rgba(0,0,0,0.3);
             overflow: hidden;
             position: relative;
         }
 
-        /* Dynamic Island / Notch */
+        /* Dynamic Island */
         .dynamic-island {
             position: absolute;
-            top: 12px;
+            top: 11px;
             left: 50%;
             transform: translateX(-50%);
             width: 126px;
-            height: 36px;
+            height: 37px;
             background: #000;
             border-radius: 20px;
             z-index: 100;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+            box-shadow:
+                0 0 0 0.5px rgba(255,255,255,0.06),
+                inset 0 0 4px rgba(0,0,0,0.8);
         }
 
-        /* Camera dot */
         .dynamic-island::after {
             content: '';
             position: absolute;
-            right: 16px;
+            right: 18px;
             top: 50%;
             transform: translateY(-50%);
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: radial-gradient(circle, #1a1a2e 30%, #0d0d1a 60%, #000 100%);
-            border: 1px solid #222;
+            background: radial-gradient(circle at 35% 35%, #1a1a2e 20%, #0a0a15 50%, #000 100%);
+            border: 0.5px solid #333;
+            box-shadow: inset 0 0 2px rgba(80, 80, 120, 0.3);
         }
 
-        /* Home indicator */
         .home-indicator {
             position: absolute;
             bottom: 8px;
@@ -201,12 +275,11 @@
             transform: translateX(-50%);
             width: 134px;
             height: 5px;
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.25);
             border-radius: 3px;
             z-index: 100;
         }
 
-        /* Screen */
         .iphone-screen {
             position: absolute;
             top: 0;
@@ -227,61 +300,171 @@
         /* Side buttons */
         .btn-power {
             position: absolute;
-            right: -5px;
+            right: -4px;
             top: 180px;
-            width: 4px;
+            width: 3px;
             height: 80px;
-            background: #333;
+            background: linear-gradient(180deg, #4a4a4c, #3a3a3c, #4a4a4c);
             border-radius: 0 2px 2px 0;
         }
 
         .btn-vol-up {
             position: absolute;
-            left: -5px;
+            left: -4px;
             top: 150px;
-            width: 4px;
-            height: 40px;
-            background: #333;
+            width: 3px;
+            height: 38px;
+            background: linear-gradient(180deg, #4a4a4c, #3a3a3c, #4a4a4c);
             border-radius: 2px 0 0 2px;
         }
 
         .btn-vol-down {
             position: absolute;
-            left: -5px;
+            left: -4px;
             top: 200px;
-            width: 4px;
-            height: 40px;
-            background: #333;
+            width: 3px;
+            height: 38px;
+            background: linear-gradient(180deg, #4a4a4c, #3a3a3c, #4a4a4c);
             border-radius: 2px 0 0 2px;
         }
 
         .btn-silent {
             position: absolute;
-            left: -5px;
+            left: -4px;
             top: 115px;
-            width: 4px;
-            height: 20px;
-            background: #333;
+            width: 3px;
+            height: 18px;
+            background: linear-gradient(180deg, #4a4a4c, #3a3a3c, #4a4a4c);
             border-radius: 2px 0 0 2px;
         }
 
-        /* Reflection effect */
+        /* Top reflection */
         .iphone-frame::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            height: 45%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 100%);
             border-radius: 52px 52px 0 0;
             pointer-events: none;
             z-index: 90;
         }
 
-        /* Responsive — hide branding on smaller screens */
+        /* Right info panel */
+        .info-right {
+            flex-shrink: 0;
+            max-width: 260px;
+            animation: fadeInRight 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 168, 132, 0.1);
+            border: 1px solid rgba(0, 168, 132, 0.25);
+            color: #00a884;
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+        }
+
+        .demo-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00a884;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,168,132,0.4); }
+            50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(0,168,132,0); }
+        }
+
+        .services-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .services-list li {
+            font-size: 13.5px;
+            color: #94a3b8;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .services-list li:last-child { border-bottom: none; }
+
+        .services-list li:hover {
+            color: #e2e8f0;
+            transform: translateX(4px);
+        }
+
+        .services-list li .service-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00a884;
+            flex-shrink: 0;
+        }
+
+        .services-list li:nth-child(even) .service-dot {
+            background: #d4a853;
+        }
+
+        .services-list li span {
+            color: #475569;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .nav-links {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-link {
+            font-size: 12px;
+            color: #00a884;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(0, 168, 132, 0.15);
+            border-radius: 10px;
+            transition: all 0.25s;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: rgba(0, 168, 132, 0.08);
+            border-color: rgba(0, 168, 132, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Responsive */
         @media (max-width: 1200px) {
             .brand-left, .info-right { display: none; }
+            .stage-layout { gap: 0; padding: 0; }
         }
 
         @media (max-height: 900px) {
@@ -294,54 +477,103 @@
             .iphone-screen iframe { border-radius: 45px; }
             .dynamic-island { top: 10px; width: 110px; height: 32px; }
         }
+
+        @media (max-height: 750px) {
+            .iphone-frame {
+                width: 300px;
+                height: 650px;
+                border-radius: 42px;
+            }
+            .iphone-screen { border-radius: 39px; }
+            .iphone-screen iframe { border-radius: 39px; }
+        }
     </style>
 </head>
 <body>
     <div class="stage-bg"></div>
 
-    <!-- Left branding -->
-    <div class="brand-left">
-        <div class="brand-name">Pfula</div>
-        <div class="brand-meaning">(to open)</div>
-        <div class="brand-tagline">
-            AI that opens government for every South African. SASSA. Home Affairs. UIF. SARS. Municipal Services. In your language.
-        </div>
-        <div class="brand-event">
-            Data & AI Community Day Durban
-            <strong>AI Unplugged — 14 March 2026</strong>
-        </div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
 
-    <!-- iPhone -->
-    <div class="iphone-container">
-        <div class="iphone-frame">
-            <div class="dynamic-island"></div>
-            <div class="btn-power"></div>
-            <div class="btn-vol-up"></div>
-            <div class="btn-vol-down"></div>
-            <div class="btn-silent"></div>
-            <div class="iphone-screen">
-                <iframe src="/" id="phone-screen"></iframe>
+    <div class="stage-layout">
+        <!-- Left branding -->
+        <div class="brand-left">
+            <div class="brand-logo">
+                <div class="brand-name">Pfula</div>
+                <div class="brand-meaning">(to open)</div>
             </div>
-            <div class="home-indicator"></div>
-        </div>
-    </div>
 
-    <!-- Right info -->
-    <div class="info-right">
-        <div class="demo-badge">Live Demo</div>
-        <ul class="services-list">
-            <li>SASSA <span>Grants & Appeals</span></li>
-            <li>Home Affairs <span>IDs & Passports</span></li>
-            <li>UIF <span>Unemployment Benefits</span></li>
-            <li>SARS <span>Tax Returns</span></li>
-            <li>eThekwini <span>Municipal Services</span></li>
-            <li>Deeds Office <span>Property</span></li>
-            <li>CIPC <span>Business Registration</span></li>
-        </ul>
-        <div class="nav-links">
-            <a href="/dashboard" class="nav-link" target="_blank">Analytics Dashboard →</a>
-            <a href="/tracker" class="nav-link" target="_blank">Case Tracker →</a>
+            <div class="brand-divider"></div>
+
+            <div class="brand-tagline">
+                <strong>AI that opens government</strong> for every South African.
+                Navigate SASSA, Home Affairs, UIF, SARS, and municipal services
+                — in your language, on your phone.
+            </div>
+
+            <div class="brand-stats">
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Services</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number gold">11</div>
+                    <div class="stat-label">Languages</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">R0.23</div>
+                    <div class="stat-label">Per Query</div>
+                </div>
+            </div>
+
+            <div class="brand-event">
+                <div class="event-label">Presenting at</div>
+                <div class="event-name">Data & AI Community Day Durban</div>
+                <div class="event-detail">AI Unplugged — 14 March 2026</div>
+            </div>
+        </div>
+
+        <!-- iPhone -->
+        <div class="iphone-container">
+            <div class="iphone-frame">
+                <div class="dynamic-island"></div>
+                <div class="btn-power"></div>
+                <div class="btn-vol-up"></div>
+                <div class="btn-vol-down"></div>
+                <div class="btn-silent"></div>
+                <div class="iphone-screen">
+                    <iframe src="/" id="phone-screen"></iframe>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+        </div>
+
+        <!-- Right info -->
+        <div class="info-right">
+            <div class="demo-badge">Live Demo</div>
+
+            <ul class="services-list">
+                <li><div class="service-dot"></div>SASSA <span>Grants & Appeals</span></li>
+                <li><div class="service-dot"></div>Home Affairs <span>IDs & Passports</span></li>
+                <li><div class="service-dot"></div>UIF <span>Unemployment</span></li>
+                <li><div class="service-dot"></div>SARS <span>Tax Returns</span></li>
+                <li><div class="service-dot"></div>eThekwini <span>Municipal</span></li>
+                <li><div class="service-dot"></div>Deeds Office <span>Property</span></li>
+                <li><div class="service-dot"></div>CIPC <span>Business</span></li>
+            </ul>
+
+            <div class="nav-links">
+                <a href="/dashboard" class="nav-link" target="_blank">Analytics Dashboard</a>
+                <a href="/tracker" class="nav-link" target="_blank">Case Tracker</a>
+            </div>
         </div>
     </div>
 </body>
