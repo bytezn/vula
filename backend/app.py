@@ -86,6 +86,13 @@ async def simulator():
     return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
 
 
+@app.get("/mockup", response_class=HTMLResponse)
+async def mockup():
+    """Serve the UX mockup page."""
+    html_path = Path(__file__).parent.parent / "frontend" / "mockup.html"
+    return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
+
+
 @app.get("/tracker", response_class=HTMLResponse)
 async def tracker():
     """Serve the case tracker page."""
