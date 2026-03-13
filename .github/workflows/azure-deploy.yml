@@ -7,6 +7,9 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: pfula-app
+  AZURE_RG: pfula-rg
+  AZURE_LOCATION: southafricanorth
+  AZURE_PLAN: pfula-plan
   PYTHON_VERSION: "3.11"
 
 permissions:
@@ -26,6 +29,57 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Provision Azure infrastructure
+        run: |
+          # Create resource group if it doesn't exist
+          az group create \
+            --name ${{ env.AZURE_RG }} \
+            --location ${{ env.AZURE_LOCATION }} \
+            --output none 2>/dev/null || true
+
+          # Create App Service plan if it doesn't exist
+          if ! az appservice plan show --name ${{ env.AZURE_PLAN }} --resource-group ${{ env.AZURE_RG }} --output none 2>/dev/null; then
+            az appservice plan create \
+              --name ${{ env.AZURE_PLAN }} \
+              --resource-group ${{ env.AZURE_RG }} \
+              --location ${{ env.AZURE_LOCATION }} \
+              --sku B1 \
+              --is-linux
+          fi
+
+          # Create Web App if it doesn't exist
+          if ! az webapp show --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RG }} --output none 2>/dev/null; then
+            az webapp create \
+              --name ${{ env.AZURE_WEBAPP_NAME }} \
+              --resource-group ${{ env.AZURE_RG }} \
+              --plan ${{ env.AZURE_PLAN }} \
+              --runtime "PYTHON:3.11"
+          fi
+
+          # Configure startup command and app settings
+          az webapp config set \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --resource-group ${{ env.AZURE_RG }} \
+            --startup-file "python run.py"
+
+          # Set Anthropic API key if secret is provided
+          if [ -n "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            az webapp config appsettings set \
+              --name ${{ env.AZURE_WEBAPP_NAME }} \
+              --resource-group ${{ env.AZURE_RG }} \
+              --settings \
+                ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}" \
+                PORT=8000 \
+                ENV=production
+          else
+            az webapp config appsettings set \
+              --name ${{ env.AZURE_WEBAPP_NAME }} \
+              --resource-group ${{ env.AZURE_RG }} \
+              --settings \
+                PORT=8000 \
+                ENV=production
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v5
