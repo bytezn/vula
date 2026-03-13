@@ -2,7 +2,7 @@ name: Deploy Pfula to Azure App Service
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'claude/**']
   workflow_dispatch:
 
 env:
