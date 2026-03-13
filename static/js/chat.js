@@ -9,6 +9,7 @@ let currentLanguage = 'en';
 let isStreaming = false;
 let currentStreamBubble = null;
 let messageCount = 0;
+let ttsEnabled = true;
 
 // --- Sound Effects (subtle, WhatsApp-like) ---
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -229,6 +230,11 @@ function handleStreamComplete(fullText) {
 
     // Generate smart follow-up suggestions
     showFollowUpSuggestions(fullText);
+
+    // Speak the response aloud
+    if (ttsEnabled) {
+        speakResponse(fullText);
+    }
 
     scrollToBottom();
 }
@@ -537,6 +543,90 @@ function stopListening() {
     if (recognition) {
         try { recognition.stop(); } catch(e) {}
     }
+}
+
+// --- Text-to-Speech ---
+
+function speakResponse(text) {
+    if (!window.speechSynthesis) return;
+
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+
+    // Clean text for speech — strip markdown, URLs, special chars
+    let clean = text
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/###?\s/g, '')
+        .replace(/https?:\/\/[^\s]+/g, '')
+        .replace(/[\-\*] /g, '')
+        .replace(/\n{2,}/g, '. ')
+        .replace(/\n/g, '. ')
+        .trim();
+
+    // Truncate very long responses for speech (first ~500 chars)
+    if (clean.length > 500) {
+        const cutoff = clean.lastIndexOf('.', 500);
+        clean = clean.substring(0, cutoff > 200 ? cutoff + 1 : 500) + '. I have more details in the message above.';
+    }
+
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    utterance.volume = 0.9;
+
+    // Try to pick a good voice
+    const voices = window.speechSynthesis.getVoices();
+    const lang = currentLanguage === 'zu' ? 'zu' : 'en';
+
+    // Prefer: en-ZA, en-GB, en-US (in that order for SA context)
+    const preferred = lang === 'zu'
+        ? voices.find(v => v.lang.startsWith('zu'))
+        : voices.find(v => v.lang === 'en-ZA')
+          || voices.find(v => v.lang === 'en-GB')
+          || voices.find(v => v.lang.startsWith('en'));
+
+    if (preferred) utterance.voice = preferred;
+    utterance.lang = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+
+    // Show speaking state
+    const status = document.getElementById('wa-status');
+    status.textContent = 'speaking...';
+    status.classList.add('typing');
+
+    utterance.onend = () => {
+        status.textContent = 'online';
+        status.classList.remove('typing');
+    };
+
+    utterance.onerror = () => {
+        status.textContent = 'online';
+        status.classList.remove('typing');
+    };
+
+    window.speechSynthesis.speak(utterance);
+}
+
+function toggleTTS() {
+    ttsEnabled = !ttsEnabled;
+    const btn = document.getElementById('tts-toggle');
+    if (btn) {
+        btn.classList.toggle('tts-off', !ttsEnabled);
+        btn.title = ttsEnabled ? 'Voice responses ON' : 'Voice responses OFF';
+    }
+
+    // Stop current speech if disabling
+    if (!ttsEnabled && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        const status = document.getElementById('wa-status');
+        status.textContent = 'online';
+        status.classList.remove('typing');
+    }
+}
+
+// Preload voices (Chrome loads them async)
+if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
 // --- Smart Follow-Up Suggestions ---

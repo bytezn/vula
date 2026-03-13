@@ -192,6 +192,29 @@ html, body {
     align-items: center;
 }
 
+/* TTS Toggle */
+.tts-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--pfula-gold);
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+}
+
+.tts-toggle:hover {
+    background: rgba(196, 150, 64, 0.15);
+}
+
+.tts-toggle.tts-off {
+    color: var(--wa-text-secondary);
+    opacity: 0.5;
+}
+
 .language-toggle {
     background: linear-gradient(135deg, var(--wa-green), #a07830);
     border-radius: 14px;
