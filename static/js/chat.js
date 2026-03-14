@@ -264,6 +264,16 @@ function handleStreamComplete(fullText) {
         speakConversational(fullText);
     }
 
+    // Flush any voice message that was queued while streaming was in progress
+    if (pendingVoiceMessage) {
+        const queued = pendingVoiceMessage;
+        pendingVoiceMessage = null;
+        setTimeout(() => {
+            document.getElementById('message-input').value = queued;
+            sendMessage();
+        }, 150);
+    }
+
     scrollToBottom();
 }
 
@@ -491,6 +501,8 @@ function runScenario(scenario) {
 
 let recognition = null;
 let isListening = false;
+let pendingVoiceMessage = null;  // queued when voice fires mid-stream
+let micSafetyTimer = null;       // auto-reset if mic hangs
 
 function initSpeechRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -519,7 +531,14 @@ function initSpeechRecognition() {
         // Auto-send on final result
         if (isFinal) {
             stopListening();
-            setTimeout(() => sendMessage(), 200);
+            setTimeout(() => {
+                if (isStreaming) {
+                    // Response still streaming — queue and send when it completes
+                    pendingVoiceMessage = transcript;
+                } else {
+                    sendMessage();
+                }
+            }, 200);
         }
     };
 
@@ -543,10 +562,15 @@ function toggleVoiceInput() {
         return;
     }
 
+    // Stop Leah before opening the mic — prevents her voice being picked up
+    _stopCurrentTTS();
+    _setTTSSpeaking(false);
+    const statusEl = document.getElementById('wa-status');
+    if (statusEl) { statusEl.textContent = 'online'; statusEl.classList.remove('typing'); }
+
     // Update language before starting
     recognition = initSpeechRecognition();
     if (!recognition) {
-        // Fallback: show a brief message
         const input = document.getElementById('message-input');
         input.placeholder = 'Voice not supported in this browser';
         setTimeout(() => {
@@ -559,17 +583,20 @@ function toggleVoiceInput() {
     const micBtn = document.getElementById('mic-btn');
     micBtn.classList.add('listening');
 
-    // Update status
     const status = document.getElementById('wa-status');
     status.textContent = 'listening...';
     status.classList.add('typing');
 
-    // Update placeholder
     const input = document.getElementById('message-input');
     input.placeholder = currentLanguage === 'zu' ? 'Khuluma manje...' : 'Speak now...';
     input.value = '';
 
     playSound('send');
+
+    // Safety timeout — auto-reset mic if it hangs for more than 12 seconds
+    micSafetyTimer = setTimeout(() => {
+        if (isListening) stopListening();
+    }, 12000);
 
     try {
         recognition.start();
@@ -580,6 +607,7 @@ function toggleVoiceInput() {
 
 function stopListening() {
     isListening = false;
+    if (micSafetyTimer) { clearTimeout(micSafetyTimer); micSafetyTimer = null; }
     const micBtn = document.getElementById('mic-btn');
     if (micBtn) micBtn.classList.remove('listening');
 
