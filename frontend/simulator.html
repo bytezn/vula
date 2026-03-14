@@ -574,7 +574,19 @@
         /* ─────────────────────────────────────────────────
            RESPONSIVE
         ───────────────────────────────────────────────── */
+        /* 1050–1300px: keep left copy + phone, hide right panel, compress spacing */
         @media (max-width: 1300px) {
+            .panel-right { display: none; }
+            .hero { gap: 28px; padding-left: 28px; padding-right: 28px; }
+            .copy { width: 300px; }
+            .headline { font-size: 46px; letter-spacing: -2.5px; }
+            .subline { font-size: 14.5px; }
+            .stats { margin-bottom: 24px; }
+            .ctas { gap: 8px; }
+        }
+
+        /* Below 1050px: phone only */
+        @media (max-width: 1050px) {
             .copy, .panel-right { display: none; }
             .hero { gap: 0; padding: 0; }
         }
