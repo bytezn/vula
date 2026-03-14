@@ -218,6 +218,16 @@ html, body {
     opacity: 0.5;
 }
 
+.tts-toggle.tts-speaking {
+    color: #ef4444;
+    animation: tts-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes tts-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.6; transform: scale(0.92); }
+}
+
 .language-toggle {
     background: linear-gradient(135deg, var(--wa-green), #009975);
     border-radius: 14px;

@@ -647,6 +647,24 @@ function extractSpeechText(text) {
     return clean.substring(0, cut > 80 ? cut : 200).trim() + '.';
 }
 
+// Closing questions appended after the spoken summary — keeps the conversation open
+const TTS_CLOSINGS = [
+    'Is there anything else I can help you with?',
+    'Would you like more detail on any of this?',
+    'Do you have any other questions for me?',
+    'Let me know if there\'s anything else you need.',
+    'Is there something specific you\'d like me to explain further?',
+];
+
+function _getClosing() {
+    return TTS_CLOSINGS[Math.floor(Math.random() * TTS_CLOSINGS.length)];
+}
+
+function _setTTSSpeaking(speaking) {
+    const btn = document.getElementById('tts-toggle');
+    if (btn) btn.classList.toggle('tts-speaking', speaking);
+}
+
 /**
  * Primary TTS: Azure Neural (en-ZA-LeahNeural — natural SA female voice).
  * Falls back to browser Web Speech API if Azure key not set or request fails.
@@ -654,8 +672,11 @@ function extractSpeechText(text) {
 async function speakConversational(text) {
     if (!ttsEnabled) return;
 
-    const speech = extractSpeechText(text);
-    if (!speech) return;
+    const summary = extractSpeechText(text);
+    if (!summary) return;
+
+    // Append a closing question so the response doesn't end abruptly
+    const speech = `${summary} ${_getClosing()}`;
 
     // Stop anything currently playing
     _stopCurrentTTS();
@@ -668,6 +689,7 @@ async function speakConversational(text) {
         }
     };
     setStatus('speaking...');
+    _setTTSSpeaking(true);
 
     // ── Try Azure Neural TTS first ──
     try {
@@ -685,8 +707,9 @@ async function speakConversational(text) {
         audio.volume = 0.95;
         currentTTSAudio = audio;
 
-        audio.onended = () => { URL.revokeObjectURL(url); currentTTSAudio = null; setStatus('online'); };
-        audio.onerror = () => { URL.revokeObjectURL(url); currentTTSAudio = null; setStatus('online'); };
+        const done = () => { URL.revokeObjectURL(url); currentTTSAudio = null; setStatus('online'); _setTTSSpeaking(false); };
+        audio.onended = done;
+        audio.onerror = done;
 
         await audio.play();
         return; // success — done
@@ -699,7 +722,7 @@ async function speakConversational(text) {
     }
 
     // ── Fallback: browser Web Speech API ──
-    _webSpeechFallback(speech, () => setStatus('online'));
+    _webSpeechFallback(speech, () => { setStatus('online'); _setTTSSpeaking(false); });
 }
 
 /** Stop whatever TTS is currently playing (Azure audio or Web Speech). */
@@ -744,8 +767,18 @@ function _webSpeechFallback(speech, onDone) {
 }
 
 function toggleTTS() {
-    ttsEnabled = !ttsEnabled;
     const btn = document.getElementById('tts-toggle');
+
+    // If currently speaking — tap stops it without toggling TTS on/off
+    if (currentTTSAudio && !currentTTSAudio.paused) {
+        _stopCurrentTTS();
+        _setTTSSpeaking(false);
+        const status = document.getElementById('wa-status');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
+        return;
+    }
+
+    ttsEnabled = !ttsEnabled;
     if (btn) {
         btn.classList.toggle('tts-off', !ttsEnabled);
         btn.title = ttsEnabled ? 'Voice responses ON' : 'Voice responses OFF';
@@ -754,10 +787,21 @@ function toggleTTS() {
     // Stop everything immediately when disabling
     if (!ttsEnabled) {
         _stopCurrentTTS();
+        _setTTSSpeaking(false);
         const status = document.getElementById('wa-status');
         if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
     }
 }
+
+// Escape key stops TTS mid-speech
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && currentTTSAudio && !currentTTSAudio.paused) {
+        _stopCurrentTTS();
+        _setTTSSpeaking(false);
+        const status = document.getElementById('wa-status');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
+    }
+});
 
 // Preload voices (Chrome loads them async)
 if (window.speechSynthesis) {
