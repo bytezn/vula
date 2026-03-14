@@ -674,8 +674,8 @@ async function speakConversational(text) {
     const summary = extractSpeechText(text);
     if (!summary) return;
 
-    // Append a closing question so the response doesn't end abruptly
-    const speech = `${summary} ${_getClosing()}`;
+    // Bridge voice → chat text, then close with a question
+    const speech = `${summary} I've shared the full details in the chat for you. ${_getClosing()}`;
 
     // Stop anything currently playing
     _stopCurrentTTS();
