@@ -633,18 +633,17 @@ function extractSpeechText(text) {
         const s = m[0].trim();
         if (s.length < 10) continue;
         sentences.push(s);
-        // One punchy sentence sounds far more conversational than two long ones
-        if (sentences[0].length >= 60) break;
-        if (sentences.join(' ').length >= 170) break;
-        if (sentences.length >= 2) break;
+        // Speak up to 4 sentences or ~420 chars — enough to cover the key detail
+        if (sentences.join(' ').length >= 420) break;
+        if (sentences.length >= 4) break;
     }
 
     if (sentences.length > 0) return sentences.join(' ');
 
     // Fallback for very short or unpunctuated responses
-    if (clean.length <= 220) return clean;
-    const cut = clean.lastIndexOf(' ', 200);
-    return clean.substring(0, cut > 80 ? cut : 200).trim() + '.';
+    if (clean.length <= 500) return clean;
+    const cut = clean.lastIndexOf(' ', 450);
+    return clean.substring(0, cut > 80 ? cut : 450).trim() + '.';
 }
 
 // Closing questions appended after the spoken summary — keeps the conversation open
