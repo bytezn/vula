@@ -9,15 +9,17 @@ import json
 import asyncio
 from pathlib import Path
 from datetime import datetime
+from xml.sax.saxutils import escape as xml_escape
 
+import httpx
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
+from fastapi.responses import HTMLResponse, FileResponse, JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import anthropic
 
-from backend.knowledge import load_all_knowledge
+from backend.knowledge import load_knowledge_for_service
 from backend.system_prompt import get_system_prompt
 from backend.demo_responses import get_demo_response, stream_demo_response
 from backend.database import (
@@ -46,15 +48,20 @@ app.add_middleware(
 STATIC_DIR = Path(__file__).parent.parent / "static"
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
-# Initialize
-knowledge_base = load_all_knowledge()
-system_prompt = get_system_prompt(knowledge_base)
+# Build a base system prompt (no KB — KB is injected per-request based on detected service)
+# This keeps the static system prompt ~1,200 tokens instead of ~54,000 tokens.
+_base_system_prompt = get_system_prompt("")  # KB placeholder filled per-request
 
 # Demo mode detection
 DEMO_MODE = not os.getenv("ANTHROPIC_API_KEY")
 
-# Claude client (None in demo mode)
-client = None if DEMO_MODE else anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
+# Claude async client (None in demo mode)
+# Using AsyncAnthropic so streaming never blocks the event loop on Azure
+# Explicit timeout: 45s connect, 90s read — prevents Azure B1 hanging on slow responses
+client = None if DEMO_MODE else anthropic.AsyncAnthropic(
+    api_key=os.getenv("ANTHROPIC_API_KEY", ""),
+    timeout=httpx.Timeout(90.0, connect=15.0),
+)
 
 
 @app.on_event("startup")
@@ -83,6 +90,13 @@ async def dashboard():
 async def simulator():
     """Serve the iPhone simulator view — for stage presentations."""
     html_path = Path(__file__).parent.parent / "frontend" / "simulator.html"
+    return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
+
+
+@app.get("/mockup", response_class=HTMLResponse)
+async def mockup():
+    """Serve the UX mockup page."""
+    html_path = Path(__file__).parent.parent / "frontend" / "mockup.html"
     return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
 
 
@@ -128,19 +142,26 @@ async def chat(data: dict):
     # Get conversation history
     messages = get_conversation_messages(conv_id)
 
+    # Build per-request system prompt: base instructions + ONLY the relevant KB section
+    # (avoids sending all 54k KB tokens every request — stays under 30k/min rate limit)
+    service = _detect_service(message)
+    kb_section = load_knowledge_for_service(service)
+    request_system_prompt = get_system_prompt(kb_section)
+
     # Call Claude (or use demo responses)
     if DEMO_MODE:
         assistant_message = get_demo_response(message)
     else:
         try:
-            response = client.messages.create(
+            response = await client.messages.create(
                 model="claude-sonnet-4-20250514",
-                max_tokens=2048,
-                system=system_prompt,
+                max_tokens=1024,
+                system=request_system_prompt,
                 messages=messages,
             )
             assistant_message = response.content[0].text
         except Exception as e:
+            print(f"[Pfula ERROR /api/chat] {type(e).__name__}: {e}")
             assistant_message = (
                 "I'm having trouble connecting right now. Please try again in a moment. "
                 "If this persists, you can call the relevant service directly — "
@@ -191,10 +212,15 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
             add_message(conv_id, "user", user_message)
 
             language = _detect_language(user_message)
-            log_analytics("query", _detect_service(user_message), user_message, language)
+            service = _detect_service(user_message)
+            log_analytics("query", service, user_message, language)
 
             # Get history
             messages = get_conversation_messages(conv_id)
+
+            # Per-request system prompt with only the relevant KB section
+            kb_section = load_knowledge_for_service(service)
+            request_system_prompt = get_system_prompt(kb_section)
 
             # Stream response
             full_response = ""
@@ -207,24 +233,26 @@ async def websocket_chat(websocket: WebSocket, conv_id: str):
                     })
             else:
                 try:
-                    with client.messages.stream(
+                    async with client.messages.stream(
                         model="claude-sonnet-4-20250514",
-                        max_tokens=2048,
-                        system=system_prompt,
+                        max_tokens=1024,
+                        system=request_system_prompt,
                         messages=messages,
                     ) as stream:
-                        for text in stream.text_stream:
+                        async for text in stream.text_stream:
                             full_response += text
                             await websocket.send_json({
                                 "type": "stream",
                                 "content": text,
                             })
-                except Exception:
+                except Exception as e:
+                    print(f"[Pfula ERROR /ws/chat] {type(e).__name__}: {e}")
                     full_response = (
-                        "I'm having trouble connecting right now. Please try again in a moment."
+                        "I'm having a moment of trouble — just tap send again and I'll be right with you. "
+                        "If it keeps happening: SASSA 0800 60 10 11 · Home Affairs 0800 60 11 90 · SARS 0800 00 7277."
                     )
                     await websocket.send_json({
-                        "type": "stream",
+                        "type": "error",
                         "content": full_response,
                     })
 
@@ -328,7 +356,7 @@ Return the letter as a JSON object with these fields:
 Return ONLY the JSON object, no other text."""
 
     try:
-        response = client.messages.create(
+        response = await client.messages.create(
             model="claude-sonnet-4-20250514",
             max_tokens=2048,
             messages=[{"role": "user", "content": letter_prompt}],
@@ -367,6 +395,65 @@ Return ONLY the JSON object, no other text."""
 async def list_letters():
     """List all escalation letters."""
     return {"letters": get_escalation_letters()}
+
+
+# --- Azure Neural TTS API ---
+
+@app.post("/api/tts")
+async def text_to_speech(data: dict):
+    """Convert text to speech using Azure Cognitive Services (en-ZA-LeahNeural).
+
+    Requires AZURE_SPEECH_KEY and AZURE_SPEECH_REGION env vars.
+    Returns MP3 audio bytes directly — the frontend plays them via the Audio API.
+    Falls back gracefully: if not configured, returns 503 so the frontend
+    can fall back to the browser's Web Speech API.
+    """
+    text = data.get("text", "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="text is required")
+
+    speech_key = os.getenv("AZURE_SPEECH_KEY")
+    speech_region = os.getenv("AZURE_SPEECH_REGION", "eastus")
+
+    if not speech_key:
+        raise HTTPException(status_code=503, detail="Azure TTS not configured — set AZURE_SPEECH_KEY")
+
+    # Use en-ZA-LeahNeural — natural South African English female voice
+    voice = "en-ZA-LeahNeural"
+    ssml = f"""<speak version='1.0' xml:lang='en-ZA'>
+  <voice name='{voice}'>
+    <prosody rate='+5%' pitch='+0%' volume='loud'>
+      {xml_escape(text)}
+    </prosody>
+  </voice>
+</speak>"""
+
+    tts_url = f"https://{speech_region}.tts.speech.microsoft.com/cognitiveservices/v1"
+    headers = {
+        "Ocp-Apim-Subscription-Key": speech_key,
+        "Content-Type": "application/ssml+xml",
+        "X-Microsoft-OutputFormat": "audio-16khz-128kbitrate-mono-mp3",
+        "User-Agent": "Pfula/1.0",
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(10.0, connect=5.0)) as http:
+            resp = await http.post(tts_url, content=ssml.encode("utf-8"), headers=headers)
+    except httpx.TimeoutException:
+        raise HTTPException(status_code=504, detail="Azure TTS timed out")
+    except Exception as e:
+        print(f"[Pfula TTS ERROR] {type(e).__name__}: {e}")
+        raise HTTPException(status_code=502, detail="Azure TTS request failed")
+
+    if resp.status_code != 200:
+        print(f"[Pfula TTS ERROR] Azure returned {resp.status_code}: {resp.text[:200]}")
+        raise HTTPException(status_code=502, detail=f"Azure TTS error {resp.status_code}")
+
+    return Response(
+        content=resp.content,
+        media_type="audio/mpeg",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 # --- Analytics API ---

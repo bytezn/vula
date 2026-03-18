@@ -1,192 +1,808 @@
 {
   "service": "SASSA - South African Social Security Agency",
-  "overview": "SASSA administers social grants to eligible South African citizens, permanent residents, and refugees. It is the primary social safety net for millions of South Africans.",
+  "overview": "SASSA administers social grants to eligible South African citizens, permanent residents, and refugees. It is the primary social safety net for over 28 million grant recipients in South Africa. SASSA operates under the Social Assistance Act 13 of 2004 and is overseen by the Department of Social Development (DSD).",
   "grants": [
     {
       "name": "Social Relief of Distress (SRD) Grant / R370 Grant",
       "amount": "R370 per month (2024/2025)",
       "eligibility": [
-        "South African citizen, permanent resident, or refugee",
+        "South African citizen, permanent resident, or refugee with valid documentation",
         "Between 18 and 60 years old",
         "Unemployed and not receiving any other social grant or UIF",
-        "Monthly income below R625",
-        "Not a full-time student at a government-funded institution",
-        "Not resident in a government-funded institution"
+        "Monthly income below R625 (verified against SARS, UIF, banks, and other government databases)",
+        "Not a full-time student at a government-funded institution receiving NSFAS",
+        "Not resident in a government-funded institution (prison, state care facility, etc.)",
+        "Must not be a registered taxpayer earning above the threshold",
+        "Must not have a spouse or partner whose income disqualifies you"
       ],
       "how_to_apply": [
-        "Apply online at srd.sassa.gov.za",
-        "You need your South African ID number",
-        "Provide a cellphone number for communication",
-        "Provide banking details or select a cash collection point",
-        "Application is reviewed monthly — you must reapply or confirm every month"
+        "Apply online at srd.sassa.gov.za — this is the ONLY official application channel for SRD",
+        "You need your South African ID number (13-digit ID number)",
+        "Provide an active cellphone number registered in your name for OTP verification",
+        "Provide banking details (FNB, Absa, Standard Bank, Nedbank, Capitec, TymeBank, African Bank, Postbank) or select Post Office cash collection",
+        "Complete the SRD online application form — no paper forms are used for this grant",
+        "Application is reviewed monthly — you MUST reconfirm by the 25th of each month",
+        "If you miss the reconfirmation deadline of the 25th, you will not be considered for that month's payment"
       ],
+      "reconfirmation": {
+        "deadline": "25th of each month",
+        "how_to_reconfirm": [
+          "Log into srd.sassa.gov.za and confirm under 'Application Status'",
+          "Dial *134*7737# and follow USSD prompts",
+          "WhatsApp 082 046 8553 with the word 'STATUS'"
+        ],
+        "what_happens_if_missed": "You are automatically excluded from that month's payment cycle. You must reconfirm the following month to be reconsidered. There is no back-pay for months you missed reconfirmation."
+      },
+      "processing_timeline": {
+        "application_review": "5-7 business days after submission",
+        "income_verification": "SASSA cross-checks your details against SARS, banks, UIF, NSFAS, Department of Home Affairs, and company payroll databases",
+        "payment_after_approval": "Payment is typically made between the 15th and the last day of the month, but dates vary each cycle",
+        "payment_method_change": "Takes effect in the next payment cycle (not the current month)"
+      },
+      "status_checking": {
+        "online": "Visit srd.sassa.gov.za → click 'SRD Status Check' → enter ID number and phone number",
+        "ussd": "Dial *134*7737# from any cellphone (no airtime needed, it is a free USSD code)",
+        "whatsapp": "Send your ID number to 082 046 8553 on WhatsApp",
+        "call": "Phone 0800 60 10 11 (toll-free from a landline) or 021 469 0111 (from a cellphone, standard rates apply)"
+      },
       "common_rejection_reasons": [
-        "Income above R625 per month detected via bank account checks",
-        "Receiving another grant (e.g., child support grant counted as income)",
-        "UIF payments detected",
-        "NSFAS funding detected (student)",
-        "Database shows employment (even if you were recently retrenched)",
-        "Failed identity verification"
+        "Income above R625 per month detected via bank account checks or SARS records",
+        "Receiving another social grant (child support grant income is counted)",
+        "UIF payments detected (even a single payment in the assessment period)",
+        "NSFAS funding detected (current students)",
+        "SARS database shows employment or tax registration with income",
+        "Company payroll databases (IRP5 data) show recent employment",
+        "Failed identity verification (ID number mismatch, deceased status on Home Affairs system)",
+        "Applicant identified as a director of a registered company (CIPC records)",
+        "Bank account shows deposits exceeding the income threshold",
+        "Applicant is under 18 or over 60",
+        "Duplicate application detected (same ID number on multiple applications)"
       ],
       "appeal_process": [
         "You can appeal within 90 days of the rejection decision",
-        "Appeal online at srd.sassa.gov.za under 'Appeal' section",
-        "You will need to provide supporting documents proving your eligibility",
-        "Appeals are reviewed by an independent tribunal",
-        "If your appeal is rejected, you can approach the Independent Tribunal for Social Assistance Appeals (ITSAA)",
-        "As a last resort, you can approach the High Court for judicial review"
+        "Appeal online at srd.sassa.gov.za under the 'Appeal' section — you need your ID number and the phone number linked to your application",
+        "Upload or provide supporting documents: affidavit of unemployment, bank statements showing no income, letter of retrenchment, UIF exhaustion letter",
+        "Appeals are first reviewed internally by SASSA within 30 days",
+        "If the internal appeal is rejected, escalate to the Independent Tribunal for Social Assistance Appeals (ITSAA)",
+        "If ITSAA rejects your appeal, you may approach the High Court for judicial review (you will need legal assistance — contact Legal Aid SA at 0800 110 110)"
       ],
       "escalation": {
         "body": "Independent Tribunal for Social Assistance Appeals (ITSAA)",
         "legislation": "Social Assistance Act 13 of 2004, Section 18",
         "contact": "SASSA toll-free: 0800 60 10 11",
-        "ombudsman": "If SASSA fails to process your appeal within 90 days, you may approach the Public Protector"
+        "itsaa_phone": "012 312 7466",
+        "itsaa_address": "368 Madiba Street, Pretoria Central, 0001",
+        "ombudsman": "If SASSA fails to process your appeal within 90 days, you may approach the Public Protector at 0800 11 20 40",
+        "legal_aid": "Legal Aid South Africa: 0800 110 110 (free legal representation for qualifying applicants)"
       }
     },
     {
-      "name": "Child Support Grant",
+      "name": "Child Support Grant (CSG)",
       "amount": "R530 per month per child (2024/2025)",
       "eligibility": [
-        "Primary caregiver of a child under 18",
+        "Primary caregiver of a child under 18 years old",
         "South African citizen, permanent resident, or refugee",
-        "Caregiver income must be below R5,600 per month (single) or R11,200 combined (married)",
-        "Child must not be in a government-funded institution",
-        "Both caregiver and child must reside in South Africa"
+        "Caregiver income must be below R5,600 per month (single) or R11,200 combined (married/cohabiting)",
+        "Child must not be in a government-funded institution (children's home, foster care facility)",
+        "Both caregiver and child must reside in South Africa",
+        "The caregiver does not need to be the biological parent — grandparents, aunts, uncles, or any person primarily caring for the child can apply",
+        "No more than 6 children per caregiver (biological parent has no limit for their own biological children)"
+      ],
+      "means_test": {
+        "single_caregiver_income_limit": "R5,600 per month / R67,200 per year",
+        "married_combined_income_limit": "R11,200 per month / R134,400 per year",
+        "what_counts_as_income": [
+          "Formal employment salary/wages",
+          "Informal employment income (piece jobs, self-employment, hawking)",
+          "Other social grants received (except the CSG being applied for)",
+          "Maintenance payments received",
+          "Rental income",
+          "Pension or retirement fund income",
+          "UIF or TERS payments"
+        ],
+        "what_does_not_count_as_income": [
+          "Gifts and donations under R1,000 per month",
+          "Once-off insurance payouts",
+          "Funeral policy payouts",
+          "Food parcels or donations in kind"
+        ],
+        "assets_not_tested": "The Child Support Grant does not have an asset/property test — only income is assessed"
+      },
+      "required_documents": [
+        "Caregiver's ID document (original or certified copy, not older than 3 months)",
+        "Child's birth certificate (unabridged birth certificate preferred)",
+        "Proof of income: latest payslip, or a sworn affidavit confirming unemployment (can be done free at a police station or commissioner of oaths)",
+        "Proof of residence: utility bill, letter from traditional authority, or affidavit",
+        "If the child's surname differs from the caregiver's: a sworn affidavit explaining the caregiving arrangement",
+        "If married: spouse's ID and proof of spouse's income",
+        "3 months' bank statements (if you have a bank account)"
+      ],
+      "required_forms": [
+        "SASSA Social Grant Application Form (available at any SASSA office, free of charge)",
+        "Sworn affidavit of unemployment (if unemployed — free at South African Police Service or commissioner of oaths)",
+        "Caregiver affidavit (if the applicant is not the biological parent)"
       ],
       "how_to_apply": [
-        "Visit your nearest SASSA office in person",
-        "Bring your ID (or certified copy), child's birth certificate, proof of income",
-        "If unemployed, bring a sworn affidavit confirming unemployment",
-        "SASSA will process within 30 days (by law)"
+        "Visit your nearest SASSA office in person — no appointment is needed but arrive early as queues can be very long",
+        "Collect and complete the SASSA application form at the office (free of charge)",
+        "Submit your ID, child's birth certificate, proof of income (payslip or unemployment affidavit), and proof of residence",
+        "SASSA will verify your information against government databases",
+        "SASSA must process the application within 30 days by law (Regulation 10(2))",
+        "You will receive an SMS notification of the outcome",
+        "If approved, back-pay is paid from the date of application (not the date of approval)"
       ],
+      "processing_timeline": {
+        "application_to_decision": "Up to 30 days (legally mandated)",
+        "first_payment_after_approval": "Within 30-60 days of approval, depending on pay cycle",
+        "back_pay": "You are entitled to back-pay from the date you submitted your application"
+      },
+      "payment_dates": "7th to 9th of each month (children's grants are paid in this window)",
       "common_problems": [
-        "Grant suspended without notification — usually due to child turning 18 or income change detected",
-        "Payment not received on expected date — check with SASSA or your bank",
-        "Someone else claiming the grant for your child — report fraud to SASSA"
+        "Grant suspended without notification — usually due to child turning 18, income change detected, or child registered as deceased on Home Affairs system",
+        "Payment not received on expected date — check with SASSA (0800 60 10 11) or your bank; payment delays of 1-3 days are common at month-end",
+        "Someone else claiming the grant for your child — report fraud to SASSA fraud hotline 0800 701 701",
+        "Grant lapses if not collected for 3 consecutive months — must reapply",
+        "Banking details changed by someone else — report immediately to SASSA and request a freeze on changes",
+        "Deductions from grant by loan sharks or microfinance — this is illegal under Regulation 26 of the Social Assistance Act; report to SASSA"
       ],
       "escalation": {
         "legislation": "Social Assistance Act 13 of 2004",
         "contact": "SASSA toll-free: 0800 60 10 11",
-        "timeframe": "SASSA must process applications within 30 days per Regulation 10(2)"
+        "timeframe": "SASSA must process applications within 30 days per Regulation 10(2)",
+        "appeal_body": "Independent Tribunal for Social Assistance Appeals (ITSAA) — 012 312 7466",
+        "appeal_address": "368 Madiba Street, Pretoria Central, 0001"
       }
     },
     {
       "name": "Older Persons Grant (Old Age Pension)",
-      "amount": "R2,180 per month (under 75) / R2,200 per month (75 and older) (2024/2025)",
+      "amount": "R2,180 per month (aged 60-74) / R2,200 per month (aged 75 and older) (2024/2025)",
       "eligibility": [
         "South African citizen, permanent resident, or refugee",
-        "Women: 60 years or older / Men: 60 years or older",
-        "Income below R7,710 per month (single) or R15,420 combined (married)",
-        "Assets below R1,372,800 (single) or R2,745,600 (married)",
-        "Not maintained in a state institution"
+        "60 years or older (both men and women — the age was equalised)",
+        "Income below R7,710 per month (single) or R15,420 combined (married/cohabiting)",
+        "Assets below R1,372,800 (single) or R2,745,600 (married/cohabiting)",
+        "Not maintained in a state institution (old age home funded by government)",
+        "Not receiving any other social grant (except Grant-in-Aid, which can be added on top)"
+      ],
+      "means_test": {
+        "single_income_limit": "R7,710 per month / R92,520 per year",
+        "married_income_limit": "R15,420 per month combined / R185,040 per year combined",
+        "single_asset_limit": "R1,372,800",
+        "married_asset_limit": "R2,745,600",
+        "what_counts_as_assets": [
+          "Property (excluding the home you live in — your primary residence is excluded)",
+          "Vehicles (market value)",
+          "Savings and investments (bank accounts, unit trusts, shares, stokvels over certain thresholds)",
+          "Life insurance policies with cash/surrender value",
+          "Any other assets with monetary value"
+        ],
+        "what_does_not_count_as_assets": [
+          "Your primary residence (the house you live in)",
+          "Household furniture and personal effects",
+          "One vehicle used for personal transport (some discretion applies)",
+          "Tools of trade",
+          "Burial society/funeral policy"
+        ]
+      },
+      "required_documents": [
+        "South African ID document (original or certified copy not older than 3 months)",
+        "Proof of residence (utility bill, municipal account, or affidavit)",
+        "3 months' bank statements for all bank accounts",
+        "Proof of income (pension payslips, rental income proof, investment statements)",
+        "If married: spouse's ID, income proof, and bank statements",
+        "If you own property: municipal valuation or title deed",
+        "Proof of any insurance policies or investments"
+      ],
+      "required_forms": [
+        "SASSA Social Grant Application Form (free at any SASSA office)",
+        "Means test declaration form (completed at the office)"
       ],
       "how_to_apply": [
-        "Visit your nearest SASSA office",
-        "Bring your ID, proof of residence, bank statements (3 months)",
-        "If married, bring spouse's ID and income proof",
-        "Processing takes up to 30 days"
-      ]
+        "Visit your nearest SASSA office in person",
+        "Bring your ID, proof of residence, bank statements (3 months for all accounts), and proof of any income or assets",
+        "If married, bring spouse's ID, income proof, and bank statements",
+        "Complete the SASSA application form and means test declaration at the office",
+        "Processing takes up to 30 days (legally mandated)",
+        "If approved, you receive back-pay from the date of application"
+      ],
+      "processing_timeline": {
+        "application_to_decision": "Up to 30 days (legally mandated)",
+        "first_payment_after_approval": "Within 30-60 days of approval",
+        "back_pay": "Paid from date of application, not date of approval",
+        "medical_review_for_frail_aged": "Not required — the Older Persons Grant is age-based, not medically assessed"
+      },
+      "payment_dates": "1st to 3rd of each month (older persons are paid first in the payment cycle)",
+      "common_problems": [
+        "Grant reduced because spouse's income or pension pushes combined income higher",
+        "Grant suspended because SASSA detected income from an investment or property rental",
+        "Grant stopped after moving to a state-funded institution — you must notify SASSA of any change in living arrangements",
+        "Deductions from SASSA gold card by unauthorised third parties — report immediately to SASSA"
+      ],
+      "escalation": {
+        "legislation": "Social Assistance Act 13 of 2004, Older Persons Act 13 of 2006",
+        "contact": "SASSA toll-free: 0800 60 10 11",
+        "appeal_body": "ITSAA — 012 312 7466, 368 Madiba Street, Pretoria Central, 0001"
+      }
     },
     {
       "name": "Disability Grant",
       "amount": "R2,180 per month (2024/2025)",
+      "types": {
+        "temporary": "Granted for 6 to 12 months — must be reassessed before expiry to continue receiving the grant",
+        "permanent": "Granted when the disability is confirmed as permanent by the SASSA-appointed medical officer — no expiry but subject to periodic review"
+      },
       "eligibility": [
         "South African citizen, permanent resident, or refugee",
-        "Between 18 and 59 years old",
-        "Must have a disability that prevents you from working",
-        "Must be assessed by a SASSA-appointed medical officer",
-        "Income below R7,710 per month (single) or R15,420 combined (married)"
+        "Between 18 and 59 years old (at age 60 you automatically transition to Older Persons Grant)",
+        "Must have a disability that prevents you from entering the open labour market",
+        "Must be assessed and confirmed by a SASSA-appointed medical officer (you cannot use your own doctor's letter alone)",
+        "Income below R7,710 per month (single) or R15,420 combined (married/cohabiting)",
+        "Assets below R1,372,800 (single) or R2,745,600 (married/cohabiting)",
+        "Not maintained in a state institution"
+      ],
+      "means_test": {
+        "single_income_limit": "R7,710 per month / R92,520 per year",
+        "married_income_limit": "R15,420 per month combined / R185,040 per year combined",
+        "single_asset_limit": "R1,372,800",
+        "married_asset_limit": "R2,745,600"
+      },
+      "required_documents": [
+        "South African ID document (original or certified copy not older than 3 months)",
+        "Medical records: hospital discharge summaries, specialist reports, chronic medication scripts, X-rays or scan reports",
+        "Proof of residence",
+        "3 months' bank statements",
+        "Proof of income (if any) or sworn affidavit of unemployment",
+        "If married: spouse's ID, income proof, and bank statements"
+      ],
+      "required_forms": [
+        "SASSA Social Grant Application Form (free at SASSA office)",
+        "SASSA Medical/Disability Assessment Form (completed by SASSA-appointed doctor — not your private doctor)",
+        "Means test declaration form"
       ],
       "how_to_apply": [
-        "Visit your nearest SASSA office",
-        "Complete the application form and book a medical assessment",
-        "Bring your ID, medical records, proof of income",
-        "The medical assessment is free — do not pay anyone",
-        "Grant can be temporary (6-12 months) or permanent depending on the condition"
+        "Visit your nearest SASSA office in person",
+        "Complete the SASSA application form and submit your documents",
+        "SASSA will book a medical assessment appointment for you — this is FREE; do not pay anyone",
+        "Attend the medical assessment on the booked date (if you miss it, you must rebook and the process starts again)",
+        "Bring all medical records, hospital letters, and chronic medication scripts to the assessment",
+        "The SASSA-appointed medical officer will determine if you qualify and whether the disability is temporary (6-12 months) or permanent",
+        "Processing takes up to 30 days from the date of medical assessment (not from application date)"
       ],
+      "processing_timeline": {
+        "application_to_medical_assessment": "7-30 days depending on availability at your local SASSA office",
+        "medical_assessment_to_decision": "Up to 30 days",
+        "total_process": "Can take 30-90 days from initial application to first payment",
+        "temporary_grant_renewal": "Apply for renewal at least 90 days before expiry date to avoid a gap in payments",
+        "transition_to_old_age": "At age 60, your disability grant automatically converts to the Older Persons Grant — no action needed"
+      },
+      "payment_dates": "4th to 6th of each month",
       "common_problems": [
-        "Temporary disability grant expiring — reapply before the expiry date",
-        "Medical assessment outcome disputed — request a review or second assessment",
-        "Grant stopped unexpectedly — contact SASSA immediately with reference number"
-      ]
+        "Temporary disability grant expiring — reapply at least 90 days before the expiry date shown on your approval letter",
+        "Medical assessment outcome disputed — request a review or second assessment in writing at your SASSA office",
+        "Grant stopped unexpectedly — contact SASSA immediately with your reference number; common causes are missed review dates or data errors",
+        "Approved for temporary when you believe your condition is permanent — appeal the decision and provide additional specialist medical evidence",
+        "Medical assessment booking delays — if SASSA takes longer than 30 days to book your assessment, lodge a complaint at the office and escalate to SASSA head office"
+      ],
+      "escalation": {
+        "legislation": "Social Assistance Act 13 of 2004",
+        "contact": "SASSA toll-free: 0800 60 10 11",
+        "appeal_body": "ITSAA — 012 312 7466, 368 Madiba Street, Pretoria Central, 0001",
+        "medical_dispute": "You may request a second medical assessment. If still disputed, escalate to ITSAA with supporting medical evidence from your treating specialist."
+      }
     },
     {
       "name": "Foster Child Grant",
       "amount": "R1,180 per month per child (2024/2025)",
       "eligibility": [
-        "You must have a valid court order placing the child in your care",
-        "The child must be under 18",
-        "You must be a South African citizen, permanent resident, or refugee"
+        "You must have a valid foster care court order issued by the Children's Court (Form 30 order)",
+        "The child must be under 18 years old",
+        "You must be a South African citizen, permanent resident, or refugee",
+        "No means test is applied — the Foster Child Grant is not income-tested",
+        "The court order must be current and valid (not expired)"
+      ],
+      "court_order_requirements": {
+        "initial_order": "Issued by the Children's Court after a social worker investigation and report",
+        "renewal": "The foster care court order must be renewed every 2 years — if it expires, the grant is automatically suspended",
+        "renewal_process": "The designated social worker must file an extension report with the Children's Court before the order expires. Contact your social worker at least 3-4 months before expiry to start the process.",
+        "lapsed_orders": "If the court order lapses, you must apply for a new court order through the Children's Court. During this period, no grant is payable. Back-pay may be possible if the delay was caused by the Department of Social Development (DSD), not the foster parent.",
+        "crisis": "There is a national backlog in foster care order renewals. If your social worker is unresponsive, contact the DSD provincial office directly or approach the Centre for Child Law at the University of Pretoria (012 420 4502) for assistance."
+      },
+      "required_documents": [
+        "Valid foster care court order (Form 30 — original or certified copy)",
+        "Foster parent's ID document (original or certified copy not older than 3 months)",
+        "Child's birth certificate (unabridged preferred)",
+        "Social worker's report (SASSA obtains this from DSD — you do not need to bring it)",
+        "Proof of residence"
+      ],
+      "required_forms": [
+        "SASSA Social Grant Application Form (free at SASSA office)",
+        "Certified copy of Children's Court order (Form 30)"
       ],
       "how_to_apply": [
-        "First obtain a foster care court order from the Children's Court",
-        "Then visit SASSA with the court order, your ID, and the child's birth certificate",
-        "SASSA processes within 30 days"
-      ]
+        "First, contact a social worker at the Department of Social Development to initiate the foster care process (this can take several months)",
+        "The social worker investigates and submits a report to the Children's Court",
+        "The Children's Court issues a foster care court order (Form 30)",
+        "Take the court order to your nearest SASSA office with your ID and child's birth certificate",
+        "SASSA processes the grant within 30 days",
+        "Back-pay is paid from the date the court order was issued (not the date you visited SASSA)"
+      ],
+      "processing_timeline": {
+        "social_worker_investigation": "2-6 months (this is the longest part of the process due to backlogs)",
+        "court_order_issuance": "1-3 months after social worker report is filed",
+        "sassa_processing": "Up to 30 days after submitting at SASSA office",
+        "court_order_renewal": "Start the process 3-4 months before the 2-year expiry"
+      },
+      "payment_dates": "7th to 9th of each month (same window as Child Support Grant)",
+      "common_problems": [
+        "Court order expired and grant was suspended — contact your social worker immediately to file for renewal",
+        "Social worker is unresponsive — escalate to the DSD district office or provincial office",
+        "Child turning 18 — the grant ends the month the child turns 18; no extension is possible",
+        "Foster parent passed away — another family member can apply for a new court order to continue foster care",
+        "Grant lapsed due to non-collection — must reapply if not collected for 3 consecutive months"
+      ],
+      "escalation": {
+        "legislation": "Children's Act 38 of 2005, Social Assistance Act 13 of 2004",
+        "contact": "SASSA toll-free: 0800 60 10 11",
+        "dsd_contact": "Department of Social Development: 012 312 7500",
+        "legal_help": "Centre for Child Law (University of Pretoria): 012 420 4502; Legal Aid SA: 0800 110 110"
+      }
     },
     {
       "name": "Care Dependency Grant",
       "amount": "R2,180 per month (2024/2025)",
       "eligibility": [
-        "Parent or caregiver of a child under 18 with a severe disability",
-        "Child requires permanent home care",
-        "Income below R5,600 per month (single) or R11,200 combined"
-      ]
+        "Parent or primary caregiver of a child under 18 with a severe disability or chronic illness requiring permanent home care",
+        "South African citizen, permanent resident, or refugee",
+        "Income below R5,600 per month (single caregiver) or R11,200 combined (married/cohabiting)",
+        "Assets below R1,372,800 (single) or R2,745,600 (married/cohabiting)",
+        "The child must NOT be permanently cared for in a state institution (24-hour care facility funded by government)",
+        "The child must be assessed by a SASSA-appointed medical officer who confirms the level of care dependency"
+      ],
+      "means_test": {
+        "single_income_limit": "R5,600 per month / R67,200 per year",
+        "married_income_limit": "R11,200 per month combined / R134,400 per year combined",
+        "single_asset_limit": "R1,372,800",
+        "married_asset_limit": "R2,745,600"
+      },
+      "medical_assessment": {
+        "who_assesses": "A SASSA-appointed medical doctor — you CANNOT use a report from your private doctor as the sole basis (but bring your private doctor's reports as supporting evidence)",
+        "what_is_assessed": "The child's level of care dependency: whether they require permanent home care due to severe physical, intellectual, or mental disability",
+        "conditions_that_typically_qualify": [
+          "Severe cerebral palsy",
+          "Profound intellectual disability",
+          "Severe autism spectrum disorder requiring constant supervision",
+          "Severe physical disability requiring daily assistance (wheelchair-bound, unable to self-care)",
+          "Chronic illnesses requiring permanent home care (severe epilepsy, severe HIV/AIDS-related illness in children)",
+          "Down syndrome with significant developmental delays",
+          "Severe visual or hearing impairment in combination with other disabilities"
+        ],
+        "reassessment": "SASSA may require periodic medical reassessment, especially for conditions that may improve. You will be notified by SMS or letter."
+      },
+      "required_documents": [
+        "Caregiver's ID document (original or certified copy not older than 3 months)",
+        "Child's birth certificate (unabridged preferred)",
+        "Medical records: specialist reports, hospital records, therapy reports, chronic medication scripts",
+        "Proof of income or sworn affidavit of unemployment",
+        "Proof of residence",
+        "3 months' bank statements",
+        "If married: spouse's ID, income proof, and bank statements",
+        "School attendance records or letter from special school (if applicable)"
+      ],
+      "required_forms": [
+        "SASSA Social Grant Application Form (free at SASSA office)",
+        "SASSA Medical/Care Dependency Assessment Form (completed by SASSA-appointed doctor)",
+        "Means test declaration form"
+      ],
+      "how_to_apply": [
+        "Visit your nearest SASSA office with all documents",
+        "Complete the application form and submit documents",
+        "SASSA will book a medical assessment for the child — this is FREE",
+        "Attend the medical assessment with the child and bring ALL medical records and specialist reports",
+        "Processing takes up to 30 days from the medical assessment date"
+      ],
+      "processing_timeline": {
+        "application_to_medical_assessment": "7-30 days",
+        "medical_assessment_to_decision": "Up to 30 days",
+        "first_payment": "Within 30-60 days of approval"
+      },
+      "payment_dates": "7th to 9th of each month (children's grants payment window)",
+      "transition_at_18": "When the child turns 18, the Care Dependency Grant ends. The now-adult child can apply for a Disability Grant in their own name if they still have a qualifying disability.",
+      "escalation": {
+        "legislation": "Social Assistance Act 13 of 2004",
+        "contact": "SASSA toll-free: 0800 60 10 11",
+        "appeal_body": "ITSAA — 012 312 7466, 368 Madiba Street, Pretoria Central, 0001",
+        "medical_dispute": "If you disagree with the medical assessment outcome, request a review in writing and provide additional specialist reports."
+      }
     },
     {
       "name": "Grant-in-Aid",
-      "amount": "R530 per month (2024/2025)",
+      "amount": "R530 per month (2024/2025) — paid IN ADDITION to your existing grant",
       "eligibility": [
-        "Already receiving an Older Persons, Disability, or War Veterans grant",
-        "Require regular attendance by another person due to physical or mental condition"
-      ]
+        "Already receiving an Older Persons Grant, Disability Grant, or War Veterans Grant",
+        "Require regular attendance/care by another person due to physical or mental condition",
+        "The person caring for you does not need to be a professional caregiver — a family member or community member qualifies",
+        "Must be assessed by SASSA (may require medical assessment)"
+      ],
+      "how_to_apply": [
+        "Visit your nearest SASSA office with your ID and proof of your existing grant",
+        "A SASSA official or medical officer will assess your care needs",
+        "No separate means test — you already qualified for the underlying grant"
+      ],
+      "processing_timeline": {
+        "application_to_decision": "Up to 30 days"
+      },
+      "payment_dates": "Paid on the same date as your primary grant (1st-3rd for older persons, 4th-6th for disability)",
+      "escalation": {
+        "legislation": "Social Assistance Act 13 of 2004",
+        "contact": "SASSA toll-free: 0800 60 10 11"
+      }
+    },
+    {
+      "name": "War Veterans Grant",
+      "amount": "R2,200 per month (2024/2025)",
+      "eligibility": [
+        "South African citizen who served in the Second World War, Korean War, or the South African liberation struggle",
+        "60 years or older, or disabled as a result of service",
+        "Income below R7,710 per month (single) or R15,420 combined (married)",
+        "Assets below R1,372,800 (single) or R2,745,600 (married)"
+      ],
+      "how_to_apply": [
+        "Visit your nearest SASSA office with your ID, proof of military service, proof of income and assets",
+        "Processing takes up to 30 days"
+      ],
+      "payment_dates": "1st to 3rd of each month",
+      "escalation": {
+        "legislation": "Social Assistance Act 13 of 2004",
+        "contact": "SASSA toll-free: 0800 60 10 11"
+      }
     }
   ],
+  "payment_information": {
+    "payment_schedule": {
+      "older_persons_grant": "1st to 3rd of each month",
+      "war_veterans_grant": "1st to 3rd of each month",
+      "disability_grant": "4th to 6th of each month",
+      "foster_child_grant": "7th to 9th of each month",
+      "care_dependency_grant": "7th to 9th of each month",
+      "child_support_grant": "7th to 9th of each month",
+      "srd_grant": "Varies — typically between the 15th and last day of the month; exact dates announced by SASSA each cycle",
+      "note": "If the payment date falls on a weekend or public holiday, payment is made on the last business day before that date. SASSA publishes the exact payment schedule on www.sassa.gov.za at the beginning of each financial year."
+    },
+    "payment_methods": {
+      "sassa_gold_card": {
+        "description": "SASSA-issued Postbank debit card (gold card) linked to your SASSA account",
+        "where_to_use": "Any ATM (Saswitch network), Post Office, retail merchants (Shoprite, Pick n Pay, Boxer, Usave, Checkers, SPAR), and SASSA pay points",
+        "fees": "One free cash withdrawal per month at the Post Office or SASSA pay point. ATM withdrawals may incur bank fees. Point-of-sale purchases at retailers are generally free.",
+        "problems": "If your card is lost/stolen, report immediately to SASSA (0800 60 10 11) or Postbank (0800 53 54 55). A replacement card takes 5-14 days."
+      },
+      "bank_account": {
+        "description": "Grant paid directly into your bank account at any South African bank",
+        "accepted_banks": "FNB, Absa, Standard Bank, Nedbank, Capitec, TymeBank, African Bank, Postbank, Discovery Bank, and other registered SA banks",
+        "requirements": "Bank account must be in the grant recipient's name. Joint accounts are not accepted for individual grants.",
+        "changing_bank_details": "Visit a SASSA office with your ID and new bank card/proof of account. Changes take effect in the next payment cycle. Do NOT give your banking details to anyone who phones or messages you claiming to be from SASSA."
+      },
+      "post_office_cash": {
+        "description": "Collect cash at any South African Post Office branch",
+        "requirements": "Bring your SASSA gold card and ID or your green bar-coded ID book",
+        "hours": "Post Office hours: Monday to Friday 08:00-16:30, some branches open Saturday 08:00-12:00"
+      },
+      "retail_cash_withdrawal": {
+        "description": "Cash back or withdrawal at participating retailers",
+        "retailers": "Shoprite, Checkers, Pick n Pay, Boxer, Usave, SPAR (select branches)",
+        "limit": "Subject to the retailer's cash-back limits, typically R500-R2,000 per transaction",
+        "note": "You can also use your SASSA gold card to pay for groceries directly at the till — no need to withdraw cash first"
+      }
+    }
+  },
+  "status_checking": {
+    "all_grants_except_srd": {
+      "phone": "Call SASSA toll-free at 0800 60 10 11 (Monday to Friday 07:30-16:00)",
+      "in_person": "Visit your nearest SASSA office with your ID — a consultant will check your status on the system",
+      "email": "Send your enquiry to grantenquiries@sassa.gov.za with your ID number and reference number"
+    },
+    "srd_grant_specific": {
+      "website": "Visit srd.sassa.gov.za → click 'SRD Status Check' → enter your ID number and phone number linked to your application",
+      "ussd": "Dial *134*7737# from any cellphone (free — no airtime required) → follow the prompts to check status",
+      "whatsapp": "Send your ID number to 082 046 8553 on WhatsApp → the automated system will reply with your status",
+      "phone": "Call 0800 60 10 11 (toll-free) or 021 469 0111 (standard rates)"
+    },
+    "status_meanings": {
+      "approved": "Your application was successful — payment will be processed according to the payment schedule",
+      "pending": "Your application is still being processed — SASSA is verifying your information",
+      "declined": "Your application was rejected — check the reason given and appeal if you believe it is incorrect",
+      "reconfirmation_needed": "SRD only: you must reconfirm by the 25th of the month to continue receiving the grant",
+      "referred": "Your application has been referred for additional verification or investigation"
+    }
+  },
+  "income_verification": {
+    "how_sassa_verifies_income": [
+      "SARS (South African Revenue Service) employment records and tax returns",
+      "UIF (Unemployment Insurance Fund) records — checks if you are receiving or have recently received UIF payments",
+      "NSFAS (National Student Financial Aid Scheme) records — checks if you receive student funding",
+      "Bank account records — SASSA can request transaction histories from any bank",
+      "CIPC (Companies and Intellectual Property Commission) — checks if you are a registered company director",
+      "Department of Labour payroll data (IRP5 submissions by employers)",
+      "Other government grant databases — checks if you are receiving any other grant",
+      "Municipal payroll data",
+      "Cross-referencing with Department of Home Affairs for identity and marital status verification"
+    ],
+    "what_counts_as_income": [
+      "Formal employment: salary, wages, commission, overtime, bonuses",
+      "Informal employment: income from piece jobs, domestic work, gardening, hawking, street vending, and other informal work",
+      "Self-employment: business income, freelance work, online work",
+      "Other social grants: the amount of other grants you receive counts as income when applying for additional grants",
+      "Maintenance payments: child maintenance or spousal maintenance received",
+      "UIF/TERS payments: unemployment or temporary employer relief payments",
+      "Rental income: income from renting out property or rooms",
+      "Pension/retirement income: private pension, provident fund, retirement annuity payments",
+      "Investment income: dividends, interest, returns from unit trusts or shares",
+      "Bursaries and stipends: if they provide a living allowance (but study-only bursaries are treated differently)"
+    ],
+    "what_does_not_count_as_income": [
+      "Gifts and donations under R1,000 per month (casual gifts from family or community)",
+      "Once-off insurance claim payouts (car accident, household insurance)",
+      "Funeral policy payouts",
+      "Food parcels and donations in kind (food hampers, clothing donations from NGOs)",
+      "Disability equipment grants from the Department of Health",
+      "Compensation for occupational injuries (COIDA) in some circumstances — treated case-by-case"
+    ],
+    "common_disputes": [
+      "SASSA detected income that no longer exists (e.g., you were retrenched but your IRP5 still shows last year's employment) — provide a retrenchment letter and UIF exhaustion letter",
+      "Income from informal work fluctuates month to month — provide an affidavit explaining the irregular nature of your income",
+      "SASSA counted a once-off deposit as monthly income — provide proof that it was a gift, insurance payout, or other excluded income type",
+      "Spouse or partner's income counted incorrectly — provide their actual payslip and bank statements to show the correct amount"
+    ]
+  },
+  "appeal_process": {
+    "overview": "If your grant application is rejected or your existing grant is suspended or cancelled, you have the right to appeal. The appeal process has three levels.",
+    "step_1_sassa_internal_appeal": {
+      "description": "First lodge an appeal with SASSA itself",
+      "deadline": "Within 90 days of the rejection or adverse decision",
+      "how_to_appeal": [
+        "For SRD grant: Appeal online at srd.sassa.gov.za under the 'Appeal' section",
+        "For all other grants: Visit your nearest SASSA office and complete the DSD/SASSA appeal form",
+        "Submit supporting documents: affidavit, bank statements, medical records, retrenchment letter — anything that supports your case",
+        "Keep a copy of everything you submit and get a receipt/reference number from SASSA"
+      ],
+      "processing_time": "SASSA should process internal appeals within 30 days, but in practice it can take 30-90 days",
+      "required_form": "DSD/SASSA Appeal Form (available free at any SASSA office)"
+    },
+    "step_2_itsaa": {
+      "description": "If SASSA rejects your internal appeal (or fails to respond within 90 days), escalate to the Independent Tribunal for Social Assistance Appeals (ITSAA)",
+      "what_is_itsaa": "An independent body established under Section 18 of the Social Assistance Act to hear appeals against SASSA decisions",
+      "phone": "012 312 7466",
+      "address": "368 Madiba Street, Pretoria Central, 0001",
+      "email": "appeals@socdev.gov.za",
+      "how_to_appeal": [
+        "Write a letter or complete the ITSAA appeal form, explaining why you believe the decision was wrong",
+        "Attach copies of your original application, the rejection letter, your SASSA internal appeal documents, and any supporting evidence",
+        "Send by registered post to ITSAA at 368 Madiba Street, Pretoria Central, 0001, or hand-deliver",
+        "You can also email your appeal to appeals@socdev.gov.za"
+      ],
+      "processing_time": "ITSAA hearings can take 30-90 days. You may be called to attend a hearing in person or telephonically.",
+      "cost": "Free — there is no charge for an ITSAA appeal"
+    },
+    "step_3_high_court_review": {
+      "description": "If ITSAA rejects your appeal, or if you believe the process was unfair or unlawful, you can approach the High Court for a judicial review",
+      "basis": "Promotion of Administrative Justice Act (PAJA) — judicial review of administrative action",
+      "deadline": "Within 180 days of the ITSAA decision",
+      "cost": "Court proceedings are expensive — apply for free legal assistance through Legal Aid SA (0800 110 110) or approach the Black Sash (021 686 6952) or a university law clinic",
+      "note": "High Court review is a last resort. Most cases are resolved at the SASSA internal appeal or ITSAA level."
+    },
+    "organisations_that_can_help_with_appeals": [
+      {
+        "name": "Legal Aid South Africa",
+        "phone": "0800 110 110",
+        "service": "Free legal representation for qualifying individuals (means-tested)"
+      },
+      {
+        "name": "Black Sash",
+        "phone": "021 686 6952",
+        "service": "Community-based advice on social grants, assistance with appeals, monitoring SASSA services"
+      },
+      {
+        "name": "South African Human Rights Commission (SAHRC)",
+        "phone": "011 877 3600",
+        "service": "Investigates complaints about violations of the right to social security"
+      },
+      {
+        "name": "Public Protector",
+        "phone": "0800 11 20 40",
+        "service": "Investigates maladministration — e.g., SASSA failing to process your application or appeal within the required timeframe"
+      },
+      {
+        "name": "Centre for Child Law (University of Pretoria)",
+        "phone": "012 420 4502",
+        "service": "Specialist help with children's grants, foster care, and care dependency issues"
+      }
+    ]
+  },
+  "what_to_do_if_payment_stops": {
+    "immediate_steps": [
+      "Check your grant status by calling 0800 60 10 11 or visiting srd.sassa.gov.za (for SRD)",
+      "Check that your banking details have not been changed — if they were changed without your consent, report fraud immediately",
+      "Visit your nearest SASSA office with your ID and proof of banking details within 90 days of the missed payment",
+      "Ask SASSA for the specific reason the payment was stopped — they are legally required to tell you"
+    ],
+    "common_causes": [
+      "Banking details were changed (by you or fraudulently by someone else)",
+      "Your bank account was closed by the bank",
+      "Income or employment was detected in a government database",
+      "Your grant period expired (temporary disability, foster care court order expired)",
+      "You did not collect your grant for 3 consecutive months (grant lapses automatically)",
+      "The beneficiary (child, older person) passed away and Home Affairs updated their records",
+      "SRD: You did not reconfirm by the 25th of the month",
+      "System error at SASSA — these are more common than SASSA admits; insist on a printout of your file"
+    ],
+    "back_pay_rules": [
+      "If the payment stoppage was SASSA's fault (system error, administrative delay), you are entitled to back-pay for all missed months",
+      "If you failed to collect for 3 months and the grant lapsed, you must reapply — back-pay is only from the new application date",
+      "If your grant was wrongly suspended and you appeal successfully, you are entitled to back-pay for the full suspension period",
+      "SASSA cannot refuse back-pay if the delay was on their side — this is established by multiple court rulings"
+    ],
+    "deadline": "Report a missed payment to SASSA within 90 days. After 90 days, it becomes much harder to recover the payment."
+  },
+  "lapsed_grants": {
+    "what_happens": "If you do not collect your grant for 3 consecutive months, the grant is automatically suspended (lapsed). SASSA assumes you no longer need the grant or are no longer eligible.",
+    "consequences": [
+      "The grant is suspended and you stop receiving payments",
+      "You must visit a SASSA office to reactivate or reapply",
+      "For SRD, you must submit a new application online",
+      "Back-pay for the lapsed months is generally NOT paid — you only receive payments going forward from the reactivation/reapplication date",
+      "If the lapse was due to circumstances beyond your control (hospitalisation, imprisonment, etc.), bring proof and request back-pay — SASSA may consider it on a case-by-case basis"
+    ],
+    "how_to_reactivate": [
+      "Visit your nearest SASSA office with your ID and existing grant reference number",
+      "Explain the reason for non-collection",
+      "SASSA will verify your continued eligibility",
+      "If you still qualify, the grant may be reactivated without a full new application (for older persons, disability, and child support grants)",
+      "For foster child grants, your court order must still be valid",
+      "For SRD, you must submit a completely new online application"
+    ],
+    "prevention": "If you know you will be unable to collect your grant (hospitalisation, travel, etc.), ask a trusted person with a power of attorney to collect on your behalf, or switch to bank account payment before you leave"
+  },
+  "common_scams_and_fraud": {
+    "warning": "SASSA will NEVER ask you to pay money for any service. All SASSA applications, assessments, and services are FREE. Anyone who asks you for money is a scammer.",
+    "known_scams": [
+      {
+        "type": "Fake SASSA agents at pay points",
+        "description": "People wearing fake SASSA-branded clothing approach grant recipients at pay points, Post Offices, or shopping centres and offer to 'help' with applications or card problems. They steal banking details, PINs, or charge fees.",
+        "how_to_protect_yourself": "Never give your SASSA card, PIN, ID, or banking details to anyone outside a SASSA office. Real SASSA officials work INSIDE the office, not outside."
+      },
+      {
+        "type": "SMS phishing (smishing)",
+        "description": "You receive an SMS saying your grant has been approved or suspended and you must click a link or call a number to 'verify' your details. The link leads to a fake website that steals your information.",
+        "how_to_protect_yourself": "SASSA sends SMS notifications but NEVER asks you to click a link or provide your PIN via SMS. Ignore and delete suspicious messages. Report them to SASSA fraud hotline 0800 701 701."
+      },
+      {
+        "type": "WhatsApp scams",
+        "description": "Fake WhatsApp accounts pretending to be SASSA ask for your ID number, banking details, or PIN. Some promise to 'fast-track' your application.",
+        "how_to_protect_yourself": "The ONLY official SASSA WhatsApp number is 082 046 8553. It is an automated system that NEVER asks for your PIN or banking details. Block and report any other number."
+      },
+      {
+        "type": "Loan deductions / illegal deductions from grants",
+        "description": "Micro-lenders and loan sharks (mashonisas) deduct repayments directly from your SASSA grant or take your SASSA card. Some grant recipients are pressured into taking loans with their grant card as security.",
+        "how_to_protect_yourself": "It is ILLEGAL for any lender to deduct from your SASSA grant or hold your SASSA card. Report any deductions to SASSA (0800 60 10 11) and the National Credit Regulator (0860 627 627). Under Regulation 26 of the Social Assistance Act, social grants are protected from attachment or deductions."
+      },
+      {
+        "type": "Fast-track fees",
+        "description": "Someone at or near a SASSA office offers to 'fast-track' or 'speed up' your application for a fee (often R200-R500). Some claim to be SASSA employees or have 'connections inside.'",
+        "how_to_protect_yourself": "No one can fast-track a SASSA application. Applications are processed in order. Report anyone charging fees to the SASSA fraud hotline 0800 701 701 or South African Police Service."
+      },
+      {
+        "type": "Fake SASSA websites",
+        "description": "Fraudulent websites that look like srd.sassa.gov.za but have slightly different URLs (e.g., srd-sassa.co.za, sassagrant.com) collect your personal information.",
+        "how_to_protect_yourself": "The ONLY official SASSA website for SRD applications is srd.sassa.gov.za. The main SASSA website is www.sassa.gov.za. Check the URL carefully before entering any information."
+      },
+      {
+        "type": "Identity theft for grant applications",
+        "description": "Someone uses your ID number to apply for a grant in your name, redirecting payments to their bank account.",
+        "how_to_protect_yourself": "If you discover that a grant has been applied for in your name without your consent, report it immediately to SASSA fraud hotline 0800 701 701 and lay a charge at the nearest police station."
+      }
+    ],
+    "where_to_report_fraud": {
+      "sassa_fraud_hotline": "0800 701 701 (toll-free, anonymous)",
+      "sassa_email": "gaboronep@sassa.gov.za or anti-fraud@sassa.gov.za",
+      "south_african_police_service": "Visit your nearest police station and open a fraud case",
+      "national_credit_regulator": "0860 627 627 (for illegal loan deductions)",
+      "financial_intelligence_centre": "012 641 6000 (for sophisticated financial fraud)"
+    }
+  },
   "sassa_offices_ethekwini": [
     {
       "name": "SASSA Durban Regional Office",
       "address": "Salmon Grove Chambers, 407 Anton Lembede Street, Durban CBD",
-      "hours": "Monday to Friday 07:30 - 16:00"
+      "hours": "Monday to Friday 07:30 - 16:00",
+      "services": "All grant types, appeals, card replacements, banking detail changes",
+      "tip": "This is the main regional office — queues are very long. Arrive before 07:00 to get an early number."
     },
     {
       "name": "SASSA Chatsworth",
       "address": "Unit 12, Chatsworth Centre, Chatsworth",
-      "hours": "Monday to Friday 07:30 - 16:00"
+      "hours": "Monday to Friday 07:30 - 16:00",
+      "services": "All grant types, appeals, card replacements"
     },
     {
       "name": "SASSA KwaMashu",
       "address": "KwaMashu Civic Centre, D Section, KwaMashu",
-      "hours": "Monday to Friday 07:30 - 16:00"
+      "hours": "Monday to Friday 07:30 - 16:00",
+      "services": "All grant types, appeals, card replacements"
     },
     {
       "name": "SASSA Umlazi",
       "address": "V Section, Umlazi Mega City, Umlazi",
-      "hours": "Monday to Friday 07:30 - 16:00"
+      "hours": "Monday to Friday 07:30 - 16:00",
+      "services": "All grant types, appeals, card replacements"
     },
     {
       "name": "SASSA Pinetown",
       "address": "1st Floor, Hyper by the Sea Building, Old Main Road, Pinetown",
-      "hours": "Monday to Friday 07:30 - 16:00"
+      "hours": "Monday to Friday 07:30 - 16:00",
+      "services": "All grant types, appeals, card replacements"
     },
     {
       "name": "SASSA Phoenix",
       "address": "Phoenix Plaza, Parthenon Street, Phoenix",
-      "hours": "Monday to Friday 07:30 - 16:00"
+      "hours": "Monday to Friday 07:30 - 16:00",
+      "services": "All grant types, appeals, card replacements"
     }
   ],
   "important_contacts": {
-    "toll_free": "0800 60 10 11",
+    "sassa_toll_free": "0800 60 10 11 (Monday to Friday 07:30-16:00, toll-free from landlines)",
+    "sassa_from_cellphone": "021 469 0111 (standard call rates apply)",
     "srd_website": "srd.sassa.gov.za",
-    "fraud_hotline": "0800 701 701",
-    "public_protector": "0800 11 20 40"
+    "sassa_main_website": "www.sassa.gov.za",
+    "sassa_whatsapp": "082 046 8553 (automated — for SRD status checks and reconfirmation)",
+    "sassa_ussd": "*134*7737# (free USSD code — for SRD status checks)",
+    "sassa_email": "grantenquiries@sassa.gov.za",
+    "fraud_hotline": "0800 701 701 (anonymous, toll-free)",
+    "postbank_lost_card": "0800 53 54 55 (report lost/stolen SASSA gold card)",
+    "public_protector": "0800 11 20 40",
+    "legal_aid_sa": "0800 110 110",
+    "itsaa": "012 312 7466 (Independent Tribunal for Social Assistance Appeals)",
+    "black_sash": "021 686 6952 (community advice and grant advocacy)",
+    "department_of_social_development": "012 312 7500",
+    "national_credit_regulator": "0860 627 627 (for illegal loan deductions from grants)",
+    "south_african_human_rights_commission": "011 877 3600"
   },
   "your_rights": [
-    "Section 27(1)(c) of the Constitution of South Africa guarantees the right to social security",
-    "SASSA must process applications within 30 days (Regulation 10(2) of the Social Assistance Act)",
-    "You have the right to appeal any decision within 90 days",
-    "SASSA must give you written reasons for any rejection",
-    "You may not be asked to pay any fees for a SASSA application — it is always free",
-    "If SASSA fails to pay your grant on time, they must provide back-pay for the missed months",
-    "You have the right to receive your grant at a pay point of your choice"
+    "Section 27(1)(c) of the Constitution of South Africa guarantees the right to social security, including the right to appropriate social assistance for those unable to support themselves",
+    "SASSA must process applications within 30 days (Regulation 10(2) of the Social Assistance Act) — if they fail to do so, you can lodge a complaint with the Public Protector",
+    "You have the right to appeal any decision within 90 days — first to SASSA internally, then to ITSAA, then to the High Court",
+    "SASSA must give you written reasons for any rejection — if they refuse, insist and reference Section 5 of the Promotion of Administrative Justice Act (PAJA)",
+    "You may NOT be asked to pay any fees for a SASSA application, medical assessment, or any other service — it is ALWAYS free",
+    "If SASSA fails to pay your grant on time through their fault, they must provide back-pay for all missed months — this has been confirmed by multiple court orders",
+    "You have the right to receive your grant at a pay point or through a payment method of your choice",
+    "Your social grant is protected from attachment, garnishee orders, or deductions by creditors or loan companies under Regulation 26 of the Social Assistance Act",
+    "No one may take your SASSA card or force you to hand over your PIN — this is a criminal offence",
+    "You have the right to be treated with dignity at SASSA offices — report any mistreatment, corruption, or bribery to the SASSA fraud hotline 0800 701 701",
+    "If you are a person with a disability, SASSA must make reasonable accommodation for you at their offices (wheelchair access, sign language, priority queuing)",
+    "SASSA must provide services in your preferred official language where reasonably possible"
+  ],
+  "frequently_asked_questions": [
+    {
+      "question": "Can I receive more than one grant?",
+      "answer": "Generally, you can only receive one social grant for yourself. However, a caregiver can receive a Child Support Grant for each qualifying child (up to 6 non-biological children) while also receiving a grant for themselves (e.g., Disability Grant + Child Support Grant for their children). You cannot receive both a Disability Grant and an Older Persons Grant. The Grant-in-Aid is paid on top of your existing Older Persons, Disability, or War Veterans grant."
+    },
+    {
+      "question": "My child turns 18 — what happens to the Child Support Grant?",
+      "answer": "The Child Support Grant automatically stops the month the child turns 18. There is no extension. If the child is still in school (up to Grade 12 / matric), they do not qualify for SRD if they are at a government-funded school. After turning 18 and leaving school, they can apply for the SRD grant if they are unemployed and meet all other criteria."
+    },
+    {
+      "question": "I was approved for SRD but payment says 'pending' for weeks — what do I do?",
+      "answer": "This is common and usually means SASSA is processing payments in batches. Check your status weekly via srd.sassa.gov.za or *134*7737#. If 'pending' persists for more than one full payment cycle, call 0800 60 10 11 or visit your nearest SASSA office. Payment processing can take up to 10 business days after the status changes to 'approved'."
+    },
+    {
+      "question": "Someone changed my banking details without my permission — what do I do?",
+      "answer": "Go to your nearest SASSA office IMMEDIATELY with your ID. Request a freeze on all changes. File a fraud report at SASSA (0800 701 701) and at your nearest police station. SASSA will investigate and reverse the unauthorised change. The process takes 5-14 days. You may miss one payment cycle during the investigation — request back-pay for any missed payment."
+    },
+    {
+      "question": "I am an asylum seeker — can I get a grant?",
+      "answer": "Only recognised refugees with a Section 24 permit (refugee status) qualify for social grants. Asylum seekers with a Section 22 permit (temporary asylum) do NOT qualify for SASSA grants. However, asylum seekers may be eligible for humanitarian assistance through the Department of Social Development or NGOs such as the UNHCR, Scalabrini Centre, or Lawyers for Human Rights."
+    },
+    {
+      "question": "I live in a rural area with no SASSA office nearby — how do I apply?",
+      "answer": "SASSA conducts outreach visits (mobile offices) to rural and remote areas on a scheduled basis. Contact 0800 60 10 11 to find out the next outreach date for your area. For SRD, apply online at srd.sassa.gov.za — you do not need to visit an office. For other grants, ask if your local councillor or community leader can arrange a SASSA outreach visit."
+    }
   ]
 }

@@ -3,346 +3,717 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pfula — iPhone Simulator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Pfula — AI that Opens Government</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+        :root {
+            --gold: #d4a853;
+            --gold-dim: rgba(212,168,83,0.6);
+            --teal: #00c49a;
+            --white: #ffffff;
+            --white-80: rgba(255,255,255,0.8);
+            --white-55: rgba(255,255,255,0.55);
+            --white-30: rgba(255,255,255,0.3);
+            --white-08: rgba(255,255,255,0.08);
+            --white-04: rgba(255,255,255,0.04);
+            --font: 'Bricolage Grotesque', sans-serif;
         }
 
-        /* Stage presentation background */
-        .stage-bg {
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #060606;
+            -webkit-font-smoothing: antialiased;
+            font-family: var(--font);
+        }
+
+        /* ─────────────────────────────────────────────────
+           VIDEO BACKGROUND
+        ───────────────────────────────────────────────── */
+        .video-bg {
             position: fixed;
             inset: 0;
+            z-index: 0;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* layered cinematic overlay */
+        .video-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
             background:
-                radial-gradient(ellipse at 30% 50%, rgba(0, 168, 132, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 50%, rgba(200, 150, 60, 0.06) 0%, transparent 60%),
-                #0a0a0a;
+                radial-gradient(ellipse 80% 80% at 50% 50%, transparent 20%, rgba(0,0,0,0.55) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.5) 100%);
         }
 
-        /* Branding */
-        .brand-left {
+        /* ─────────────────────────────────────────────────
+           NAV BAR
+        ───────────────────────────────────────────────── */
+        .nav {
             position: fixed;
-            left: 48px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-        }
-
-        .brand-name {
-            font-size: 48px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: -2px;
-            line-height: 1;
-        }
-
-        .brand-meaning {
-            font-size: 16px;
-            color: #c8963c;
-            font-style: italic;
-            font-weight: 300;
-            margin-top: 4px;
-        }
-
-        .brand-tagline {
-            font-size: 14px;
-            color: #64748b;
-            margin-top: 16px;
-            max-width: 280px;
-            line-height: 1.5;
-        }
-
-        .brand-event {
-            margin-top: 32px;
-            font-size: 11px;
-            color: #475569;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .brand-event strong {
-            color: #00a884;
-            display: block;
-            margin-top: 4px;
-            font-size: 12px;
-        }
-
-        /* Right side info */
-        .info-right {
-            position: fixed;
-            right: 48px;
-            top: 50%;
-            transform: translateY(-50%);
-            text-align: right;
-            z-index: 10;
-        }
-
-        .demo-badge {
-            display: inline-block;
-            background: rgba(0, 168, 132, 0.15);
-            border: 1px solid rgba(0, 168, 132, 0.3);
-            color: #00a884;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
-        }
-
-        .services-list {
-            list-style: none;
-            text-align: right;
-        }
-
-        .services-list li {
-            font-size: 13px;
-            color: #64748b;
-            padding: 4px 0;
-            transition: color 0.2s;
-        }
-
-        .services-list li:hover {
-            color: #e2e8f0;
-        }
-
-        .services-list li span {
-            color: #475569;
-            margin-left: 6px;
-        }
-
-        .nav-links {
-            margin-top: 32px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        .nav-link {
-            font-size: 12px;
-            color: #00a884;
-            text-decoration: none;
-            padding: 4px 12px;
-            border: 1px solid rgba(0, 168, 132, 0.2);
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .nav-link:hover {
-            background: rgba(0, 168, 132, 0.1);
-            border-color: rgba(0, 168, 132, 0.4);
-        }
-
-        /* iPhone Frame */
-        .iphone-container {
-            position: relative;
-            z-index: 20;
-        }
-
-        .iphone-frame {
-            width: 390px;
-            height: 844px;
-            border-radius: 55px;
-            background: #1a1a1a;
-            border: 3px solid #333;
-            box-shadow:
-                0 0 0 2px #111,
-                0 0 80px rgba(0, 168, 132, 0.1),
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                inset 0 0 0 2px rgba(255,255,255,0.05);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Dynamic Island / Notch */
-        .dynamic-island {
-            position: absolute;
-            top: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 126px;
-            height: 36px;
-            background: #000;
-            border-radius: 20px;
-            z-index: 100;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
-        }
-
-        /* Camera dot */
-        .dynamic-island::after {
-            content: '';
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #1a1a2e 30%, #0d0d1a 60%, #000 100%);
-            border: 1px solid #222;
-        }
-
-        /* Home indicator */
-        .home-indicator {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 134px;
-            height: 5px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 3px;
-            z-index: 100;
-        }
-
-        /* Screen */
-        .iphone-screen {
-            position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            border-radius: 52px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 56px;
+            height: 68px;
+            background: rgba(0,0,0,0.18);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .nav-logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .nav-logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--white-55);
+            text-decoration: none;
+            letter-spacing: 0.2px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--white);
+            color: #0a0a0a !important;
+            padding: 10px 22px;
+            border-radius: 100px;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.2px;
+            text-decoration: none;
+            transition: all 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold) !important;
+            color: #0a0a0a !important;
+            transform: none !important;
+        }
+
+        .nav-cta-arrow {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* ─────────────────────────────────────────────────
+           HERO LAYOUT
+        ───────────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100vh;
+            padding-top: 68px; /* nav offset */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 64px;
+            padding-left: 56px;
+            padding-right: 56px;
+        }
+
+        /* ─────────────────────────────────────────────────
+           LEFT — COPY
+        ───────────────────────────────────────────────── */
+        .copy {
+            flex: 0 0 auto;
+            width: 340px;
+            animation: fadeLeft 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes fadeLeft {
+            from { opacity: 0; transform: translateX(-36px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Eyebrow badge */
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(212,168,83,0.35);
+            background: rgba(212,168,83,0.08);
+            backdrop-filter: blur(8px);
+            color: var(--gold);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .eyebrow-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        /* Headline */
+        .headline {
+            font-size: 58px;
+            font-weight: 800;
+            line-height: 1.0;
+            letter-spacing: -3px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .headline em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        /* Sub */
+        .subline {
+            font-size: 15.5px;
+            font-weight: 400;
+            color: var(--white-55);
+            line-height: 1.7;
+            margin-bottom: 36px;
+            letter-spacing: 0.1px;
+        }
+
+        .subline strong {
+            color: var(--white-80);
+            font-weight: 600;
+        }
+
+        /* Stats row */
+        .stats {
+            display: flex;
+            gap: 0;
+            margin-bottom: 36px;
+            border: 1px solid var(--white-08);
+            border-radius: 14px;
             overflow: hidden;
+            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.15);
+        }
+
+        .stat {
+            flex: 1;
+            padding: 18px 0;
+            text-align: center;
+            border-right: 1px solid var(--white-08);
+        }
+
+        .stat:last-child { border-right: none; }
+
+        .stat-val {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .stat-val.gold { color: var(--gold); }
+
+        .stat-lbl {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--white-30);
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            margin-top: 5px;
+        }
+
+        /* CTA buttons */
+        .ctas {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            font-family: var(--font);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 13px 28px;
+            border-radius: 100px;
+            background: var(--white);
+            color: #0a0a0a;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: -0.2px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold);
+        }
+
+        .btn-ghost {
+            font-family: var(--font);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 13px 24px;
+            border-radius: 100px;
+            background: transparent;
+            color: var(--white-80);
+            border: 1px solid var(--white-08);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: -0.2px;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--white-30);
+            color: var(--white);
+            background: var(--white-04);
+        }
+
+        /* ─────────────────────────────────────────────────
+           CENTRE — PHONE
+        ───────────────────────────────────────────────── */
+        .phone-wrap {
+            flex: 0 0 auto;
+            position: relative;
+            animation: riseUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+        }
+
+        @keyframes riseUp {
+            from { opacity: 0; transform: translateY(36px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Ambient glow */
+        .phone-glow {
+            position: absolute;
+            inset: -80px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center,
+                rgba(212,168,83,0.13) 0%,
+                rgba(0,196,154,0.07) 50%,
+                transparent 75%
+            );
+            animation: breathe 5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50%       { opacity: 1; transform: scale(1.06); }
+        }
+
+        /* iPhone 15 Pro */
+        .iphone {
+            position: relative;
+            z-index: 1;
+            width: 370px;
+            height: 800px;
+            border-radius: 52px;
+            background: linear-gradient(150deg, #2c2c2e 0%, #1c1c1e 40%, #0f0f11 100%);
+            border: 1.5px solid rgba(255,255,255,0.13);
+            box-shadow:
+                inset 0 0 0 1px rgba(0,0,0,0.9),
+                0 0 0 0.5px rgba(255,255,255,0.04),
+                0 0 50px rgba(212,168,83,0.07),
+                0 40px 100px rgba(0,0,0,0.75),
+                0 8px 30px rgba(0,0,0,0.5);
+            overflow: visible;
+        }
+
+        .iphone-screen {
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            overflow: hidden;
+            background: #000;
         }
 
         .iphone-screen iframe {
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 52px;
+            display: block;
+            border-radius: 50px;
+        }
+
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 118px;
+            height: 34px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 200;
+        }
+
+        .dynamic-island::after {
+            content: '';
+            position: absolute;
+            right: 19px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #1a1a2e, #000);
+            border: 0.5px solid rgba(255,255,255,0.05);
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 9px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            z-index: 200;
+        }
+
+        .screen-glare {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 44%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            border-radius: 50px 50px 0 0;
+            pointer-events: none;
+            z-index: 150;
         }
 
         /* Side buttons */
         .btn-power {
-            position: absolute;
-            right: -5px;
-            top: 180px;
-            width: 4px;
-            height: 80px;
-            background: #333;
+            position: absolute; right: -3px; top: 175px;
+            width: 3px; height: 76px;
+            background: linear-gradient(180deg, #505052, #3a3a3c, #505052);
             border-radius: 0 2px 2px 0;
         }
-
         .btn-vol-up {
-            position: absolute;
-            left: -5px;
-            top: 150px;
-            width: 4px;
-            height: 40px;
-            background: #333;
+            position: absolute; left: -3px; top: 145px;
+            width: 3px; height: 38px;
+            background: linear-gradient(180deg, #505052, #3a3a3c, #505052);
             border-radius: 2px 0 0 2px;
         }
-
         .btn-vol-down {
-            position: absolute;
-            left: -5px;
-            top: 200px;
-            width: 4px;
-            height: 40px;
-            background: #333;
+            position: absolute; left: -3px; top: 196px;
+            width: 3px; height: 38px;
+            background: linear-gradient(180deg, #505052, #3a3a3c, #505052);
             border-radius: 2px 0 0 2px;
         }
-
         .btn-silent {
-            position: absolute;
-            left: -5px;
-            top: 115px;
-            width: 4px;
-            height: 20px;
-            background: #333;
+            position: absolute; left: -3px; top: 108px;
+            width: 3px; height: 18px;
+            background: linear-gradient(180deg, #505052, #3a3a3c, #505052);
             border-radius: 2px 0 0 2px;
         }
 
-        /* Reflection effect */
-        .iphone-frame::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-            border-radius: 52px 52px 0 0;
-            pointer-events: none;
-            z-index: 90;
+        /* ─────────────────────────────────────────────────
+           RIGHT — SERVICES + LINKS
+        ───────────────────────────────────────────────── */
+        .panel-right {
+            flex: 0 0 auto;
+            width: 240px;
+            animation: fadeRight 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
         }
 
-        /* Responsive — hide branding on smaller screens */
-        @media (max-width: 1200px) {
-            .brand-left, .info-right { display: none; }
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(36px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Live badge */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: rgba(0,196,154,0.08);
+            border: 1px solid rgba(0,196,154,0.28);
+            backdrop-filter: blur(8px);
+            color: var(--teal);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+            animation: livePulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,196,154,0.4); }
+            50%       { opacity: 0.7; box-shadow: 0 0 0 7px rgba(0,196,154,0); }
+        }
+
+        /* Services */
+        .services {
+            list-style: none;
+        }
+
+        .services li {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--white-55);
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.2px;
+            transition: all 0.22s;
+        }
+
+        .services li:last-child { border-bottom: none; }
+
+        .services li:hover {
+            color: var(--white-80);
+            transform: translateX(4px);
+        }
+
+        .svc-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+        }
+
+        .services li:nth-child(even) .svc-dot { background: var(--gold); }
+
+        .svc-sub {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--white-30);
+            margin-left: auto;
+            letter-spacing: 0;
+        }
+
+        /* Nav links */
+        .action-links {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .action-link {
+            font-family: var(--font);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white-55);
+            text-decoration: none;
+            padding: 10px 18px;
+            border: 1px solid var(--white-08);
+            border-radius: 10px;
+            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.1);
+            display: block;
+            text-align: center;
+            letter-spacing: -0.2px;
+            transition: all 0.22s;
+        }
+
+        .action-link:hover {
+            background: var(--white-04);
+            border-color: var(--white-30);
+            color: var(--white-80);
+            transform: translateY(-1px);
+        }
+
+        /* ─────────────────────────────────────────────────
+           RESPONSIVE
+        ───────────────────────────────────────────────── */
+        /* 1050–1300px: keep left copy + phone, hide right panel, compress spacing */
+        @media (max-width: 1300px) {
+            .panel-right { display: none; }
+            .hero { gap: 28px; padding-left: 28px; padding-right: 28px; }
+            .copy { width: 300px; }
+            .headline { font-size: 46px; letter-spacing: -2.5px; }
+            .subline { font-size: 14.5px; }
+            .stats { margin-bottom: 24px; }
+            .ctas { gap: 8px; }
+        }
+
+        /* Below 1050px: phone only */
+        @media (max-width: 1050px) {
+            .copy, .panel-right { display: none; }
+            .hero { gap: 0; padding: 0; }
         }
 
         @media (max-height: 900px) {
-            .iphone-frame {
-                width: 340px;
-                height: 736px;
-                border-radius: 48px;
-            }
-            .iphone-screen { border-radius: 45px; }
-            .iphone-screen iframe { border-radius: 45px; }
-            .dynamic-island { top: 10px; width: 110px; height: 32px; }
+            .iphone { width: 324px; height: 700px; border-radius: 46px; }
+            .iphone-screen { border-radius: 44px; }
+            .iphone-screen iframe { border-radius: 44px; }
+            .screen-glare { border-radius: 44px 44px 0 0; }
+            .dynamic-island { width: 104px; height: 30px; }
+            .headline { font-size: 46px; letter-spacing: -2.5px; }
+        }
+
+        @media (max-height: 760px) {
+            .iphone { width: 284px; height: 614px; border-radius: 40px; }
+            .iphone-screen { border-radius: 38px; }
+            .iphone-screen iframe { border-radius: 38px; }
+            .screen-glare { border-radius: 38px 38px 0 0; }
         }
     </style>
 </head>
 <body>
-    <div class="stage-bg"></div>
 
-    <!-- Left branding -->
-    <div class="brand-left">
-        <div class="brand-name">Pfula</div>
-        <div class="brand-meaning">(to open)</div>
-        <div class="brand-tagline">
-            AI that opens government for every South African. SASSA. Home Affairs. UIF. SARS. Municipal Services. In your language.
-        </div>
-        <div class="brand-event">
-            Data & AI Community Day Durban
-            <strong>AI Unplugged — 14 March 2026</strong>
-        </div>
+    <!-- Video Background -->
+    <div class="video-bg">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="/static/video/bg.mp4" type="video/mp4">
+        </video>
     </div>
+    <div class="video-overlay"></div>
 
-    <!-- iPhone -->
-    <div class="iphone-container">
-        <div class="iphone-frame">
-            <div class="dynamic-island"></div>
-            <div class="btn-power"></div>
-            <div class="btn-vol-up"></div>
-            <div class="btn-vol-down"></div>
-            <div class="btn-silent"></div>
-            <div class="iphone-screen">
-                <iframe src="/" id="phone-screen"></iframe>
-            </div>
-            <div class="home-indicator"></div>
-        </div>
-    </div>
-
-    <!-- Right info -->
-    <div class="info-right">
-        <div class="demo-badge">Live Demo</div>
-        <ul class="services-list">
-            <li>SASSA <span>Grants & Appeals</span></li>
-            <li>Home Affairs <span>IDs & Passports</span></li>
-            <li>UIF <span>Unemployment Benefits</span></li>
-            <li>SARS <span>Tax Returns</span></li>
-            <li>eThekwini <span>Municipal Services</span></li>
-            <li>Deeds Office <span>Property</span></li>
-            <li>CIPC <span>Business Registration</span></li>
+    <!-- Nav Bar -->
+    <nav class="nav">
+        <div class="nav-logo">Pfula<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Impact</a></li>
+            <li><a href="/dashboard" target="_blank">Analytics</a></li>
+            <li><a href="/tracker" target="_blank">Case Tracker</a></li>
         </ul>
-        <div class="nav-links">
-            <a href="/dashboard" class="nav-link" target="_blank">Analytics Dashboard →</a>
-            <a href="/tracker" class="nav-link" target="_blank">Case Tracker →</a>
+        <a href="/" class="nav-links nav-cta" target="_blank">
+            Try Live <span class="nav-cta-arrow">→</span>
+        </a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+
+        <!-- Left copy -->
+        <div class="copy">
+            <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                AI Civic Assistant · South Africa
+            </div>
+
+            <h1 class="headline">
+                AI that <em>opens</em><br>government.
+            </h1>
+
+            <p class="subline">
+                <strong>Navigate SASSA, Home Affairs, UIF, SARS</strong> and
+                municipal services — in your language, on your phone.
+                Real answers. Real legislation. No confusion.
+            </p>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-val">7</div>
+                    <div class="stat-lbl">Services</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val gold">11</div>
+                    <div class="stat-lbl">Languages</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val">24/7</div>
+                    <div class="stat-lbl">Always On</div>
+                </div>
+            </div>
+
+            <div class="ctas">
+                <a href="/" class="btn-primary" target="_blank">Try Pfula →</a>
+                <a href="/dashboard" class="btn-ghost" target="_blank">View Analytics</a>
+            </div>
         </div>
-    </div>
+
+        <!-- Phone -->
+        <div class="phone-wrap">
+            <div class="phone-glow"></div>
+            <div class="iphone">
+                <div class="btn-power"></div>
+                <div class="btn-vol-up"></div>
+                <div class="btn-vol-down"></div>
+                <div class="btn-silent"></div>
+                <div class="iphone-screen">
+                    <iframe src="/" id="phone-screen" title="Pfula WhatsApp Chat"></iframe>
+                </div>
+                <div class="dynamic-island"></div>
+                <div class="screen-glare"></div>
+                <div class="home-indicator"></div>
+            </div>
+        </div>
+
+        <!-- Right panel -->
+        <div class="panel-right">
+            <div class="live-badge">
+                <span class="live-dot"></span>
+                Live Demo
+            </div>
+
+            <ul class="services">
+                <li><div class="svc-dot"></div>SASSA <span class="svc-sub">Grants & Appeals</span></li>
+                <li><div class="svc-dot"></div>Home Affairs <span class="svc-sub">IDs & Passports</span></li>
+                <li><div class="svc-dot"></div>UIF <span class="svc-sub">Unemployment</span></li>
+                <li><div class="svc-dot"></div>SARS <span class="svc-sub">Tax Returns</span></li>
+                <li><div class="svc-dot"></div>eThekwini <span class="svc-sub">Municipal</span></li>
+                <li><div class="svc-dot"></div>Deeds Office <span class="svc-sub">Property</span></li>
+                <li><div class="svc-dot"></div>CIPC <span class="svc-sub">Business</span></li>
+            </ul>
+
+            <div class="action-links">
+                <a href="/dashboard" class="action-link" target="_blank">Analytics Dashboard</a>
+                <a href="/tracker" class="action-link" target="_blank">Case Tracker</a>
+            </div>
+        </div>
+
+    </section>
+
 </body>
 </html>

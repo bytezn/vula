@@ -1,68 +1,358 @@
 {
   "service": "South African Revenue Service (SARS)",
-  "overview": "SARS collects taxes that fund government services. Every person who earns income above certain thresholds must register as a taxpayer and submit annual tax returns. SARS also handles VAT registration, customs, and tax clearance certificates.",
+  "overview": "SARS collects taxes that fund government services. Every person who earns income above certain thresholds must register as a taxpayer and submit annual tax returns. SARS also handles VAT registration, customs, transfer duty, and tax clearance certificates. The current tax year runs from 1 March 2024 to 28 February 2025.",
   "individual_tax": {
     "who_must_register": [
       "Any person earning above R95,750 per year from a single employer",
       "Anyone earning income from more than one source",
       "Anyone with a provisional tax obligation",
-      "Anyone earning rental income, freelance income, or investment income"
+      "Anyone earning rental income, freelance income, or investment income",
+      "Anyone who has capital gains exceeding the annual exclusion of R40,000",
+      "Directors of companies or members of close corporations"
     ],
     "tax_thresholds_2024_2025": {
       "under_65": "R95,750 per year",
       "65_to_74": "R148,217 per year",
       "75_and_older": "R165,689 per year"
     },
+    "tax_brackets_2024_2025": [
+      {
+        "bracket": "R1 – R237,100",
+        "rate": "18% of taxable income"
+      },
+      {
+        "bracket": "R237,101 – R370,500",
+        "rate": "R42,678 + 26% of the amount above R237,100"
+      },
+      {
+        "bracket": "R370,501 – R512,800",
+        "rate": "R77,362 + 31% of the amount above R370,500"
+      },
+      {
+        "bracket": "R512,801 – R673,000",
+        "rate": "R121,475 + 36% of the amount above R512,800"
+      },
+      {
+        "bracket": "R673,001 – R857,900",
+        "rate": "R179,147 + 39% of the amount above R673,000"
+      },
+      {
+        "bracket": "R857,901 – R1,817,000",
+        "rate": "R251,258 + 41% of the amount above R857,900"
+      },
+      {
+        "bracket": "R1,817,001 and above",
+        "rate": "R644,489 + 45% of the amount above R1,817,000"
+      }
+    ],
+    "tax_rebates_2024_2025": {
+      "primary_rebate": "R17,235 — applies to all individual taxpayers",
+      "secondary_rebate": "R9,444 — applies to taxpayers aged 65 and older (in addition to primary rebate)",
+      "tertiary_rebate": "R3,145 — applies to taxpayers aged 75 and older (in addition to primary and secondary rebates)"
+    },
     "how_to_register": [
       "Visit www.sarsefiling.co.za and create an eFiling account",
       "Or visit your nearest SARS branch with your ID and proof of address",
-      "You will receive a tax reference number — KEEP THIS SAFE, you will need it forever"
+      "You will receive a tax reference number — KEEP THIS SAFE, you will need it forever",
+      "You can also register via the SARS MobiApp on your smartphone"
     ],
+    "efiling_step_by_step": [
+      "Step 1: Go to www.sarsefiling.co.za and register for an account (you need your ID number, contact details, and a valid email address)",
+      "Step 2: Complete the registration wizard — SARS will verify your identity and send a confirmation",
+      "Step 3: Log in and navigate to 'Returns' → 'Income Tax' → 'Income Tax Return (ITR12)'",
+      "Step 4: Your IRP5 data from your employer should be auto-imported — if not, request the return and SARS will attempt to populate it",
+      "Step 5: Review all pre-populated fields carefully — check salary, tax deducted, medical aid contributions, and retirement fund contributions against your IRP5 certificate",
+      "Step 6: Add any additional income not pre-populated (rental income, freelance income, foreign income, interest above exempt amount)",
+      "Step 7: Claim any allowable deductions (travel allowance, home office, additional medical expenses, donations to approved PBOs)",
+      "Step 8: Submit the return — SARS will issue an assessment (ITA34) immediately showing whether you owe tax or are due a refund",
+      "Step 9: Track your refund status on eFiling under 'Returns' → 'Tax Status' or call 0800 00 7277"
+    ],
+    "auto_assessment": {
+      "what_it_is": "SARS now auto-assesses many salaried taxpayers using employer and third-party data. If SARS has sufficient information, they will issue an auto-assessment without you needing to file a return.",
+      "how_it_works": [
+        "SARS sends you an SMS or email notifying you of the auto-assessment, typically from early July",
+        "Log in to eFiling or SARS MobiApp to view your assessment",
+        "If you AGREE with the assessment, you do not need to do anything — it is accepted automatically after the deadline",
+        "If you DISAGREE (e.g., you have additional income, deductions, or corrections), you must file a manual return BEFORE the deadline",
+        "You can also edit and re-submit even after accepting an auto-assessment, as long as it is before the deadline"
+      ],
+      "important_note": "Do NOT ignore your auto-assessment. Even if you agree, check it carefully. If SARS has incorrect data (e.g., missing deductions), you may be paying more tax than necessary."
+    },
+    "tax_season_dates": {
+      "overview": "SARS announces exact dates each year, but the typical schedule is as follows:",
+      "auto_assessment_notification": "From 1 July — SARS begins issuing auto-assessments via SMS/email",
+      "non_provisional_efiling": "1 July – 23 October — deadline for salaried individuals filing via eFiling or SARS MobiApp",
+      "non_provisional_branch": "1 July – 23 October — deadline if filing at a SARS branch (by appointment only)",
+      "provisional_taxpayers": "1 July – 31 January of the following year — extended deadline for provisional taxpayers filing via eFiling",
+      "note": "Always check the SARS website for confirmed dates as they may shift slightly each year"
+    },
+    "required_documents": {
+      "overview": "Gather all these documents BEFORE you start filing your return:",
+      "documents": [
+        "IRP5/IT3(a) certificate from your employer — this shows your annual salary, tax deducted, and benefits. Contact HR if you have not received it by June",
+        "Medical aid tax certificate (from your medical aid scheme) — needed to claim medical tax credits",
+        "Retirement annuity (RA) certificate — from your RA fund provider, showing contributions for the year",
+        "IT3(b) certificate — from your bank or investment provider, showing interest, dividends, and capital gains",
+        "Bank statements — especially if you earned interest income above the exempt amount (R23,800 under 65, R34,500 for 65+)",
+        "Logbook for travel allowance — a detailed daily logbook showing business vs. personal kilometres (required by SARS if claiming travel deduction)",
+        "Proof of rental income and expenses — lease agreements, bank statements, receipts for repairs and maintenance",
+        "Home office expenses documentation — proof of dedicated room used exclusively for work, municipal bills, lease or bond statements",
+        "Donation receipts — Section 18A certificates from approved public benefit organisations (PBOs)",
+        "Foreign income documentation — if you earned income outside South Africa, including foreign tax certificates"
+      ]
+    },
     "filing_your_tax_return": {
-      "when": "Tax season runs from July to November each year (dates announced by SARS annually)",
+      "when": "Tax season typically runs from 1 July to 23 October for non-provisional taxpayers and until 31 January for provisional taxpayers (dates announced by SARS annually)",
       "how": [
-        "Log in to SARS eFiling (www.sarsefiling.co.za)",
+        "Log in to SARS eFiling (www.sarsefiling.co.za) or the SARS MobiApp",
         "Your employer's IRP5 certificate should be pre-populated",
-        "Check that the amounts match your payslips",
-        "Add any additional income (freelance, rental, investments)",
-        "Claim allowable deductions (medical aid contributions, retirement fund contributions, travel allowance)",
+        "Check that the amounts match your payslips and IRP5 certificate",
+        "Add any additional income (freelance, rental, investments, foreign income)",
+        "Claim allowable deductions (medical aid contributions, retirement fund contributions, travel allowance, home office, donations)",
         "Submit the return",
-        "SARS will issue an assessment — either you owe SARS or SARS owes you a refund"
+        "SARS will issue an assessment (ITA34) — either you owe SARS or SARS owes you a refund"
       ],
       "first_time_tips": [
         "Keep all your payslips — they are your proof if SARS questions anything",
         "Your IRP5 certificate comes from your employer — ask HR for it",
         "If you earned below the threshold and had tax deducted, you MAY get a refund",
         "Medical aid tax credits are automatic if your employer reported them correctly",
-        "You can claim for home office expenses ONLY if you have a dedicated room used exclusively for work"
+        "You can claim for home office expenses ONLY if you have a dedicated room used exclusively for work",
+        "Keep ALL supporting documents for at least 5 years — SARS can audit up to 5 years back (longer if fraud is suspected)",
+        "If you are unsure about anything, rather file and include everything — SARS will query if needed"
       ]
+    },
+    "common_deductions": {
+      "travel_allowance": {
+        "description": "If you receive a travel allowance from your employer and use your own vehicle for business travel, you may deduct actual business travel expenses.",
+        "requirements": [
+          "You MUST keep a detailed logbook — record every trip (date, destination, purpose, opening km, closing km, business or personal)",
+          "SARS publishes an annual table of deemed costs (fixed cost based on vehicle value + fuel cost per km + maintenance cost per km)",
+          "Without a logbook, SARS will only allow 20% of your travel allowance as a deduction (the rest is taxed)",
+          "The SARS rate tables are based on the value of the vehicle — higher value vehicles get a higher fixed cost allowance"
+        ]
+      },
+      "home_office": {
+        "description": "You may claim home office expenses if you work from home, but the requirements are strict.",
+        "requirements": [
+          "You must have a dedicated room used EXCLUSIVELY for work — a corner of the lounge does NOT qualify",
+          "If you earn a salary (regular income earner), you must spend more than 50% of your working time in your home office",
+          "If you earn commission income (more than 50% of total pay), the requirements are slightly less strict",
+          "Claimable expenses: proportionate share of rent or bond interest, electricity, rates, cleaning, repairs to the office area",
+          "The proportion is calculated as office area divided by total area of the home"
+        ]
+      },
+      "retirement_contributions": {
+        "description": "Contributions to pension funds, provident funds, and retirement annuity (RA) funds are tax-deductible.",
+        "limits": [
+          "You may deduct the LESSER of 27.5% of your remuneration or 27.5% of your taxable income",
+          "The maximum annual deduction is R350,000",
+          "Any contributions above the limit are carried forward to future years",
+          "This includes contributions made by your employer on your behalf"
+        ]
+      },
+      "medical_aid_credits": {
+        "description": "You receive tax credits (not deductions) for medical aid contributions.",
+        "credits_2024_2025": [
+          "Main member: R364 per month",
+          "Main member + one dependant: R728 per month",
+          "Each additional dependant: R246 per month",
+          "Additional medical expenses exceeding 7.5% of taxable income can be claimed as a deduction (for under 65s)"
+        ]
+      },
+      "donations": {
+        "description": "Donations to approved public benefit organisations (PBOs) with Section 18A status are deductible up to 10% of taxable income."
+      }
     },
     "common_problems": [
       "Employer did not submit IRP5 — contact your employer immediately, then report to SARS if they refuse",
-      "Assessment shows you owe money you don't have — apply for a payment arrangement at SARS",
-      "Received assessment for tax you don't owe — dispute the assessment within 30 days on eFiling",
+      "Assessment shows you owe money you don't have — apply for a payment arrangement at SARS (see payment_arrangements section)",
+      "Received assessment for tax you don't owe — dispute the assessment within 30 business days on eFiling",
       "eFiling not working — clear your browser cache, try a different browser, or visit a SARS branch",
-      "Outstanding tax returns from previous years — file them all, starting with the oldest year"
+      "Outstanding tax returns from previous years — file them all, starting with the oldest year",
+      "Auto-assessment is incorrect — file a manual return before the deadline to override it",
+      "Refund delayed — check eFiling for verification requests, SARS may need supporting documents",
+      "Tax reference number lost — call 0800 00 7277 or visit a branch with your ID to recover it"
+    ]
+  },
+  "provisional_tax": {
+    "who_must_pay": [
+      "Anyone who earns income NOT subject to PAYE (employees' tax), such as:",
+      "Rental income from property",
+      "Freelance or contract income",
+      "Business income (sole proprietor)",
+      "Director's remuneration from a company where PAYE is not deducted",
+      "Investment income exceeding the interest exemption and not subject to withholding tax"
+    ],
+    "payment_schedule": [
+      {
+        "payment": "First period (IRP6)",
+        "due_date": "End of August (6 months into the tax year)",
+        "amount": "Estimated tax for the full year, based on projected taxable income — pay at least half"
+      },
+      {
+        "payment": "Second period (IRP6)",
+        "due_date": "End of February (end of the tax year)",
+        "amount": "Remaining estimated tax based on actual or revised projected income, minus the first payment"
+      },
+      {
+        "payment": "Third period (optional top-up)",
+        "due_date": "30 September (7 months after year-end)",
+        "amount": "Voluntary payment to avoid interest if your estimate was too low. Only available to taxpayers with a February year-end"
+      }
+    ],
+    "penalties_for_underestimation": "If your estimate of taxable income in the second period is less than 80% of actual taxable income (or less than 90% for taxable income exceeding R1 million), SARS may charge an underestimation penalty of up to 20% of the underpaid amount.",
+    "tip": "Rather overestimate than underestimate — you can claim any overpayment back as a refund when you file your annual return."
+  },
+  "transfer_duty": {
+    "what_it_is": "Transfer duty is a tax payable on the acquisition of property (land and buildings) in South Africa. It is payable by the buyer.",
+    "rates_2024_2025": [
+      {
+        "property_value": "R0 – R1,100,000",
+        "rate": "0% (no transfer duty payable)"
+      },
+      {
+        "property_value": "R1,100,001 – R1,512,500",
+        "rate": "3% of the value above R1,100,000"
+      },
+      {
+        "property_value": "R1,512,501 – R2,117,500",
+        "rate": "R12,375 + 6% of the value above R1,512,500"
+      },
+      {
+        "property_value": "R2,117,501 – R2,722,500",
+        "rate": "R48,675 + 8% of the value above R2,117,500"
+      },
+      {
+        "property_value": "R2,722,501 – R12,100,000",
+        "rate": "R97,075 + 11% of the value above R2,722,500"
+      },
+      {
+        "property_value": "R12,100,001 and above",
+        "rate": "R1,128,600 + 13% of the value above R12,100,000"
+      }
+    ],
+    "important_notes": [
+      "Transfer duty must be paid within 6 months of acquisition, or interest is charged",
+      "If the seller is a VAT vendor and the property is sold as part of a going concern, VAT applies instead of transfer duty",
+      "No transfer duty is payable if VAT is charged on the transaction",
+      "First-time homebuyers buying property up to R1,100,000 pay zero transfer duty"
+    ]
+  },
+  "refund_timeline": {
+    "normal_processing": "If your tax affairs are fully compliant (all returns submitted, no outstanding debt, banking details confirmed), refunds are typically paid within 3 to 7 business days after assessment.",
+    "possible_delays": [
+      "SARS verification/audit — SARS may select your return for verification and request supporting documents. This can delay your refund by several weeks.",
+      "Incorrect or unconfirmed banking details — log in to eFiling and confirm your banking details are correct and verified",
+      "Outstanding returns from previous years — all outstanding returns must be filed before a refund is released",
+      "Outstanding tax debt — SARS will offset your refund against any tax debt you owe",
+      "Employer IRP5 not submitted — if your employer has not submitted their reconciliation, your refund may be held"
+    ],
+    "how_to_check": "Log in to eFiling → Returns → Tax Status, or call 0800 00 7277 for refund status"
+  },
+  "verification_and_audit": {
+    "what_it_is": "SARS may select your return for verification or audit to confirm the accuracy of information submitted. This is a routine process and does not mean you did anything wrong.",
+    "process": [
+      "SARS will notify you via eFiling, SMS, or email that your return has been selected for verification",
+      "You will be told which supporting documents are required (e.g., IRP5, logbook, medical certificates, bank statements)",
+      "You have 21 business days from the date of the request to submit the required documents via eFiling",
+      "Upload documents on eFiling under 'Returns' → 'Supporting Documents'",
+      "SARS will review the documents and issue a revised assessment or confirm the original assessment"
+    ],
+    "if_you_disagree": [
+      "If you disagree with the revised assessment after verification, you may file a Notice of Objection within 30 business days",
+      "File the objection on eFiling under 'Disputes' → 'Notice of Objection'",
+      "SARS must respond to your objection — if they disallow it, you can appeal within 30 business days",
+      "If the appeal is unsuccessful, you may apply for Alternative Dispute Resolution (ADR) or approach the Tax Court"
+    ],
+    "tips": [
+      "Respond within 21 days — if you miss the deadline, SARS may issue an additional assessment",
+      "Upload clear, legible copies of all requested documents",
+      "If you need more time, request an extension on eFiling before the deadline expires",
+      "Keep copies of everything you submit"
+    ]
+  },
+  "payment_arrangements": {
+    "what_it_is": "If you owe SARS and cannot pay the full amount, you may apply for a payment arrangement (installment plan).",
+    "how_to_apply": [
+      "Log in to eFiling → Payments → Payment Plan Request",
+      "Or call SARS on 0800 00 7277 to discuss your situation",
+      "Or visit a SARS branch with your ID and supporting documents showing your financial situation",
+      "You will need to propose a realistic payment schedule that SARS must approve"
+    ],
+    "important_notes": [
+      "Interest is charged on the outstanding balance at the prescribed rate (repo rate + 4%)",
+      "You must make payments on time — if you default on the arrangement, SARS may cancel it and pursue collection",
+      "A payment arrangement does NOT stop interest from accruing, but it prevents SARS from taking immediate enforcement action",
+      "SARS may require proof of your financial situation (bank statements, income proof, list of expenses)"
     ]
   },
   "tax_clearance_certificate": {
-    "what_it_is": "A document confirming that your tax affairs are in order. Required for government tenders, certain visa applications, and large financial transactions.",
+    "what_it_is": "A Tax Compliance Certificate (TCC) confirms that your tax affairs are in order. Required for government tenders, certain visa applications, foreign investment allowances, and large financial transactions.",
     "how_to_get": [
-      "Apply on SARS eFiling under 'Tax Compliance Status'",
-      "Your tax returns must be up to date and any debt must be settled or under a payment arrangement",
-      "Processing is usually immediate if your affairs are in order",
+      "Step 1: Log in to SARS eFiling",
+      "Step 2: Navigate to 'Tax Compliance Status' → 'Apply for TCC'",
+      "Step 3: Select the type of TCC you need (Good Standing, Tender, Foreign Investment Allowance, or Emigration)",
+      "Step 4: Submit the application — SARS will verify your compliance status",
+      "Step 5: If compliant, a TCC PIN is generated — share this PIN with the party who requires it (e.g., government department, bank)",
+      "Step 6: The requirer verifies your TCC using the PIN on the SARS website"
+    ],
+    "validity": "A TCC is valid for 12 months from the date of issue.",
+    "requirements": [
+      "All tax returns must be up to date (no outstanding returns)",
+      "Any tax debt must be settled or under an approved payment arrangement",
+      "Your eFiling profile must have confirmed and verified banking details",
       "If there are issues, SARS will tell you what needs to be resolved first"
     ]
   },
   "vat_registration": {
-    "who_must_register": "Any business with taxable supplies exceeding R1 million per year",
-    "voluntary_registration": "Businesses with taxable supplies exceeding R50,000 per year may register voluntarily",
+    "who_must_register": "Any business (including sole proprietors) with taxable supplies exceeding R1 million in any 12-month period MUST register for VAT.",
+    "voluntary_registration": "Businesses with taxable supplies exceeding R50,000 in a 12-month period may register voluntarily. This can be beneficial if your clients are VAT-registered businesses.",
     "how_to_register": [
-      "Apply on SARS eFiling",
-      "Provide proof of business activity, bank statements, invoices",
-      "SARS may conduct a verification visit",
-      "Once registered, you must submit VAT returns every 2 months"
+      "Apply on SARS eFiling under 'Organisations' → 'Register New'",
+      "Provide proof of business activity, bank statements, invoices, lease agreement",
+      "SARS may conduct a verification visit to your business premises",
+      "Once registered, you must submit VAT returns every 2 months (Category A) or monthly (Category C for larger businesses)"
+    ],
+    "vat_rate": "The standard VAT rate in South Africa is 15%."
+  },
+  "common_scams": {
+    "overview": "SARS scams are common and becoming more sophisticated. Fraudsters impersonate SARS to steal your personal information or money.",
+    "types_of_scams": [
+      "Phishing emails that look like they come from SARS, asking you to click a link and enter your login details or banking information",
+      "SMS messages claiming you are due a refund and asking you to reply with your banking details",
+      "Fake eFiling websites that look identical to the real site — always check the URL is www.sarsefiling.co.za",
+      "Phone calls from people claiming to be SARS agents demanding immediate payment by EFT or voucher",
+      "Emails with attachments claiming to be your tax assessment — these may contain malware"
+    ],
+    "how_to_protect_yourself": [
+      "SARS will NEVER ask for your banking details, passwords, or PINs via email, SMS, or phone",
+      "SARS will NEVER send you a link to update your banking details",
+      "SARS will NEVER threaten you with immediate arrest for unpaid tax",
+      "Always access eFiling by typing www.sarsefiling.co.za directly in your browser — never click links in emails",
+      "If in doubt, call SARS directly on 0800 00 7277 to verify any communication",
+      "Report suspected scams to SARS at 0800 00 2870 (fraud hotline)"
     ]
+  },
+  "penalties": {
+    "late_submission": {
+      "individuals": "R250 per month for each month the return is outstanding, up to a maximum of 35 months (R8,750 total)",
+      "companies_and_trusts": "Penalty ranges from R250 to R16,000 per month depending on the entity's assessed loss or taxable income, up to 35 months"
+    },
+    "understatement_penalty": {
+      "description": "If SARS finds that you understated your taxable income or overstated deductions, an understatement penalty applies based on the behaviour:",
+      "rates": [
+        "Substantial understatement (no reasonable grounds): 10% of the shortfall",
+        "Reasonable care not taken: 25% of the shortfall",
+        "No reasonable grounds for tax position: 50% of the shortfall",
+        "Gross negligence: 100% of the shortfall",
+        "Intentional tax evasion: 150% of the shortfall",
+        "Repeat offender (intentional or gross negligence + obstructive): 200% of the shortfall"
+      ]
+    },
+    "non_registration": "Failure to register as a taxpayer when required: a fine of up to R16,000 or imprisonment of up to 24 months.",
+    "late_payment": "Interest is charged on late payment of tax at the prescribed rate (currently repo rate + 4%). A 10% penalty may also be levied on the late amount.",
+    "criminal_offences": "Tax evasion, fraud, and failure to submit returns are criminal offences under the Tax Administration Act. Convictions can result in fines and imprisonment."
   },
   "sars_offices_ethekwini": [
     {
@@ -86,14 +376,18 @@
     "contact_centre": "0800 00 7277 (toll-free)",
     "efiling_help": "0800 00 7277 option 1",
     "fraud_and_corruption": "0800 00 2870",
-    "tax_ombud": "0800 662 837"
+    "tax_ombud": "0800 662 837",
+    "sars_website": "www.sars.gov.za",
+    "efiling_website": "www.sarsefiling.co.za",
+    "sars_mobiapp": "Available on Google Play Store and Apple App Store"
   },
   "escalation": {
     "step_1": "Use SARS eFiling to dispute an assessment — you have 30 business days from the assessment date",
     "step_2": "If SARS does not resolve your dispute, request Alternative Dispute Resolution (ADR) through eFiling",
-    "step_3": "If ADR fails, appeal to the Tax Court",
-    "step_4": "Contact the Tax Ombud for complaints about SARS service: 0800 662 837",
-    "legislation": "Tax Administration Act 28 of 2011, Income Tax Act 58 of 1962"
+    "step_3": "If ADR fails, appeal to the Tax Court within 30 business days of the ADR outcome",
+    "step_4": "Contact the Tax Ombud for complaints about SARS service: 0800 662 837 or www.taxombud.gov.za",
+    "step_5": "As a last resort, you may approach the High Court for judicial review of SARS decisions",
+    "legislation": "Tax Administration Act 28 of 2011, Income Tax Act 58 of 1962, Value-Added Tax Act 89 of 1991"
   },
   "your_rights": [
     "You have the right to be treated fairly and with respect at any SARS office",
@@ -102,6 +396,9 @@
     "You have the right to a payment arrangement if you cannot pay your tax debt in full",
     "SARS must process refunds within a reasonable time — persistent delays can be reported to the Tax Ombud",
     "You have the right to confidentiality of your tax information",
-    "SARS may not attach your primary residence to settle tax debt below R250,000 without a court order"
+    "SARS may not attach your primary residence to settle tax debt below R250,000 without a court order",
+    "You have the right to be informed of the reasons for any SARS decision affecting you",
+    "You have the right to appoint a tax practitioner to act on your behalf",
+    "You have the right to request reasons for any delay in processing your return or refund"
   ]
 }

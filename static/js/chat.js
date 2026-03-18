@@ -1,6 +1,6 @@
 /**
- * Pfula Chat Engine — WhatsApp-style conversation interface
- * Handles WebSocket streaming, message rendering, and demo scenarios
+ * Pfula Chat Engine — Premium WhatsApp-style conversation
+ * WebSocket streaming with buttery-smooth UX
  */
 
 let conversationId = null;
@@ -8,15 +8,70 @@ let ws = null;
 let currentLanguage = 'en';
 let isStreaming = false;
 let currentStreamBubble = null;
+let messageCount = 0;
+let ttsEnabled = true;
+
+// TTS: track whether we've already spoken for the current streamed message
+let hasSpokenThisMessage = false;
+let streamAccumulator = '';
+
+// Azure TTS: hold the currently playing Audio element so we can stop it
+let currentTTSAudio = null;
+
+// --- Sound Effects (subtle, WhatsApp-like) ---
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function initAudio() {
+    if (!audioCtx) {
+        try { audioCtx = new AudioCtx(); } catch(e) {}
+    }
+}
+
+function playSound(type) {
+    if (!audioCtx) return;
+    try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'send') {
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.08);
+            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 0.1);
+        } else if (type === 'receive') {
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.06);
+            osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.12);
+            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 0.15);
+        }
+    } catch(e) {}
+}
 
 // --- Initialization ---
 
 document.addEventListener('DOMContentLoaded', async () => {
     updateClock();
     setInterval(updateClock, 30000);
+
+    // Initialize audio on first interaction
+    document.addEventListener('click', initAudio, { once: true });
+    document.addEventListener('keydown', initAudio, { once: true });
+
     await initConversation();
     connectWebSocket();
-    document.getElementById('message-input').focus();
+
+    // Focus with slight delay for smooth page load
+    setTimeout(() => {
+        document.getElementById('message-input').focus();
+    }, 300);
 });
 
 async function initConversation() {
@@ -34,12 +89,20 @@ async function initConversation() {
 }
 
 function connectWebSocket() {
+    if (!conversationId) return;
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${protocol}//${window.location.host}/ws/chat/${conversationId}`;
-    ws = new WebSocket(wsUrl);
+
+    try {
+        ws = new WebSocket(wsUrl);
+    } catch(e) {
+        console.error('WebSocket creation failed:', e);
+        return;
+    }
 
     ws.onopen = () => {
         document.getElementById('wa-status').textContent = 'online';
+        document.getElementById('wa-status').classList.remove('typing');
     };
 
     ws.onmessage = (event) => {
@@ -49,12 +112,15 @@ function connectWebSocket() {
             handleStreamChunk(data.content);
         } else if (data.type === 'complete') {
             handleStreamComplete(data.content);
+        } else if (data.type === 'error') {
+            handleStreamError(data.content);
         }
     };
 
     ws.onclose = () => {
         document.getElementById('wa-status').textContent = 'connecting...';
-        setTimeout(connectWebSocket, 2000);
+        // Reconnect with backoff
+        setTimeout(connectWebSocket, 3000);
     };
 
     ws.onerror = () => {
@@ -69,16 +135,24 @@ function sendMessage() {
     const text = input.value.trim();
     if (!text || isStreaming) return;
 
-    // Add user message
-    addMessageToChat('user', text);
+    initAudio();
+    playSound('send');
+
+    // Add user message with sent animation
+    addMessageToChat('user', text, true);
 
     // Clear input
     input.value = '';
     input.style.height = 'auto';
 
-    // Hide quick actions on first message
+    // Hide quick actions with smooth fade
     const quickActions = document.getElementById('quick-actions');
-    if (quickActions) quickActions.style.display = 'none';
+    if (quickActions && quickActions.style.display !== 'none') {
+        quickActions.style.transition = 'opacity 0.3s, transform 0.3s';
+        quickActions.style.opacity = '0';
+        quickActions.style.transform = 'translateY(-8px)';
+        setTimeout(() => { quickActions.style.display = 'none'; }, 300);
+    }
 
     // Show typing indicator
     showTypingIndicator();
@@ -109,6 +183,7 @@ async function sendViaRest(text) {
         });
         const data = await resp.json();
         hideTypingIndicator();
+        playSound('receive');
         addMessageToChat('assistant', data.response);
     } catch (e) {
         hideTypingIndicator();
@@ -122,6 +197,11 @@ function handleStreamChunk(text) {
     if (!currentStreamBubble) {
         hideTypingIndicator();
         isStreaming = true;
+        playSound('receive');
+
+        // Reset TTS state for this new message
+        hasSpokenThisMessage = false;
+        streamAccumulator = '';
 
         // Create a new assistant message bubble for streaming
         const chatArea = document.getElementById('chat-area');
@@ -129,7 +209,7 @@ function handleStreamChunk(text) {
         msgDiv.className = 'message assistant';
         msgDiv.innerHTML = `
             <div class="message-bubble">
-                <div class="message-text" id="streaming-text"></div>
+                <div class="message-text streaming-cursor" id="streaming-text"></div>
                 <div class="message-time">
                     <span>${getCurrentTime()}</span>
                     <svg class="read-receipt" width="16" height="11" viewBox="0 0 16 11"><path d="M11.07 0L5.41 5.67 3.15 3.4 2 4.55l3.41 3.41 6.8-6.82L11.07 0zM8.6 8.22L7.45 9.37l-3.41-3.41L5.19 4.8l2.26 2.26 5.66-5.67L14.25 2.54 8.6 8.22z" fill="#53bdeb"/></svg>
@@ -141,14 +221,26 @@ function handleStreamChunk(text) {
     }
 
     // Append text to the streaming bubble
-    currentStreamBubble.innerHTML = formatMessage(
-        currentStreamBubble.getAttribute('data-raw') ?
-        currentStreamBubble.getAttribute('data-raw') + text : text
-    );
-    currentStreamBubble.setAttribute(
-        'data-raw',
-        (currentStreamBubble.getAttribute('data-raw') || '') + text
-    );
+    const rawText = (currentStreamBubble.getAttribute('data-raw') || '') + text;
+    currentStreamBubble.setAttribute('data-raw', rawText);
+    currentStreamBubble.innerHTML = formatMessage(rawText);
+
+    // Keep cursor class during streaming
+    currentStreamBubble.classList.add('streaming-cursor');
+
+    // ── Early TTS: speak the first conversational sentence as soon as it lands ──
+    // Don't wait for the full response — feels much more natural in conversation
+    if (ttsEnabled && !hasSpokenThisMessage) {
+        streamAccumulator += text;
+        // Wait for at least 80 chars then look for a natural sentence break
+        if (streamAccumulator.length >= 80) {
+            const earlyMatch = streamAccumulator.match(/^[\s\S]{60,}?[.?!](?=\s|$)/);
+            if (earlyMatch) {
+                hasSpokenThisMessage = true;
+                speakConversational(streamAccumulator);
+            }
+        }
+    }
 
     scrollToBottom();
 }
@@ -156,20 +248,69 @@ function handleStreamChunk(text) {
 function handleStreamComplete(fullText) {
     if (currentStreamBubble) {
         currentStreamBubble.innerHTML = formatMessage(fullText);
+        currentStreamBubble.classList.remove('streaming-cursor');
         currentStreamBubble.removeAttribute('id');
         currentStreamBubble.removeAttribute('data-raw');
     }
     currentStreamBubble = null;
     isStreaming = false;
+
+    // Generate smart follow-up suggestions
+    showFollowUpSuggestions(fullText);
+
+    // Speak the response aloud — only if early-trigger didn't already fire
+    // (for very short responses that never hit the sentence-detection threshold)
+    if (ttsEnabled && !hasSpokenThisMessage) {
+        speakConversational(fullText);
+    }
+
+    // Flush any voice message that was queued while streaming was in progress
+    if (pendingVoiceMessage) {
+        const queued = pendingVoiceMessage;
+        pendingVoiceMessage = null;
+        setTimeout(() => {
+            document.getElementById('message-input').value = queued;
+            sendMessage();
+        }, 150);
+    }
+
+    scrollToBottom();
+}
+
+function handleStreamError(errorText) {
+    // Clean up any partial stream
+    if (currentStreamBubble) {
+        const parent = currentStreamBubble.closest('.message');
+        if (parent) parent.remove();
+    }
+    currentStreamBubble = null;
+    isStreaming = false;
+    hideTypingIndicator();
+
+    // Show as a subtle "retry" notice rather than a normal assistant message
+    const chatArea = document.getElementById('chat-area');
+    const errDiv = document.createElement('div');
+    errDiv.className = 'message assistant';
+    errDiv.innerHTML = `
+        <div class="message-bubble" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.25);">
+            <div class="message-text" style="color:#fca5a5; font-size:13px;">
+                ⚠️ ${escapeHtml(errorText)}
+            </div>
+            <div class="message-time"><span>${getCurrentTime()}</span></div>
+        </div>
+    `;
+    chatArea.appendChild(errDiv);
     scrollToBottom();
 }
 
 // --- UI Helpers ---
 
-function addMessageToChat(role, content) {
+function addMessageToChat(role, content, justSent) {
     const chatArea = document.getElementById('chat-area');
     const msgDiv = document.createElement('div');
-    msgDiv.className = `message ${role}`;
+    msgDiv.className = `message ${role}${justSent ? ' just-sent' : ''}`;
+
+    messageCount++;
 
     const timeStr = getCurrentTime();
     const formattedContent = role === 'assistant' ? formatMessage(content) : escapeHtml(content);
@@ -188,6 +329,9 @@ function addMessageToChat(role, content) {
         </div>
     `;
 
+    // Stagger animation for sequential messages
+    msgDiv.style.animationDelay = '0.05s';
+
     chatArea.appendChild(msgDiv);
     scrollToBottom();
 }
@@ -195,25 +339,35 @@ function addMessageToChat(role, content) {
 function showTypingIndicator() {
     const indicator = document.getElementById('typing-indicator');
     indicator.style.display = 'block';
-    document.getElementById('wa-status').textContent = 'typing...';
+    const status = document.getElementById('wa-status');
+    status.textContent = 'typing...';
+    status.classList.add('typing');
     scrollToBottom();
 }
 
 function hideTypingIndicator() {
     const indicator = document.getElementById('typing-indicator');
     indicator.style.display = 'none';
-    document.getElementById('wa-status').textContent = 'online';
+    const status = document.getElementById('wa-status');
+    status.textContent = 'online';
+    status.classList.remove('typing');
 }
 
 function scrollToBottom() {
     const chatArea = document.getElementById('chat-area');
-    chatArea.scrollTop = chatArea.scrollHeight;
+    // Use requestAnimationFrame for smooth scroll
+    requestAnimationFrame(() => {
+        chatArea.scrollTop = chatArea.scrollHeight;
+    });
 }
 
 function updateClock() {
     const now = new Date();
     const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
     document.getElementById('current-time').textContent = timeStr;
+    // Also update welcome time if it exists
+    const welcomeTime = document.getElementById('welcome-time');
+    if (welcomeTime) welcomeTime.textContent = timeStr;
 }
 
 function getCurrentTime() {
@@ -229,28 +383,27 @@ function formatMessage(text) {
     // Escape HTML first
     let html = escapeHtml(text);
 
-    // Bold: **text** or __text__
+    // Bold: **text**
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
 
-    // Italic: *text* or _text_
-    html = html.replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+    // Emoji bullet points: convert raw emoji at line start
+    // Keep them as-is, they look great
 
     // Headers: ### text
     html = html.replace(/^### (.*?)$/gm, '<h4>$1</h4>');
     html = html.replace(/^## (.*?)$/gm, '<h3>$1</h3>');
 
-    // Bullet points: - text or * text
-    html = html.replace(/^[\-\*] (.*?)$/gm, '• $1');
+    // Bullet points: - text or * text (but not ** bold)
+    html = html.replace(/^[\-] (.*?)$/gm, '<span style="padding-left:4px">&#8226; $1</span>');
 
     // Numbered lists: 1. text
-    html = html.replace(/^(\d+)\. (.*?)$/gm, '$1. $2');
+    html = html.replace(/^(\d+)\. (.*?)$/gm, '<span style="padding-left:4px">$1. $2</span>');
 
     // Phone numbers: make clickable
     html = html.replace(/(\d{3,4}[\s-]?\d{3,4}[\s-]?\d{3,4})/g, '<a href="tel:$1">$1</a>');
 
     // URLs
-    html = html.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
+    html = html.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
     // Line breaks
     html = html.replace(/\n/g, '<br>');
@@ -283,7 +436,6 @@ function autoResize(textarea) {
 function toggleLanguage() {
     currentLanguage = currentLanguage === 'en' ? 'zu' : 'en';
     const label = document.getElementById('lang-label');
-    const welcomeText = document.getElementById('welcome-text');
 
     if (currentLanguage === 'zu') {
         label.textContent = 'ZU';
@@ -298,7 +450,17 @@ function toggleLanguage() {
 
 function toggleDemoPanel() {
     const panel = document.getElementById('demo-panel');
-    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    if (panel.style.display === 'none' || !panel.style.display) {
+        panel.style.display = 'block';
+    } else {
+        panel.style.opacity = '0';
+        panel.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            panel.style.display = 'none';
+            panel.style.opacity = '';
+            panel.style.transform = '';
+        }, 200);
+    }
 }
 
 // --- Demo Scenarios ---
@@ -328,6 +490,474 @@ function runScenario(scenario) {
     toggleDemoPanel();
     const messages = DEMO_SCENARIOS[scenario];
     if (messages && messages.length > 0) {
-        sendQuickMessage(messages[0]);
+        // Small delay for panel to close
+        setTimeout(() => {
+            sendQuickMessage(messages[0]);
+        }, 250);
     }
+}
+
+// --- Voice Input (Web Speech API) ---
+
+let recognition = null;
+let isListening = false;
+let pendingVoiceMessage = null;  // queued when voice fires mid-stream
+let micSafetyTimer = null;       // auto-reset if mic hangs
+
+function initSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return null;
+
+    const rec = new SpeechRecognition();
+    rec.continuous = false;
+    rec.interimResults = true;
+    rec.maxAlternatives = 1;
+
+    // Set language based on current toggle
+    rec.lang = currentLanguage === 'zu' ? 'zu-ZA' : 'en-ZA';
+
+    rec.onresult = (event) => {
+        let transcript = '';
+        let isFinal = false;
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+            if (event.results[i].isFinal) isFinal = true;
+        }
+
+        const input = document.getElementById('message-input');
+        input.value = transcript;
+        autoResize(input);
+
+        // Auto-send on final result
+        if (isFinal) {
+            stopListening();
+            setTimeout(() => {
+                if (isStreaming) {
+                    // Response still streaming — queue and send when it completes
+                    pendingVoiceMessage = transcript;
+                } else {
+                    sendMessage();
+                }
+            }, 200);
+        }
+    };
+
+    rec.onend = () => {
+        stopListening();
+    };
+
+    rec.onerror = (event) => {
+        console.error('Speech error:', event.error);
+        stopListening();
+    };
+
+    return rec;
+}
+
+function toggleVoiceInput() {
+    initAudio();
+
+    if (isListening) {
+        stopListening();
+        return;
+    }
+
+    // Stop Leah before opening the mic — prevents her voice being picked up
+    _stopCurrentTTS();
+    _setTTSSpeaking(false);
+    const statusEl = document.getElementById('wa-status');
+    if (statusEl) { statusEl.textContent = 'online'; statusEl.classList.remove('typing'); }
+
+    // Update language before starting
+    recognition = initSpeechRecognition();
+    if (!recognition) {
+        const input = document.getElementById('message-input');
+        input.placeholder = 'Voice not supported in this browser';
+        setTimeout(() => {
+            input.placeholder = currentLanguage === 'zu' ? 'Bhala umyalezo' : 'Type a message';
+        }, 2000);
+        return;
+    }
+
+    isListening = true;
+    const micBtn = document.getElementById('mic-btn');
+    micBtn.classList.add('listening');
+
+    const status = document.getElementById('wa-status');
+    status.textContent = 'listening...';
+    status.classList.add('typing');
+
+    const input = document.getElementById('message-input');
+    input.placeholder = currentLanguage === 'zu' ? 'Khuluma manje...' : 'Speak now...';
+    input.value = '';
+
+    playSound('send');
+
+    // Safety timeout — auto-reset mic if it hangs for more than 12 seconds
+    micSafetyTimer = setTimeout(() => {
+        if (isListening) stopListening();
+    }, 12000);
+
+    try {
+        recognition.start();
+    } catch(e) {
+        stopListening();
+    }
+}
+
+function stopListening() {
+    isListening = false;
+    if (micSafetyTimer) { clearTimeout(micSafetyTimer); micSafetyTimer = null; }
+    const micBtn = document.getElementById('mic-btn');
+    if (micBtn) micBtn.classList.remove('listening');
+
+    const status = document.getElementById('wa-status');
+    if (status) {
+        status.textContent = 'online';
+        status.classList.remove('typing');
+    }
+
+    const input = document.getElementById('message-input');
+    if (input) {
+        input.placeholder = currentLanguage === 'zu' ? 'Bhala umyalezo' : 'Type a message';
+    }
+
+    if (recognition) {
+        try { recognition.stop(); } catch(e) {}
+    }
+}
+
+// --- Text-to-Speech ---
+
+// Extract the most conversational spoken sentence from a response.
+// The system prompt now instructs Claude to open with a direct spoken sentence —
+// this function finds and surfaces it cleanly.
+function extractSpeechText(text) {
+    // Step 1: strip all markdown/formatting
+    let clean = text
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1')
+        .replace(/`{1,3}[^`]*`{1,3}/g, '')
+        .replace(/#{1,4}\s+/g, '')
+        .replace(/https?:\/\/[^\s]+/g, '')
+        .replace(/^\s*[-*•]\s+/gm, ' ')           // bullets → space (keep content)
+        .replace(/^\s*\d+\.\s+/gm, ' ')           // numbered → space
+        .replace(/\n{2,}/g, ' ')
+        .replace(/\n/g, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+
+    // Step 2: cut hollow openers that add zero spoken value
+    clean = clean.replace(
+        /^(Sure[!,.]?\s*|Of course[!,.]?\s*|Great[!,.]?\s*|Absolutely[!,.]?\s*|Certainly[!,.]?\s*|No problem[!,.]?\s*|Happy to help[!,.]?\s*|I['']d be (happy|glad) to[^.]*\.\s*)/i,
+        ''
+    );
+
+    // Step 3: collect full sentences
+    const sentenceRx = /[^.?!]+[.?!]+/g;
+    const sentences = [];
+    let m;
+    while ((m = sentenceRx.exec(clean)) !== null) {
+        const s = m[0].trim();
+        if (s.length < 10) continue;
+        sentences.push(s);
+        // Speak up to 4 sentences or ~420 chars — enough to cover the key detail
+        if (sentences.join(' ').length >= 420) break;
+        if (sentences.length >= 4) break;
+    }
+
+    if (sentences.length > 0) return sentences.join(' ');
+
+    // Fallback for very short or unpunctuated responses
+    if (clean.length <= 500) return clean;
+    const cut = clean.lastIndexOf(' ', 450);
+    return clean.substring(0, cut > 80 ? cut : 450).trim() + '.';
+}
+
+// Closing questions appended after the spoken summary — keeps the conversation open
+const TTS_CLOSINGS = [
+    'Is there anything else I can help you with?',
+    'Would you like more detail on any of this?',
+    'Do you have any other questions for me?',
+    'Let me know if there\'s anything else you need.',
+    'Is there something specific you\'d like me to explain further?',
+];
+
+function _getClosing() {
+    return TTS_CLOSINGS[Math.floor(Math.random() * TTS_CLOSINGS.length)];
+}
+
+function _setTTSSpeaking(speaking) {
+    const btn = document.getElementById('tts-toggle');
+    if (btn) btn.classList.toggle('tts-speaking', speaking);
+}
+
+/**
+ * Primary TTS: Azure Neural (en-ZA-LeahNeural — natural SA female voice).
+ * Falls back to browser Web Speech API if Azure key not set or request fails.
+ */
+async function speakConversational(text) {
+    if (!ttsEnabled) return;
+
+    const summary = extractSpeechText(text);
+    if (!summary) return;
+
+    // Bridge voice → chat text, then close with a question
+    const speech = `${summary} I've shared the full details in the chat for you. ${_getClosing()}`;
+
+    // Stop anything currently playing
+    _stopCurrentTTS();
+
+    const status = document.getElementById('wa-status');
+    const setStatus = (msg) => {
+        if (status) {
+            status.textContent = msg;
+            status.classList.toggle('typing', msg !== 'online');
+        }
+    };
+    setStatus('speaking...');
+    _setTTSSpeaking(true);
+
+    // ── Try Azure Neural TTS first ──
+    try {
+        const resp = await fetch('/api/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: speech, lang: currentLanguage }),
+        });
+
+        if (!resp.ok) throw new Error(`Azure TTS ${resp.status}`);
+
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        audio.volume = 0.95;
+        currentTTSAudio = audio;
+
+        const done = () => { URL.revokeObjectURL(url); currentTTSAudio = null; setStatus('online'); _setTTSSpeaking(false); };
+        audio.onended = done;
+        audio.onerror = done;
+
+        await audio.play();
+        return; // success — done
+
+    } catch (e) {
+        // 503 = not configured (expected until key is set), other = network/Azure issue
+        if (!e.message.includes('503')) {
+            console.warn('[Pfula] Azure TTS unavailable, falling back to Web Speech:', e.message);
+        }
+    }
+
+    // ── Fallback: browser Web Speech API ──
+    _webSpeechFallback(speech, () => { setStatus('online'); _setTTSSpeaking(false); });
+}
+
+/** Stop whatever TTS is currently playing (Azure audio or Web Speech). */
+function _stopCurrentTTS() {
+    if (currentTTSAudio) {
+        try { currentTTSAudio.pause(); } catch(e) {}
+        currentTTSAudio = null;
+    }
+    if (window.speechSynthesis) {
+        try { window.speechSynthesis.cancel(); } catch(e) {}
+    }
+}
+
+/** Web Speech API fallback — best-effort SA voice selection. */
+function _webSpeechFallback(speech, onDone) {
+    if (!window.speechSynthesis) { if (onDone) onDone(); return; }
+
+    const utterance = new SpeechSynthesisUtterance(speech);
+    utterance.rate = 1.05;
+    utterance.pitch = 1.0;
+    utterance.volume = 0.92;
+
+    const voices = window.speechSynthesis.getVoices();
+    const isZulu = currentLanguage === 'zu';
+    let preferred = null;
+    if (isZulu) {
+        preferred = voices.find(v => v.lang.startsWith('zu'));
+    } else {
+        // Prefer SA, then AU, then US — explicitly avoid en-GB robotic voice
+        preferred = voices.find(v => v.lang === 'en-ZA')
+            || voices.find(v => v.lang === 'en-AU')
+            || voices.find(v => v.lang === 'en-US')
+            || voices.find(v => v.lang.startsWith('en') && !v.lang.includes('GB'));
+    }
+    utterance.lang = isZulu ? 'zu-ZA' : 'en-ZA';
+    if (preferred) utterance.voice = preferred;
+
+    utterance.onend = () => { if (onDone) onDone(); };
+    utterance.onerror = () => { if (onDone) onDone(); };
+
+    window.speechSynthesis.speak(utterance);
+}
+
+function toggleTTS() {
+    const btn = document.getElementById('tts-toggle');
+
+    // If currently speaking — tap stops it without toggling TTS on/off
+    if (currentTTSAudio && !currentTTSAudio.paused) {
+        _stopCurrentTTS();
+        _setTTSSpeaking(false);
+        const status = document.getElementById('wa-status');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
+        return;
+    }
+
+    ttsEnabled = !ttsEnabled;
+    if (btn) {
+        btn.classList.toggle('tts-off', !ttsEnabled);
+        btn.title = ttsEnabled ? 'Voice responses ON' : 'Voice responses OFF';
+    }
+
+    // Stop everything immediately when disabling
+    if (!ttsEnabled) {
+        _stopCurrentTTS();
+        _setTTSSpeaking(false);
+        const status = document.getElementById('wa-status');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
+    }
+}
+
+// Escape key stops TTS mid-speech
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && currentTTSAudio && !currentTTSAudio.paused) {
+        _stopCurrentTTS();
+        _setTTSSpeaking(false);
+        const status = document.getElementById('wa-status');
+        if (status) { status.textContent = 'online'; status.classList.remove('typing'); }
+    }
+});
+
+// Preload voices (Chrome loads them async)
+if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+}
+
+// --- Smart Follow-Up Suggestions ---
+
+const FOLLOW_UP_MAP = [
+    {
+        keywords: ['sassa', 'srd', 'grant', 'social relief', 'declined', 'rejected'],
+        suggestions: [
+            'How do I appeal this decision?',
+            'What documents do I need to reapply?',
+            'Help me write a PAJA written reasons request',
+        ]
+    },
+    {
+        keywords: ['home affairs', 'smart id', 'id card', 'passport', 'birth certificate'],
+        suggestions: [
+            'What are my rights under PAJA if they delay?',
+            'Can I collect at a bank branch instead?',
+            'Help me write a formal escalation letter',
+        ]
+    },
+    {
+        keywords: ['tax', 'sars', 'efiling', 'tax return', 'tax bracket'],
+        suggestions: [
+            'What deductions can I claim?',
+            'How do medical tax credits work?',
+            'What happens if I file late?',
+        ]
+    },
+    {
+        keywords: ['uif', 'unemployment', 'ui-19', 'retrenched', 'maternity'],
+        suggestions: [
+            'My employer didn\'t register me — what now?',
+            'How long will it take to get paid?',
+            'Can I claim if I resigned?',
+        ]
+    },
+    {
+        keywords: ['municipal', 'rates', 'electricity', 'water', 'ethekwini', 'bill'],
+        suggestions: [
+            'How do I qualify for indigent support?',
+            'Can they disconnect without notice?',
+            'Help me dispute this bill formally',
+        ]
+    },
+    {
+        keywords: ['company', 'cipc', 'registration', 'annual return', 'deregistered'],
+        suggestions: [
+            'What are the annual return deadlines?',
+            'How do I reinstate a deregistered company?',
+            'What BEE level is my company?',
+        ]
+    },
+    {
+        keywords: ['property', 'transfer', 'deeds', 'title deed', 'conveyancing'],
+        suggestions: [
+            'What is the transfer duty on my property?',
+            'How long does transfer take?',
+            'What if my title deed is lost?',
+        ]
+    },
+    {
+        keywords: ['letter', 'formal', 'complaint', 'escalat', 'paja', 'public protector'],
+        suggestions: [
+            'Can you also draft a Public Protector complaint?',
+            'What is the deadline for their response?',
+            'What are my next steps if they ignore this?',
+        ]
+    },
+    {
+        keywords: ['isibonelelo', 'umama', 'sawubona', 'ngicela', 'imali'],
+        suggestions: [
+            'Ngicela ungisize ngokubhala incwadi yokukhalaza',
+            'Yimaphi amaphepha engiwadingayo?',
+            'Ngingathola kanjani usizo ngokushesha?',
+        ]
+    },
+];
+
+function showFollowUpSuggestions(responseText) {
+    // Remove any existing follow-ups
+    const existing = document.querySelector('.follow-up-suggestions');
+    if (existing) existing.remove();
+
+    if (!responseText) return;
+
+    const lower = responseText.toLowerCase();
+    let suggestions = null;
+
+    // Find matching suggestions based on response content
+    for (const mapping of FOLLOW_UP_MAP) {
+        const matchCount = mapping.keywords.filter(k => lower.includes(k)).length;
+        if (matchCount >= 1) {
+            suggestions = mapping.suggestions;
+            break;
+        }
+    }
+
+    // Fallback generic suggestions
+    if (!suggestions) {
+        suggestions = [
+            'Tell me more about my rights',
+            'What documents do I need?',
+            'Help me write a formal letter',
+        ];
+    }
+
+    const chatArea = document.getElementById('chat-area');
+    const container = document.createElement('div');
+    container.className = 'follow-up-suggestions';
+
+    suggestions.forEach(text => {
+        const btn = document.createElement('button');
+        btn.className = 'follow-up-btn';
+        btn.textContent = text;
+        btn.onclick = () => {
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(-4px)';
+            setTimeout(() => container.remove(), 200);
+            sendQuickMessage(text);
+        };
+        container.appendChild(btn);
+    });
+
+    chatArea.appendChild(container);
+    scrollToBottom();
 }

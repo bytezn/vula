@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pfula — UX Mockup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #f5e6d0;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============ VIDEO BACKGROUND ============ */
+        .video-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        /* Dark overlay for readability */
+        .video-overlay {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 70% 40%, transparent 30%, rgba(0,0,0,0.5) 80%),
+                linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+
+        /* ============ MAIN LAYOUT ============ */
+        .stage-layout {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 72px;
+            width: 100%;
+            height: 100vh;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* ============ LEFT BRANDING ============ */
+        .brand-left {
+            flex-shrink: 0;
+            max-width: 360px;
+        }
+
+        .brand-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #e87520;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .brand-meaning {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: #e87520;
+            font-style: italic;
+            font-weight: 400;
+            margin-bottom: 28px;
+        }
+
+        .brand-divider {
+            width: 56px;
+            height: 2px;
+            background: linear-gradient(90deg, #e87520, #f5a030, transparent);
+            margin-bottom: 24px;
+        }
+
+        .brand-tagline {
+            font-size: 15px;
+            color: rgba(245, 230, 208, 0.6);
+            line-height: 1.75;
+            font-weight: 400;
+        }
+
+        .brand-tagline strong {
+            color: rgba(245, 230, 208, 0.9);
+            font-weight: 600;
+        }
+
+        /* Stats row */
+        .brand-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 36px;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #e87520;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            color: rgba(245, 230, 208, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        /* Event card */
+        .brand-event {
+            margin-top: 40px;
+            padding: 18px 22px;
+            background: rgba(232, 117, 32, 0.06);
+            border: 1px solid rgba(232, 117, 32, 0.15);
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .event-label {
+            font-size: 9px;
+            color: rgba(245, 230, 208, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight: 700;
+        }
+
+        .event-name {
+            color: rgba(245, 230, 208, 0.9);
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        .event-detail {
+            color: #e87520;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        /* ============ PHONE FRAME ============ */
+        .phone-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* Ambient glow behind phone */
+        .phone-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 900px;
+            background: radial-gradient(ellipse, rgba(232, 117, 32, 0.1) 0%, transparent 65%);
+            pointer-events: none;
+            animation: phonePulse 5s ease-in-out infinite;
+        }
+
+        @keyframes phonePulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        .phone-frame {
+            width: 390px;
+            height: 844px;
+            border-radius: 55px;
+            background: #0a0806;
+            border: 1.5px solid rgba(232, 117, 32, 0.15);
+            box-shadow:
+                0 0 0 1px rgba(0,0,0,0.8),
+                0 0 120px rgba(232, 117, 32, 0.08),
+                0 40px 100px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255,255,255,0.04);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Dynamic Island */
+        .notch {
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 100;
+        }
+
+        .home-bar {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            z-index: 100;
+        }
+
+        /* ============ CHAT MOCKUP INSIDE PHONE ============ */
+        .phone-screen {
+            position: absolute;
+            inset: 0;
+            border-radius: 52px;
+            overflow: hidden;
+            background: #0a0806;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Status bar */
+        .mock-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 28px 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* WA Header */
+        .mock-header {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px 12px;
+            gap: 10px;
+            border-bottom: 1px solid rgba(232, 117, 32, 0.1);
+        }
+
+        .mock-back {
+            color: #fff;
+            font-size: 18px;
+            opacity: 0.7;
+        }
+
+        .mock-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b4513, #e87520);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 17px;
+            color: #fff;
+            position: relative;
+        }
+
+        .mock-avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 1px;
+            right: 1px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e87520;
+            border: 2px solid #0a0806;
+        }
+
+        .mock-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f5e6d0;
+            flex: 1;
+        }
+
+        .mock-online {
+            font-size: 11px;
+            color: #e87520;
+            font-weight: 500;
+        }
+
+        .mock-header-btns {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .mock-tts {
+            color: #e87520;
+            font-size: 14px;
+        }
+
+        .mock-lang {
+            background: linear-gradient(135deg, #e87520, #c4550a);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        /* Chat area */
+        .mock-chat {
+            flex: 1;
+            padding: 16px 14px;
+            overflow: hidden;
+        }
+
+        .mock-date {
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .mock-date span {
+            background: rgba(232, 117, 32, 0.08);
+            color: rgba(245, 230, 208, 0.4);
+            font-size: 11px;
+            padding: 4px 14px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        /* Message bubbles */
+        .mock-msg {
+            margin-bottom: 6px;
+            display: flex;
+        }
+
+        .mock-msg.bot { justify-content: flex-start; }
+        .mock-msg.user { justify-content: flex-end; }
+
+        .mock-bubble {
+            max-width: 78%;
+            padding: 9px 12px 5px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .mock-msg.bot .mock-bubble {
+            background: rgba(232, 117, 32, 0.08);
+            border: 1px solid rgba(232, 117, 32, 0.08);
+            border-top-left-radius: 3px;
+            color: #f5e6d0;
+        }
+
+        .mock-msg.user .mock-bubble {
+            background: #5c2a0a;
+            border-top-right-radius: 3px;
+            color: #f5e6d0;
+        }
+
+        .mock-bubble strong {
+            color: #e87520;
+        }
+
+        .mock-bubble .time {
+            font-size: 10px;
+            color: rgba(245, 230, 208, 0.3);
+            float: right;
+            margin-left: 8px;
+            margin-top: 4px;
+        }
+
+        /* Follow-up pills */
+        .mock-followups {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .mock-pill {
+            background: rgba(232, 117, 32, 0.06);
+            border: 1px solid rgba(232, 117, 32, 0.18);
+            color: #e87520;
+            padding: 6px 12px;
+            border-radius: 18px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Quick action buttons */
+        .mock-quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .mock-quick {
+            background: rgba(232, 117, 32, 0.06);
+            border: 1px solid rgba(232, 117, 32, 0.2);
+            color: #e87520;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Input bar */
+        .mock-input-bar {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px 12px;
+            gap: 6px;
+            border-top: 1px solid rgba(232, 117, 32, 0.06);
+        }
+
+        .mock-attach {
+            color: rgba(245, 230, 208, 0.3);
+            font-size: 18px;
+            padding: 6px;
+        }
+
+        .mock-input-box {
+            flex: 1;
+            background: rgba(232, 117, 32, 0.04);
+            border: 1px solid rgba(232, 117, 32, 0.1);
+            border-radius: 24px;
+            padding: 10px 16px;
+            color: rgba(245, 230, 208, 0.35);
+            font-size: 14px;
+        }
+
+        .mock-mic {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(232, 117, 32, 0.1);
+            border: 1.5px solid rgba(232, 117, 32, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e87520;
+            font-size: 16px;
+        }
+
+        .mock-send {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e87520, #c4550a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(232, 117, 32, 0.3);
+        }
+
+        /* Bottom nav */
+        .mock-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0 28px;
+            border-top: 1px solid rgba(232, 117, 32, 0.06);
+        }
+
+        .mock-nav-item {
+            text-align: center;
+            font-size: 10px;
+            color: rgba(245, 230, 208, 0.3);
+            position: relative;
+        }
+
+        .mock-nav-item.active {
+            color: #e87520;
+        }
+
+        .mock-nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: #e87520;
+            border-radius: 1px;
+        }
+
+        .mock-nav-icon {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* ============ RIGHT PANEL ============ */
+        .info-right {
+            flex-shrink: 0;
+            max-width: 240px;
+        }
+
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(232, 117, 32, 0.08);
+            border: 1px solid rgba(232, 117, 32, 0.2);
+            color: #e87520;
+            padding: 8px 18px;
+            border-radius: 24px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(8px);
+        }
+
+        .demo-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #e87520;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232,117,32,0.4); }
+            50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(232,117,32,0); }
+        }
+
+        .services-list {
+            list-style: none;
+        }
+
+        .services-list li {
+            font-size: 13px;
+            color: rgba(245, 230, 208, 0.5);
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(232, 117, 32, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .services-list li:last-child { border-bottom: none; }
+
+        .service-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #e87520;
+            flex-shrink: 0;
+        }
+
+        .services-list li:nth-child(even) .service-dot {
+            background: #f5a030;
+        }
+
+        .services-list li span {
+            color: rgba(245, 230, 208, 0.2);
+            font-size: 11px;
+            margin-left: auto;
+        }
+
+        .nav-links {
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-link {
+            font-size: 12px;
+            color: #e87520;
+            text-decoration: none;
+            padding: 10px 18px;
+            border: 1px solid rgba(232, 117, 32, 0.12);
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            background: rgba(232, 117, 32, 0.04);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(232, 117, 32, 0.1);
+            border-color: rgba(232, 117, 32, 0.3);
+        }
+
+        /* ============ MOCKUP LABEL ============ */
+        .mockup-label {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(232, 117, 32, 0.1);
+            border: 1px solid rgba(232, 117, 32, 0.2);
+            padding: 8px 24px;
+            border-radius: 24px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #e87520;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1200px) {
+            .brand-left, .info-right { display: none; }
+            .stage-layout { gap: 0; padding: 0; }
+        }
+
+        @media (max-height: 900px) {
+            .phone-frame {
+                width: 340px;
+                height: 736px;
+                border-radius: 48px;
+            }
+            .phone-screen { border-radius: 45px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- MOCKUP LABEL -->
+    <div class="mockup-label">UX Mockup — Video Background + Amber Theme</div>
+
+    <!-- VIDEO BACKGROUND -->
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="/static/video/bg.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <!-- LAYOUT -->
+    <div class="stage-layout">
+
+        <!-- LEFT BRANDING -->
+        <div class="brand-left">
+            <div class="brand-label">AI Civic Assistant</div>
+            <div class="brand-name">Pfula</div>
+            <div class="brand-meaning">"to open"</div>
+            <div class="brand-divider"></div>
+            <div class="brand-tagline">
+                <strong>AI that opens government</strong> for every South African.
+                Navigate SASSA, Home Affairs, UIF, SARS, and municipal services
+                — in your language, on your phone.
+            </div>
+
+            <div class="brand-stats">
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Services</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">Languages</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">R0.23</div>
+                    <div class="stat-label">Per Query</div>
+                </div>
+            </div>
+
+            <div class="brand-event">
+                <div class="event-label">Presenting at</div>
+                <div class="event-name">Data & AI Community Day Durban</div>
+                <div class="event-detail">AI Unplugged — 14 March 2026</div>
+            </div>
+        </div>
+
+        <!-- PHONE -->
+        <div class="phone-container">
+            <div class="phone-frame">
+                <div class="notch"></div>
+                <div class="phone-screen">
+                    <!-- Status bar -->
+                    <div class="mock-status-bar">
+                        <span>17:45</span>
+                        <span style="font-size:11px;opacity:0.5">●●● ▲ ■</span>
+                    </div>
+
+                    <!-- Header -->
+                    <div class="mock-header">
+                        <div class="mock-back">←</div>
+                        <div class="mock-avatar">P</div>
+                        <div style="flex:1">
+                            <div class="mock-name">Pfula</div>
+                            <div class="mock-online">online</div>
+                        </div>
+                        <div class="mock-header-btns">
+                            <div class="mock-tts">🔊</div>
+                            <div class="mock-lang">EN</div>
+                        </div>
+                    </div>
+
+                    <!-- Chat -->
+                    <div class="mock-chat">
+                        <div class="mock-date"><span>Today</span></div>
+
+                        <div class="mock-msg bot">
+                            <div class="mock-bubble">
+                                Hi! I'm <strong>Pfula</strong> — I help South Africans navigate government services. What do you need help with today?
+                                <span class="time">17:45 ✓✓</span>
+                            </div>
+                        </div>
+
+                        <div class="mock-quick-actions">
+                            <div class="mock-quick">SASSA Grant Help</div>
+                            <div class="mock-quick">Home Affairs ID</div>
+                            <div class="mock-quick">Municipal Bill</div>
+                            <div class="mock-quick">SARS Tax Help</div>
+                            <div class="mock-quick" style="border-color:rgba(245,160,48,0.25);color:#f5a030">IsiZulu</div>
+                        </div>
+
+                        <div class="mock-msg user" style="margin-top:14px">
+                            <div class="mock-bubble">
+                                My SASSA SRD grant was rejected and I don't know why
+                                <span class="time">17:46 ✓✓</span>
+                            </div>
+                        </div>
+
+                        <div class="mock-msg bot">
+                            <div class="mock-bubble">
+                                I understand how stressful this must be. Let me help you understand why and what to do next.
+
+                                <br><br><strong>Common reasons for SRD decline:</strong>
+                                <br>• Income above R624/month threshold
+                                <br>• NSFAS or UIF benefits detected
+                                <br>• Bank verification mismatch
+                                <span class="time">17:46 ✓✓</span>
+                            </div>
+                        </div>
+
+                        <div class="mock-followups">
+                            <div class="mock-pill">How do I appeal?</div>
+                            <div class="mock-pill">What documents do I need?</div>
+                            <div class="mock-pill">Write me a PAJA letter</div>
+                        </div>
+                    </div>
+
+                    <!-- Input bar -->
+                    <div class="mock-input-bar">
+                        <div class="mock-attach">📎</div>
+                        <div class="mock-input-box">Type a message</div>
+                        <div class="mock-mic">🎤</div>
+                        <div class="mock-send">▶</div>
+                    </div>
+
+                    <!-- Nav -->
+                    <div class="mock-nav">
+                        <div class="mock-nav-item active">
+                            <span class="mock-nav-icon">💬</span>
+                            Chat
+                        </div>
+                        <div class="mock-nav-item">
+                            <span class="mock-nav-icon">📋</span>
+                            Cases
+                        </div>
+                        <div class="mock-nav-item">
+                            <span class="mock-nav-icon">📊</span>
+                            Dashboard
+                        </div>
+                    </div>
+                </div>
+                <div class="home-bar"></div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="info-right">
+            <div class="demo-badge">Live Demo</div>
+
+            <ul class="services-list">
+                <li><div class="service-dot"></div>SASSA <span>Grants & Appeals</span></li>
+                <li><div class="service-dot"></div>Home Affairs <span>IDs & Passports</span></li>
+                <li><div class="service-dot"></div>UIF <span>Unemployment</span></li>
+                <li><div class="service-dot"></div>SARS <span>Tax Returns</span></li>
+                <li><div class="service-dot"></div>eThekwini <span>Municipal</span></li>
+                <li><div class="service-dot"></div>Deeds Office <span>Property</span></li>
+                <li><div class="service-dot"></div>CIPC <span>Business</span></li>
+            </ul>
+
+            <div class="nav-links">
+                <a href="#" class="nav-link">Analytics Dashboard</a>
+                <a href="#" class="nav-link">Case Tracker</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
